@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NYC Cannabis Price Tracker | Best Weed Deals in Manhattan</title>
+  <meta name="description" content="Compare weed prices across NYC dispensaries in real time. Find the cheapest ounce and half-ounce flower deals in Manhattan, updated daily.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0f172a">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="NYC Cannabis Price Tracker | Best Weed Deals in Manhattan">
+  <meta property="og:description" content="Compare flower prices across Manhattan dispensaries. Find the cheapest ounce and half-ounce deals, updated daily.">
+  <meta property="og:url" content="https://nycweedprices.com/">
+  <meta property="og:image" content="https://nycweedprices.com/og-image.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="NYC Cannabis Price Tracker">
+  <meta name="twitter:description" content="Find the cheapest weed in NYC. Real-time dispensary price comparisons for Manhattan.">
+
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green:       #22c55e;
+      --green-dim:   #16a34a;
+      --green-glow:  rgba(34,197,94,.15);
+      --green-light: rgba(34,197,94,.08);
+      --bg:          #0f172a;
+      --bg-card:     #1e293b;
+      --bg-card2:    #263347;
+      --border:      #334155;
+      --text:        #f1f5f9;
+      --text-muted:  #94a3b8;
+      --text-dim:    #64748b;
+      --red:         #f87171;
+      --amber:       #fbbf24;
+      --blue:        #60a5fa;
+      --purple:      #a78bfa;
+      --radius:      12px;
+      --radius-sm:   8px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    a { color: var(--green); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ─── Loading overlay ──────────────────────────────────── */
+    #loading-overlay {
+      position: fixed; inset: 0; background: var(--bg);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 16px; z-index: 1000; transition: opacity .3s;
+    }
+    #loading-overlay.hidden { opacity: 0; pointer-events: none; }
+    .spinner {
+      width: 44px; height: 44px;
+      border: 3px solid var(--border);
+      border-top-color: var(--green);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { color: var(--text-muted); font-size: 14px; }
+
+    /* ─── Top nav ───────────────────────────────────────────── */
+    .topnav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(15,23,42,.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 56px;
+    }
+    .topnav-brand {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 700; font-size: 16px; color: var(--text);
+      text-decoration: none;
+    }
+    .topnav-brand .leaf {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px;
+      background: var(--green);
+      border-radius: 8px;
+      font-size: 18px;
+    }
+    .topnav-links { display: flex; gap: 4px; }
+    .topnav-links a {
+      padding: 6px 12px; border-radius: 6px;
+      font-size: 13px; font-weight: 500;
+      color: var(--text-muted);
+      transition: color .15s, background .15s;
+    }
+    .topnav-links a:hover { color: var(--text); background: var(--bg-card); text-decoration: none; }
+
+    /* hamburger */
+    .hamburger {
+      display: none;
+      background: none; border: none; cursor: pointer;
+      padding: 6px; color: var(--text-muted);
+    }
+    .hamburger svg { display: block; }
+
+    /* ─── Hero ──────────────────────────────────────────────── */
+    .hero {
+      padding: 56px 20px 48px;
+      text-align: center;
+      background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(34,197,94,.12) 0%, transparent 70%);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--green-light);
+      border: 1px solid rgba(34,197,94,.3);
+      color: var(--green);
+      font-size: 12px; font-weight: 600;
+      padding: 4px 12px; border-radius: 20px;
+      margin-bottom: 20px;
+      text-transform: uppercase; letter-spacing: .6px;
+    }
+    .hero h1 {
+      font-size: clamp(28px, 6vw, 52px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #f1f5f9 0%, var(--green) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: clamp(15px, 2.5vw, 18px);
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 0 auto 28px;
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--green);
+      color: #000;
+      font-weight: 700; font-size: 15px;
+      padding: 12px 28px; border-radius: 10px;
+      transition: background .15s, transform .1s;
+      text-decoration: none;
+    }
+    .hero-cta:hover { background: #16a34a; transform: translateY(-1px); text-decoration: none; }
+    .hero-updated {
+      margin-top: 18px;
+      font-size: 12px; color: var(--text-dim);
+    }
+    .hero-updated span { color: var(--green); font-weight: 600; }
+
+    /* ─── Stats ─────────────────────────────────────────────── */
+    .stats-section { padding: 0 20px 40px; }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .2s, transform .15s;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent-color, var(--green));
+    }
+    .stat-card:hover { border-color: var(--accent-color, var(--green)); transform: translateY(-2px); }
+    .stat-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .6px; color: var(--text-dim); margin-bottom: 8px; }
+    .stat-value { font-size: 28px; font-weight: 800; line-height: 1; color: var(--accent-color, var(--green)); }
+    .stat-sub { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+
+    /* ─── Main content ──────────────────────────────────────── */
+    .main-section { padding: 0 20px 60px; }
+    .section-inner { max-width: 960px; margin: 0 auto; }
+    .section-title {
+      font-size: 20px; font-weight: 700;
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-title .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+    }
+
+    /* ─── Filter bar ────────────────────────────────────────── */
+    .filter-bar {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    }
+    .search-box {
+      position: relative; flex: 1; min-width: 200px;
+    }
+    .search-box svg {
+      position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+      color: var(--text-dim); pointer-events: none;
+    }
+    .search-box input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-size: 14px;
+      padding: 8px 12px 8px 34px;
+      outline: none;
+      transition: border-color .15s;
+    }
+    .search-box input::placeholder { color: var(--text-dim); }
+    .search-box input:focus { border-color: var(--green); }
+
+    .filter-group { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+    .filter-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: var(--text-dim); }
+
+    .pill {
+      padding: 5px 14px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 12px; font-weight: 600;
+      cursor: pointer;
+      background: transparent;
+      color: var(--text-muted);
+      transition: all .15s;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .pill:hover { border-color: var(--green); color: var(--green); }
+    .pill.active { background: var(--green); border-color: var(--green); color: #000; }
+
+    .filter-meta {
+      margin-left: auto;
+      font-size: 12px; color: var(--text-dim);
+      white-space: nowrap;
+    }
+    .filter-meta strong { color: var(--text); }
+
+    /* collapsible neighborhood filter on mobile */
+    .filter-toggle-btn {
+      display: none;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      font-size: 12px; font-weight: 600;
+      padding: 6px 12px;
+      cursor: pointer;
+      align-items: center; gap: 6px;
+    }
+    .nbhd-filter-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    /* ─── Table ─────────────────────────────────────────────── */
+    .table-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table { width: 100%; border-collapse: collapse; }
+    thead { position: sticky; top: 56px; z-index: 10; }
+    th {
+      background: var(--bg-card2);
+      color: var(--text-muted);
+      text-align: left;
+      padding: 11px 14px;
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+      border-bottom: 1px solid var(--border);
+      transition: color .15s;
+    }
+    th:hover { color: var(--text); }
+    th.sorted-asc::after  { content: ' ↑'; color: var(--green); }
+    th.sorted-desc::after { content: ' ↓'; color: var(--green); }
+
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(51,65,85,.6);
+      vertical-align: middle;
+      font-size: 14px;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255,255,255,.025); }
+
+    /* best price rows */
+    tr.best-oz   td { background: rgba(34,197,94,.05); }
+    tr.best-half td { background: rgba(167,139,250,.05); }
+    tr.best-oz:hover   td { background: rgba(34,197,94,.09); }
+    tr.best-half:hover td { background: rgba(167,139,250,.09); }
+
+    .store-name { font-weight: 600; font-size: 14px; }
+    .store-nbhd { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+    .store-address { font-size: 11px; color: var(--text-dim); }
+
+    .price { font-weight: 800; font-size: 17px; color: var(--green); }
+    tr.best-half .price { color: var(--purple); }
+
+    .size-tag {
+      display: inline-flex; align-items: center;
+      padding: 3px 9px; border-radius: 12px;
+      font-size: 11px; font-weight: 700;
+      white-space: nowrap;
+    }
+    .tag-oz   { background: rgba(96,165,250,.12); color: var(--blue); border: 1px solid rgba(96,165,250,.25); }
+    .tag-half { background: rgba(167,139,250,.12); color: var(--purple); border: 1px solid rgba(167,139,250,.25); }
+
+    .product-name { font-size: 13px; color: var(--text-muted); max-width: 280px; line-height: 1.4; }
+    .product-name .best-badge {
+      display: inline-block;
+      background: var(--green-light);
+      color: var(--green);
+      border: 1px solid rgba(34,197,94,.3);
+      font-size: 10px; font-weight: 700;
+      padding: 1px 6px; border-radius: 6px;
+      margin-left: 6px; vertical-align: middle;
+      text-transform: uppercase; letter-spacing: .4px;
+    }
+
+    .empty-state {
+      padding: 60px 20px;
+      text-align: center;
+      color: var(--text-dim);
+    }
+    .empty-state svg { display: block; margin: 0 auto 16px; opacity: .3; }
+    .empty-state p { font-size: 14px; }
+
+    .error-banner {
+      background: rgba(248,113,113,.1);
+      border: 1px solid rgba(248,113,113,.3);
+      border-radius: var(--radius);
+      color: var(--red);
+      padding: 16px 20px;
+      font-size: 14px;
+      display: flex; gap: 10px; align-items: center;
+    }
+
+    /* ─── How It Works ──────────────────────────────────────── */
+    .how-section {
+      padding: 0 20px 64px;
+    }
+    .how-inner {
+      max-width: 960px; margin: 0 auto;
+    }
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .how-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      transition: border-color .2s;
+    }
+    .how-card:hover { border-color: var(--border); }
+    .how-step {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px;
+      background: var(--green-light);
+      border: 1px solid rgba(34,197,94,.25);
+      border-radius: 10px;
+      color: var(--green);
+      font-size: 18px;
+      margin-bottom: 14px;
+    }
+    .how-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .how-card p { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+
+    /* ─── Footer ────────────────────────────────────────────── */
+    footer {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      padding: 28px 20px;
+      text-align: center;
+    }
+    .footer-inner { max-width: 960px; margin: 0 auto; }
+    .footer-brand {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-weight: 700; font-size: 15px;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .footer-brand .leaf-sm {
+      width: 24px; height: 24px;
+      background: var(--green);
+      border-radius: 6px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 13px;
+    }
+    footer p {
+      font-size: 12px;
+      color: var(--text-dim);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+    footer .disclaimer {
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    /* ─── Responsive ────────────────────────────────────────── */
+    @media (max-width: 680px) {
+      .topnav-links { display: none; }
+      .hamburger { display: flex; }
+
+      .hero { padding: 40px 16px 36px; }
+
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+
+      .filter-toggle-btn { display: inline-flex; }
+      .nbhd-filter-wrap.collapsed { display: none; }
+
+      th, td { padding: 10px 10px; }
+      .product-name { max-width: 160px; }
+
+      thead { top: 56px; }
+
+      .how-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 400px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .stat-value { font-size: 22px; }
+    }
+
+    /* ─── Mobile nav menu ───────────────────────────────────── */
+    .mobile-menu {
+      display: none;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 16px 12px;
+      flex-direction: column; gap: 2px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 14px; font-weight: 500;
+      color: var(--text-muted);
+    }
+    .mobile-menu a:hover { background: var(--bg); color: var(--text); text-decoration: none; }
+
+    /* ─── Scroll-to-top ─────────────────────────────────────── */
+    .back-to-top {
+      position: fixed; bottom: 24px; right: 20px;
+      background: var(--green); color: #000;
+      width: 40px; height: 40px; border-radius: 50%;
+      border: none; cursor: pointer;
+      display: none; align-items: center; justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 4px 14px rgba(34,197,94,.4);
+      transition: transform .15s, opacity .2s;
+      z-index: 50;
+    }
+    .back-to-top.visible { display: flex; }
+    .back-to-top:hover { transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+
+<!-- Loading overlay -->
+<div id="loading-overlay" role="status" aria-live="polite">
+  <div class="spinner"></div>
+  <p class="loading-text">Loading dispensary data&hellip;</p>
+</div>
+
+<!-- Top nav -->
+<nav class="topnav" role="navigation" aria-label="Main navigation">
+  <a class="topnav-brand" href="#">
+    <span class="leaf" aria-hidden="true">🌿</span>
+    NYC Weed Prices
+  </a>
+  <div class="topnav-links">
+    <a href="#prices">Prices</a>
+    <a href="#how-it-works">How It Works</a>
+  </div>
+  <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu" aria-expanded="false">
+    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <line x1="3" y1="6"  x2="19" y2="6"/>
+      <line x1="3" y1="11" x2="19" y2="11"/>
+      <line x1="3" y1="16" x2="19" y2="16"/>
+    </svg>
+  </button>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu" role="menu">
+  <a href="#prices" onclick="closeMobileMenu()">Prices</a>
+  <a href="#how-it-works" onclick="closeMobileMenu()">How It Works</a>
+</div>
+
+<!-- Hero -->
+<header class="hero" role="banner">
+  <div class="hero-badge">&#127807; Live NYC data</div>
+  <h1>Find the Cheapest Weed in NYC</h1>
+  <p>Real-time flower price comparisons across Manhattan dispensaries — sorted by price, updated daily.</p>
+  <a class="hero-cta" href="#prices">Compare Prices Now ↓</a>
+  <p class="hero-updated" id="lastUpdated">Loading&hellip;</p>
+</header>
+
+<!-- Stats -->
+<section class="stats-section" aria-label="Summary statistics">
+  <div class="stats-grid" id="statsGrid">
+    <!-- injected by JS -->
+  </div>
+</section>
+
+<!-- Price Table -->
+<section class="main-section" id="prices" aria-label="Dispensary prices">
+  <div class="section-inner">
+    <h2 class="section-title"><span class="dot" aria-hidden="true"></span>Live Price Board</h2>
+
+    <!-- Filter bar -->
+    <div class="filter-bar" role="search">
+      <div class="search-box">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="7" cy="7" r="5"/><line x1="10.5" y1="10.5" x2="14" y2="14"/>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Search store or product&hellip;" aria-label="Search dispensary or product" oninput="renderTable()">
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">Size:</span>
+        <div id="sizeFilter" style="display:flex;gap:6px;flex-wrap:wrap;">
+          <button class="pill active" data-size="all"   onclick="setSize(this)">All</button>
+          <button class="pill"        data-size="1 oz"  onclick="setSize(this)">1 oz</button>
+          <button class="pill"        data-size="1/2 oz" onclick="setSize(this)">&#189; oz</button>
+        </div>
+      </div>
+
+      <div class="filter-group" id="nbhdGroup" style="display:none;">
+        <span class="filter-label">Area:</span>
+        <button class="filter-toggle-btn" id="nbhdToggle" onclick="toggleNbhdFilter()" aria-expanded="false">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,4 6,8 10,4"/></svg>
+          Neighborhoods
+        </button>
+        <div class="nbhd-filter-wrap collapsed" id="nbhdFilter"></div>
+      </div>
+
+      <span class="filter-meta" id="filterMeta"></span>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrap" role="region" aria-label="Price table" aria-live="polite">
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th onclick="sortCol('store')"  id="th-store" scope="col">Store</th>
+              <th onclick="sortCol('size')"   id="th-size"  scope="col">Size</th>
+              <th onclick="sortCol('price')"  id="th-price" scope="col" class="sorted-asc">Price</th>
+              <th scope="col">Product</th>
+            </tr>
+          </thead>
+          <tbody id="priceBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="how-section" id="how-it-works" aria-label="How it works">
+  <div class="how-inner">
+    <h2 class="section-title"><span class="dot" aria-hidden="true"></span>How It Works</h2>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-step" aria-hidden="true">&#128269;</div>
+        <h3>Automated Scraping</h3>
+        <p>Our scraper visits licensed NYC dispensary menus daily and pulls live flower product listings directly from their storefronts.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-step" aria-hidden="true">&#128200;</div>
+        <h3>Price Extraction</h3>
+        <p>We identify 1&nbsp;oz and &frac12;&nbsp;oz flower options, extract the price, and normalize listings across different menu platforms.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-step" aria-hidden="true">&#9889;</div>
+        <h3>Instant Comparison</h3>
+        <p>All prices are sorted cheapest-first so you can immediately see which dispensary has the best deal for your preferred quantity.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-step" aria-hidden="true">&#128204;</div>
+        <h3>Manhattan Only</h3>
+        <p>We focus exclusively on licensed dispensaries in Manhattan, NYC, ensuring all listed stores are legal, regulated, and verifiable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="leaf-sm" aria-hidden="true">🌿</span>
+      NYC Weed Prices
+    </div>
+    <p>Comparing flower prices across Manhattan dispensaries so you don&rsquo;t have to.</p>
+    <p class="disclaimer">Data updated daily. Prices may vary. Always verify before visiting. This site is for informational purposes only and is not affiliated with any dispensary. Must be 21+ to purchase cannabis in New York.</p>
+  </div>
+</footer>
+
+<!-- Back to top -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">&#8679;</button>
+
+<script>
+'use strict';
+
+/* ─── State ──────────────────────────────────────── */
+let allData       = [];
+let activeSizeFilter = 'all';
+let activeNbhd    = 'all';
+let sortKey       = 'price';
+let sortDir       = 'asc';
+let bestOzPrice   = Infinity;
+let bestHalfPrice = Infinity;
+
+/* ─── Helpers ────────────────────────────────────── */
+function esc(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function fmt(price) {
+  return '$' + price.toFixed(2).replace(/\.00$/, '');
+}
+
+function relativeTime(iso) {
+  if (!iso) return null;
+  const diff = Date.now() - new Date(iso).getTime();
+  const mins = Math.round(diff / 60000);
+  if (mins < 2)   return 'just now';
+  if (mins < 60)  return mins + ' minutes ago';
+  const hrs = Math.round(mins / 60);
+  if (hrs < 24)   return hrs + ' hour' + (hrs !== 1 ? 's' : '') + ' ago';
+  const days = Math.round(hrs / 24);
+  return days + ' day' + (days !== 1 ? 's' : '') + ' ago';
+}
+
+/* ─── Filters ────────────────────────────────────── */
+function setSize(el) {
+  document.querySelectorAll('#sizeFilter .pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  activeSizeFilter = el.dataset.size;
+  renderTable();
+}
+
+function setNbhd(el) {
+  document.querySelectorAll('#nbhdFilter .pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  activeNbhd = el.dataset.nbhd;
+  renderTable();
+}
+
+function toggleNbhdFilter() {
+  const wrap = document.getElementById('nbhdFilter');
+  const btn  = document.getElementById('nbhdToggle');
+  const open = wrap.classList.toggle('collapsed') === false;
+  btn.setAttribute('aria-expanded', String(!open));
+  // rotate chevron
+  btn.querySelector('svg polyline').setAttribute('points', open ? '2,8 6,4 10,8' : '2,4 6,8 10,4');
+}
+
+/* ─── Sort ───────────────────────────────────────── */
+function sortCol(key) {
+  if (sortKey === key) {
+    sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+  } else {
+    sortKey = key;
+    sortDir = key === 'price' ? 'asc' : 'asc';
+  }
+  updateSortHeaders();
+  renderTable();
+}
+
+function updateSortHeaders() {
+  ['store','size','price'].forEach(k => {
+    const th = document.getElementById('th-' + k);
+    if (!th) return;
+    th.classList.remove('sorted-asc','sorted-desc');
+    if (sortKey === k) th.classList.add('sorted-' + sortDir);
+  });
+}
+
+/* ─── Build rows ─────────────────────────────────── */
+function buildRows() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  const rows = [];
+
+  for (const d of allData) {
+    const listings = [
+      ...(d.ounceListings     || []),
+      ...(d.halfOunceListings || [])
+    ];
+    for (const l of listings) {
+      if (activeSizeFilter !== 'all' && l.size !== activeSizeFilter) continue;
+      if (activeNbhd       !== 'all' && d.neighborhood !== activeNbhd) continue;
+      if (q) {
+        const haystack = [d.name, d.neighborhood, l.product, d.address].join(' ').toLowerCase();
+        if (!haystack.includes(q)) continue;
+      }
+      rows.push({
+        store:        d.name,
+        neighborhood: d.neighborhood || '',
+        address:      d.address      || '',
+        size:         l.size,
+        price:        l.price,
+        product:      l.product || ''
+      });
+    }
+  }
+
+  rows.sort((a, b) => {
+    let cmp = 0;
+    if      (sortKey === 'price') cmp = a.price - b.price;
+    else if (sortKey === 'store') cmp = a.store.localeCompare(b.store);
+    else if (sortKey === 'size')  cmp = a.size.localeCompare(b.size) || a.price - b.price;
+    return sortDir === 'asc' ? cmp : -cmp;
+  });
+
+  return rows;
+}
+
+/* ─── Render table ───────────────────────────────── */
+function renderTable() {
+  const rows  = buildRows();
+  const tbody = document.getElementById('priceBody');
+  const meta  = document.getElementById('filterMeta');
+
+  meta.innerHTML = '<strong>' + rows.length + '</strong> listing' + (rows.length !== 1 ? 's' : '');
+
+  if (!rows.length) {
+    tbody.innerHTML = `
+      <tr><td colspan="4">
+        <div class="empty-state">
+          <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <circle cx="20" cy="20" r="17"/>
+            <path d="M13 27c1.8-3 4.5-5 7-5s5.2 2 7 5"/>
+            <circle cx="15" cy="16" r="2" fill="currentColor"/>
+            <circle cx="25" cy="16" r="2" fill="currentColor"/>
+          </svg>
+          <p>No listings match your filters.</p>
+        </div>
+      </td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = rows.map(r => {
+    const isOz       = r.size === '1 oz';
+    const isBestOz   = isOz      && r.price === bestOzPrice;
+    const isBestHalf = !isOz     && r.price === bestHalfPrice;
+    const rowCls     = isBestOz ? 'best-oz' : isBestHalf ? 'best-half' : '';
+
+    const sizeTag = isOz
+      ? '<span class="size-tag tag-oz">1 oz</span>'
+      : '<span class="size-tag tag-half">&frac12; oz</span>';
+
+    const bestBadge = (isBestOz || isBestHalf)
+      ? '<span class="best-badge">Best deal</span>'
+      : '';
+
+    return `<tr class="${rowCls}">
+      <td>
+        <div class="store-name">${esc(r.store)}</div>
+        <div class="store-nbhd">${esc(r.neighborhood)}</div>
+      </td>
+      <td>${sizeTag}</td>
+      <td class="price">${fmt(r.price)}</td>
+      <td class="product-name">${esc(r.product)}${bestBadge}</td>
+    </tr>`;
+  }).join('');
+}
+
+/* ─── Stats cards ────────────────────────────────── */
+function renderStats() {
+  const okStores  = allData.filter(d => d.status === 'ok');
+  const allOz     = allData.flatMap(d => d.ounceListings     || []);
+  const allHalf   = allData.flatMap(d => d.halfOunceListings || []);
+  const total     = allOz.length + allHalf.length;
+
+  bestOzPrice   = allOz.length   ? Math.min(...allOz.map(l => l.price))   : Infinity;
+  bestHalfPrice = allHalf.length ? Math.min(...allHalf.map(l => l.price)) : Infinity;
+
+  const cheapOzStore   = allOz.length   ? allData.find(d => (d.ounceListings     || []).some(l => l.price === bestOzPrice))   : null;
+  const cheapHalfStore = allHalf.length ? allData.find(d => (d.halfOunceListings || []).some(l => l.price === bestHalfPrice)) : null;
+
+  const cards = [
+    {
+      label:   'Stores Tracked',
+      value:   allData.length,
+      sub:     okStores.length + ' with live prices',
+      accent:  'var(--green)',
+    },
+    {
+      label:   'Total Listings',
+      value:   total,
+      sub:     allOz.length + ' oz &middot; ' + allHalf.length + ' half-oz',
+      accent:  'var(--blue)',
+    },
+    ...(bestOzPrice < Infinity ? [{
+      label:   'Cheapest 1 oz',
+      value:   fmt(bestOzPrice),
+      sub:     esc(cheapOzStore?.name || ''),
+      accent:  'var(--green)',
+    }] : []),
+    ...(bestHalfPrice < Infinity ? [{
+      label:   'Cheapest &frac12; oz',
+      value:   fmt(bestHalfPrice),
+      sub:     esc(cheapHalfStore?.name || ''),
+      accent:  'var(--purple)',
+    }] : []),
+  ];
+
+  document.getElementById('statsGrid').innerHTML = cards.map(c => `
+    <div class="stat-card" style="--accent-color:${c.accent}">
+      <div class="stat-label">${c.label}</div>
+      <div class="stat-value">${c.value}</div>
+      <div class="stat-sub">${c.sub}</div>
+    </div>`).join('');
+}
+
+/* ─── Neighborhood filter ────────────────────────── */
+function buildNbhdFilter() {
+  const hoods = [...new Set(
+    allData
+      .filter(d => d.status === 'ok' && d.neighborhood)
+      .map(d => d.neighborhood)
+  )].sort();
+
+  if (!hoods.length) return;
+
+  const group = document.getElementById('nbhdGroup');
+  group.style.display = 'flex';
+
+  document.getElementById('nbhdFilter').innerHTML = [
+    `<button class="pill active" data-nbhd="all" onclick="setNbhd(this)">All</button>`,
+    ...hoods.map(h => `<button class="pill" data-nbhd="${esc(h)}" onclick="setNbhd(this)">${esc(h)}</button>`)
+  ].join('');
+}
+
+/* ─── Last updated ───────────────────────────────── */
+function renderLastUpdated() {
+  const el = document.getElementById('lastUpdated');
+
+  // Try scrapedAt field from first entry that has it
+  const ts = allData.find(d => d.scrapedAt)?.scrapedAt;
+  if (ts) {
+    const rel = relativeTime(ts);
+    const abs = new Date(ts).toLocaleString('en-US', { month:'short', day:'numeric', hour:'numeric', minute:'2-digit' });
+    el.innerHTML = `Last updated: <span>${rel}</span> &middot; ${abs}`;
+  } else {
+    el.innerHTML = `Data scraped from live dispensary menus &mdash; updated daily`;
+  }
+}
+
+/* ─── Bootstrap ──────────────────────────────────── */
+function hideLoader() {
+  const overlay = document.getElementById('loading-overlay');
+  overlay.classList.add('hidden');
+  setTimeout(() => overlay.remove(), 400);
+}
+
+fetch('/api/data')
+  .then(r => {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  })
+  .then(json => {
+    if (json.error) throw new Error(json.error);
+
+    allData = Array.isArray(json) ? json : [];
+
+    renderStats();
+    buildNbhdFilter();
+    renderLastUpdated();
+    renderTable();
+    hideLoader();
+  })
+  .catch(err => {
+    hideLoader();
+    const main = document.querySelector('.main-section .section-inner');
+    if (main) {
+      main.insertAdjacentHTML('afterbegin', `
+        <div class="error-banner" role="alert">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="10" cy="10" r="9"/>
+            <line x1="10" y1="6" x2="10" y2="11"/>
+            <circle cx="10" cy="14" r=".5" fill="currentColor"/>
+          </svg>
+          Unable to load price data. Make sure the server is running and the scraper has been run.
+          <small style="display:block;margin-top:4px;opacity:.7">${esc(err.message)}</small>
+        </div>`);
+    }
+    document.getElementById('lastUpdated').textContent = 'Data unavailable';
+    document.getElementById('statsGrid').innerHTML = '';
+  });
+
+/* ─── Hamburger ──────────────────────────────────── */
+document.getElementById('hamburgerBtn').addEventListener('click', function() {
+  const menu = document.getElementById('mobileMenu');
+  const open = menu.classList.toggle('open');
+  this.setAttribute('aria-expanded', String(open));
+});
+
+function closeMobileMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.getElementById('hamburgerBtn').setAttribute('aria-expanded', 'false');
+}
+
+/* ─── Back to top ────────────────────────────────── */
+window.addEventListener('scroll', function() {
+  const btn = document.getElementById('backToTop');
+  btn.classList.toggle('visible', window.scrollY > 400);
+}, { passive: true });
+</script>
+
+</body>
+</html>

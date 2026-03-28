@@ -1,0 +1,704 @@
+[
+  {
+    "name": "Housing Works Cannabis Co",
+    "address": "750 Broadway",
+    "neighborhood": "NoHo",
+    "menuUrlOverride": "https://hwcannabis.co/menu/broadway/categories/flower/",
+    "dealsUrlOverride": null,
+    "sourceNote": "Official Blaze storefront",
+    "menuUrl": "https://hwcannabis.co/menu/broadway/categories/flower/",
+    "dealsUrl": null,
+    "status": "ok",
+    "ounceListings": [],
+    "halfOunceListings": [
+      {
+        "size": "1/2 oz",
+        "price": 100,
+        "line": "14.0 grams",
+        "product": "ITHACA CULTIVATED | SOUR DIESEL - 14G - FLOWER"
+      },
+      {
+        "size": "1/2 oz",
+        "price": 100,
+        "line": "14.0 grams",
+        "product": "BACK HOME CANNABIS COMPANY | SUPER LEMON HAZE - 14G FLOWER"
+      },
+      {
+        "size": "1/2 oz",
+        "price": 100,
+        "line": "14.0 grams",
+        "product": "BACK HOME CANNABIS COMPANY | JACK HERER - 14G FLOWER"
+      },
+      {
+        "size": "1/2 oz",
+        "price": 100,
+        "line": "14.0 grams",
+        "product": "ITHACA CULTIVATED | SPRITZER - 14G - FLOWER"
+      }
+    ],
+    "deals": [],
+    "error": null,
+    "totalProducts": 4,
+    "flowerProducts": 4,
+    "provider": "blaze",
+    "cheapestOunce": null,
+    "cheapestHalfOunce": {
+      "size": "1/2 oz",
+      "price": 100,
+      "line": "14.0 grams",
+      "product": "ITHACA CULTIVATED | SOUR DIESEL - 14G - FLOWER"
+    }
+  },
+  {
+    "name": "Smacked Village",
+    "address": "99 MacDougal St",
+    "neighborhood": "Greenwich Village",
+    "menuUrlOverride": "https://getsmacked.online/categories/flower/",
+    "dealsUrlOverride": null,
+    "sourceNote": "Joint/Surfside storefront – NOTE: store is actually at 144 Bleecker St per official site; address in this file may be stale",
+    "menuUrl": "https://getsmacked.online/categories/flower/",
+    "dealsUrl": null,
+    "status": "ok",
+    "ounceListings": [
+      {
+        "size": "1 oz",
+        "price": 125,
+        "line": "$125.00/28g",
+        "product": "Smoakland - Sour Diesel - Flower"
+      },
+      {
+        "size": "1 oz",
+        "price": 181,
+        "line": "$181.00/28g",
+        "product": "Only a few left in stock! Grocery - Lucky Charms - Flower"
+      }
+    ],
+    "halfOunceListings": [
+      {
+        "size": "1/2 oz",
+        "price": 70,
+        "line": "$70.00/14g",
+        "product": "Only a few left in stock! Dumbo Electric - Super Lemon Haze - Infused Pre-Ground-Flower"
+      },
+      {
+        "size": "1/2 oz",
+        "price": 102,
+        "line": "$102.00/14g",
+        "product": "Indica Hybrid 1937 - Pink Passionfruit - Flower"
+      }
+    ],
+    "deals": [],
+    "error": null,
+    "totalProducts": 5,
+    "flowerProducts": 8,
+    "provider": "generic",
+    "cheapestOunce": {
+      "size": "1 oz",
+      "price": 125,
+      "line": "$125.00/28g",
+      "product": "Smoakland - Sour Diesel - Flower"
+    },
+    "cheapestHalfOunce": {
+      "size": "1/2 oz",
+      "price": 70,
+      "line": "$70.00/14g",
+      "product": "Only a few left in stock! Dumbo Electric - Super Lemon Haze - Infused Pre-Ground-Flower"
+    }
+  },
+  {
+    "name": "The Travel Agency",
+    "address": "33 Christopher St",
+    "neighborhood": "West Village",
+    "menuUrlOverride": "https://www.thetravelagency.co/flower/",
+    "dealsUrlOverride": null,
+    "sourceNote": "Official Blaze storefront",
+    "menuUrl": "https://www.thetravelagency.co/flower/",
+    "dealsUrl": null,
+    "status": "ok",
+    "ounceListings": [],
+    "halfOunceListings": [
+      {
+        "size": "1/2 oz",
+        "price": 120,
+        "line": "$120.00 | 1/2oz",
+        "product": "Terp Poison | Lift"
+      },
+      {
+        "size": "1/2 oz",
+        "price": 110,
+        "line": "$110.00 | 1/2oz",
+        "product": "FIND. Garlic Patties"
+      },
+      {
+        "size": "1/2 oz",
+        "price": 132,
+        "line": "$132.00 | 1/2oz",
+        "product": "GRASSROOTS Titan Express X Dark Heart Genetics"
+      },
+      {
+        "size": "1/2 oz",
+        "price": 100,
+        "line": "$100.00 | 1/2oz",
+        "product": "Kosher Kush INDICA HYBRID"
+      }
+    ],
+    "deals": [],
+    "error": null,
+    "totalProducts": 4,
+    "flowerProducts": 4,
+    "provider": "blaze",
+    "cheapestOunce": null,
+    "cheapestHalfOunce": {
+      "size": "1/2 oz",
+      "price": 100,
+      "line": "$100.00 | 1/2oz",
+      "product": "Kosher Kush INDICA HYBRID"
+    }
+  },
+  {
+    "name": "Dazed",
+    "address": "287 Hudson St",
+    "neighborhood": "Hudson Square",
+    "menuUrlOverride": null,
+    "dealsUrlOverride": null,
+    "sourceNote": "Address mismatch: Dazed NYC only has 33 Union Sq W location confirmed online; no 287 Hudson St location found – may be wrong store or closed",
+    "menuUrl": null,
+    "dealsUrl": null,
+    "status": "skipped",
+    "ounceListings": [],
+    "halfOunceListings": [],
+    "deals": [],
+    "error": "No confirmed menu URL configured.",
+    "totalProducts": 0,
+    "flowerProducts": 0,
+    "provider": "unknown",
+    "cheapestOunce": null,
+    "cheapestHalfOunce": null
+  },
+  {
+    "name": "The Alchemy (Flatiron)",
+    "address": "22 W 23rd St",
+    "neighborhood": "Flatiron",
+    "menuUrlOverride": "https://www.thealchemy.nyc/flatiron/shop-flatiron?dtche%5Bcategory%5D=flower",
+    "dealsUrlOverride": null,
+    "sourceNote": "Dutchie embed on official site (slug: the-alchemy-flatiron) – NOTE: official address is 12 W 18th St, not 22 W 23rd St",
+    "menuUrl": "https://www.thealchemy.nyc/flatiron/shop-flatiron?dtche%5Bcategory%5D=flower",
+    "dealsUrl": null,
+    "status": "no_target_sizes",
+    "ounceListings": [],
+    "halfOunceListings": [],
+    "deals": [],
+    "error": "Menu loaded, but no 1 oz or 1/2 oz flower listings were found. Flower products seen: 0.",
+    "totalProducts": 0,
+    "flowerProducts": 0,
+    "provider": "generic",
+    "cheapestOunce": null,
+    "cheapestHalfOunce": null
+  },
+  {
+    "name": "The Alchemy (Chelsea)",
+    "address": "254 W 29th St",
+    "neighborhood": "Chelsea",
+    "menuUrlOverride": "https://www.thealchemy.nyc/shop?dtche%5Bcategory%5D=flower",
+    "dealsUrlOverride": null,
+    "sourceNote": "Dutchie embed on official site (slug: blazinup) – NOTE: official address is 302 8th Ave, not 254 W 29th St",
+    "menuUrl": "https://www.thealchemy.nyc/shop?dtche%5Bcategory%5D=flower",
+    "dealsUrl": null,
+    "status": "no_target_sizes",
+    "ounceListings": [],
+    "halfOunceListings": [],
+    "deals": [],
+    "error": "Menu loaded, but no 1 oz or 1/2 oz flower listings were found. Flower products seen: 0.",
+    "totalProducts": 0,
+    "flowerProducts": 0,
+    "provider": "generic",
+    "cheapestOunce": null,
+    "cheapestHalfOunce": null
+  },
+  {
+    "name": "Stoops NYC",
+    "address": "182 5th Ave",
+    "neighborhood": "Flatiron",
+    "leaflySlug": "stoopsnyc",
+    "menuUrl": "https://www.leafly.com/dispensary-info/stoopsnyc/menu?product_category[]=Flower",
+    "dealsUrl": "https://www.leafly.com/dispensary-info/stoopsnyc/deals",
+    "status": "ok",
+    "ounceListings": [
+      {
+        "size": "1 oz",
+        "price": 220,
+        "line": "Rythm | Granny Candy | 28g Flower | Sativa",
+        "product": "Rythm | Granny Candy | 28g Flower | Sativa"
+      },
+      {
+        "size": "1 oz",
+        "price": 220,
+        "line": "Rythm | Taffy Twist | 28g Flower | Indica Dominant",
+        "product": "Rythm | Taffy Twist | 28g Flower | Indica Dominant"
+      },
+      {
+        "size": "1 oz",
+        "price": 220,
+        "line": "Rythm | Creamsicle Sunset | 28g Flower | Hybrid",
+        "product": "Rythm | Creamsicle Sunset | 28g Flower | Hybrid"
+      },
+      {
+        "size": "1 oz",
+        "price": 220,
+        "line": "Rythm | Bananaconda | 28g Flower | Hybrid",
+        "product": "Rythm | Bananaconda | 28g Flower | Hybrid"
+      },
+      {
+        "size": "1 oz",
+        "price": 220,
+        "line": "Rythm | 95 Cookies | 28g Flower | Sativa",
+        "product": "Rythm | 95 Cookies | 28g Flower | Sativa"
+      },
+      {
+        "size": "1 oz",
+        "price": 220,
+        "line": "Rythm | Jack's Delight | 28g Flower | Sativa",
+        "product": "Rythm | Jack's Delight | 28g Flower | Sativa"
+      },
+      {
+        "size": "1 oz",
+        "price": 160,
+        "line": "Grocery | Trop Cherry | 28g Flower | Sativa",
+        "product": "Grocery | Trop Cherry | 28g Flower | Sativa"
+      },
+      {
+        "size": "1 oz",
+        "price": 160,
+        "line": "Grocery | Soap X Purple Punch | Hybrid | 28g Flower",
+        "product": "Grocery | Soap X Purple Punch | Hybrid | 28g Flower"
+      },
+      {
+        "size": "1 oz",
+        "price": 160,
+        "line": "Grocery | Blue Dream | Sativa | 28g Flower",
+        "product": "Grocery | Blue Dream | Sativa | 28g Flower"
+      },
+      {
+        "size": "1 oz",
+        "price": 160,
+        "line": "Grocery | Grape Candy | Indica | 28g Flower",
+        "product": "Grocery | Grape Candy | Indica | 28g Flower"
+      }
+    ],
+    "halfOunceListings": [
+      {
+        "size": "1/2 oz",
+        "price": 40,
+        "line": "Booty Shake | Do-Si-Do | 14g PreGround Flower | Indica",
+        "product": "Booty Shake | Do-Si-Do | 14g PreGround Flower | Indica"
+      },
+      {
+        "size": "1/2 oz",
+        "price": 60,
+        "line": "Dumbo Electric | Kiwi Lemon Cherry Gelato | 14g Pre-Ground Flower | Hybrid",
+        "product": "Dumbo Electric | Kiwi Lemon Cherry Gelato | 14g Pre-Ground Flower | Hybrid"
+      },
+      {
+        "size": "1/2 oz",
+        "price": 60,
+        "line": "Dumbo Electric | Hash Money | 14G Infused Pre Ground Flower | Hybrid |",
+        "product": "Dumbo Electric | Hash Money | 14G Infused Pre Ground Flower | Hybrid |"
+      },
+      {
+        "size": "1/2 oz",
+        "price": 90,
+        "line": "1937 | Private Reserve OG | 14g Mixed Flower | Indica",
+        "product": "1937 | Private Reserve OG | 14g Mixed Flower | Indica"
+      },
+      {
+        "size": "1/2 oz",
+        "price": 90,
+        "line": "1937 | Paztelito | 14g Mixed bud | Hybrid",
+        "product": "1937 | Paztelito | 14g Mixed bud | Hybrid"
+      },
+      {
+        "size": "1/2 oz",
+        "price": 90,
+        "line": "1937 | Mcruntz | 14g Mixed bud | Hybrid",
+        "product": "1937 | Mcruntz | 14g Mixed bud | Hybrid"
+      },
+      {
+        "size": "1/2 oz",
+        "price": 90,
+        "line": "1937 | Super Pure Runtz | 14g | Hybrid",
+        "product": "1937 | Super Pure Runtz | 14g | Hybrid"
+      }
+    ],
+    "deals": [
+      "10% off",
+      "10% Off Sticky Smalls Flower",
+      "Available daily until 3/30"
+    ],
+    "error": null,
+    "totalProducts": 68,
+    "flowerProducts": 17,
+    "provider": "leafly",
+    "cheapestOunce": {
+      "size": "1 oz",
+      "price": 160,
+      "line": "Grocery | Trop Cherry | 28g Flower | Sativa",
+      "product": "Grocery | Trop Cherry | 28g Flower | Sativa"
+    },
+    "cheapestHalfOunce": {
+      "size": "1/2 oz",
+      "price": 40,
+      "line": "Booty Shake | Do-Si-Do | 14g PreGround Flower | Indica",
+      "product": "Booty Shake | Do-Si-Do | 14g PreGround Flower | Indica"
+    }
+  },
+  {
+    "name": "Blue Forest Farms",
+    "address": "55 W 17th St",
+    "neighborhood": "Flatiron",
+    "menuUrlOverride": "https://shop.blueforestfarmsdispensary.com/",
+    "dealsUrlOverride": null,
+    "sourceNote": "Official WordPress shop – NOTE: official address appears to be 122 E 25th St, not 55 W 17th St; no direct flower-category URL available (503 on /flower/)",
+    "menuUrl": "https://shop.blueforestfarmsdispensary.com/",
+    "dealsUrl": null,
+    "status": "no_target_sizes",
+    "ounceListings": [],
+    "halfOunceListings": [],
+    "deals": [],
+    "error": "Menu loaded, but no 1 oz or 1/2 oz flower listings were found. Flower products seen: 0.",
+    "totalProducts": 0,
+    "flowerProducts": 0,
+    "provider": "generic",
+    "cheapestOunce": null,
+    "cheapestHalfOunce": null
+  },
+  {
+    "name": "Mighty Lucky",
+    "address": "234 W 14th St",
+    "neighborhood": "Chelsea",
+    "menuUrlOverride": "https://mighty-lucky.com/collections/all?dtche%5Bpath%5D=products&dtche%5Bcategory%5D=flower",
+    "dealsUrlOverride": null,
+    "sourceNote": "Dutchie-embedded Shopify storefront (mightylucky.myshopify.com) – NOTE: official address is 259 Bowery, not 234 W 14th St",
+    "menuUrl": "https://mighty-lucky.com/collections/all?dtche%5Bpath%5D=products&dtche%5Bcategory%5D=flower",
+    "dealsUrl": null,
+    "status": "no_target_sizes",
+    "ounceListings": [],
+    "halfOunceListings": [],
+    "deals": [],
+    "error": "Menu loaded, but no 1 oz or 1/2 oz flower listings were found. Flower products seen: 0.",
+    "totalProducts": 0,
+    "flowerProducts": 0,
+    "provider": "generic",
+    "cheapestOunce": null,
+    "cheapestHalfOunce": null
+  },
+  {
+    "name": "Gotham (Bowery)",
+    "address": "3 E 3rd St",
+    "neighborhood": "Bowery",
+    "menuUrlOverride": "https://gotham.nyc/menu/?category=flower&retailer=bowery",
+    "dealsUrlOverride": null,
+    "sourceNote": "Official location-specific flower menu",
+    "menuUrl": "https://gotham.nyc/menu/?category=flower&retailer=bowery",
+    "dealsUrl": null,
+    "status": "ok",
+    "ounceListings": [
+      {
+        "size": "1 oz",
+        "price": 160,
+        "line": "28g",
+        "product": "Alchemy Pure BLUE DREAM"
+      },
+      {
+        "size": "1 oz",
+        "price": 190,
+        "line": "28g",
+        "product": "RYTHM Indoor L'ORANGE"
+      }
+    ],
+    "halfOunceListings": [
+      {
+        "size": "1/2 oz",
+        "price": 100,
+        "line": "14g",
+        "product": "Stone Road Infused Ground NORTHERN LIGHTS"
+      },
+      {
+        "size": "1/2 oz",
+        "price": 100,
+        "line": "14g",
+        "product": "Stone Road Infused Ground MANGO SHERBET"
+      },
+      {
+        "size": "1/2 oz",
+        "price": 100,
+        "line": "14g",
+        "product": "Stone Road Infused Ground APPLE JACK"
+      },
+      {
+        "size": "1/2 oz",
+        "price": 100,
+        "line": "14g",
+        "product": "Stone Road Infused Ground RAINBOW POUND CAKE"
+      },
+      {
+        "size": "1/2 oz",
+        "price": 100,
+        "line": "14g",
+        "product": "Stone Road Infused Ground SWEET MAUI KUSH"
+      }
+    ],
+    "deals": [],
+    "error": null,
+    "totalProducts": 7,
+    "flowerProducts": 7,
+    "provider": "gotham",
+    "cheapestOunce": {
+      "size": "1 oz",
+      "price": 160,
+      "line": "28g",
+      "product": "Alchemy Pure BLUE DREAM"
+    },
+    "cheapestHalfOunce": {
+      "size": "1/2 oz",
+      "price": 100,
+      "line": "14g",
+      "product": "Stone Road Infused Ground NORTHERN LIGHTS"
+    }
+  },
+  {
+    "name": "Gotham (Chelsea)",
+    "address": "146 10th Ave",
+    "neighborhood": "Chelsea",
+    "menuUrlOverride": "https://gotham.nyc/menu/?category=flower&retailer=chelsea",
+    "dealsUrlOverride": null,
+    "sourceNote": "Official location-specific flower menu",
+    "menuUrl": "https://gotham.nyc/menu/?category=flower&retailer=chelsea",
+    "dealsUrl": null,
+    "status": "ok",
+    "ounceListings": [
+      {
+        "size": "1 oz",
+        "price": 200,
+        "line": "28g",
+        "product": "Rolling Green MANGO RUNTZ"
+      },
+      {
+        "size": "1 oz",
+        "price": 200,
+        "line": "28g",
+        "product": "Rolling Green COOKIE BURGER"
+      },
+      {
+        "size": "1 oz",
+        "price": 200,
+        "line": "28g",
+        "product": "Rolling Green EL CHIVO"
+      }
+    ],
+    "halfOunceListings": [],
+    "deals": [],
+    "error": null,
+    "totalProducts": 3,
+    "flowerProducts": 3,
+    "provider": "gotham",
+    "cheapestOunce": {
+      "size": "1 oz",
+      "price": 200,
+      "line": "28g",
+      "product": "Rolling Green MANGO RUNTZ"
+    },
+    "cheapestHalfOunce": null
+  },
+  {
+    "name": "New Amsterdam",
+    "address": "245 W 14th St",
+    "neighborhood": "Chelsea",
+    "menuUrlOverride": "https://shop.newamsterdam.nyc/products?store=245-w-14th-st",
+    "dealsUrlOverride": null,
+    "sourceNote": "Mosaic storefront",
+    "menuUrl": "https://shop.newamsterdam.nyc/products?store=245-w-14th-st",
+    "dealsUrl": null,
+    "status": "timeout",
+    "ounceListings": [],
+    "halfOunceListings": [],
+    "deals": [],
+    "error": "Scrape timed out after 30s",
+    "totalProducts": 0,
+    "flowerProducts": 0,
+    "provider": "unknown",
+    "cheapestOunce": null,
+    "cheapestHalfOunce": null
+  },
+  {
+    "name": "CONBUD",
+    "address": "100 Delancey St",
+    "neighborhood": "LES",
+    "menuUrlOverride": "https://conbud.com/stores/conbud-les/products/flower",
+    "dealsUrlOverride": null,
+    "sourceNote": "Official CONBUD storefront – weight filters scraped",
+    "menuUrl": "https://conbud.com/stores/conbud-les/products/flower",
+    "dealsUrl": null,
+    "status": "ok",
+    "ounceListings": [
+      {
+        "size": "1 oz",
+        "price": 160,
+        "line": "1 oz",
+        "product": "Grocery | Mixed Light Flower | 28 Gram | Blue Dream | Sativa"
+      },
+      {
+        "size": "1 oz",
+        "price": 115,
+        "line": "1 oz",
+        "product": "Munchkins | 28g Premium Smalls | Hybrid - The Soap"
+      },
+      {
+        "size": "1 oz",
+        "price": 175,
+        "line": "1 Ounce (7 Jars) For $175",
+        "product": "Bouket | 4g Flower Jar | Paztelito"
+      },
+      {
+        "size": "1 oz",
+        "price": 115,
+        "line": "1 oz",
+        "product": "Munchkins | 28g Premium Smalls | Sativa - Tangie"
+      },
+      {
+        "size": "1 oz",
+        "price": 115,
+        "line": "1 oz",
+        "product": "Munchkins | 28g Premium Smalls | Indica - Granddaddy Purp"
+      },
+      {
+        "size": "1 oz",
+        "price": 160,
+        "line": "1 oz",
+        "product": "Gypsy Weed | 1 Ounce Flower | Amnesia"
+      }
+    ],
+    "halfOunceListings": [
+      {
+        "size": "1/2 oz",
+        "price": 120,
+        "line": "1/2 oz",
+        "product": "Dank | 14g Flower | Amnesia Haze"
+      },
+      {
+        "size": "1/2 oz",
+        "price": 84,
+        "line": "Crunch Berries - Premium Flower - 14g - Hybrid",
+        "product": "Crunch Berries - Premium Flower - 14g - Hybrid"
+      },
+      {
+        "size": "1/2 oz",
+        "price": 84,
+        "line": "1/2 oz",
+        "product": "Crunch Berries - Premium Flower - 14g - Hybrid To The Moon"
+      },
+      {
+        "size": "1/2 oz",
+        "price": 120,
+        "line": "1/2 oz",
+        "product": "Dank | 14g Flower | Tropical Runtz"
+      }
+    ],
+    "deals": [],
+    "error": null,
+    "totalProducts": 10,
+    "flowerProducts": 10,
+    "provider": "conbud",
+    "cheapestOunce": {
+      "size": "1 oz",
+      "price": 115,
+      "line": "1 oz",
+      "product": "Munchkins | 28g Premium Smalls | Hybrid - The Soap"
+    },
+    "cheapestHalfOunce": {
+      "size": "1/2 oz",
+      "price": 84,
+      "line": "Crunch Berries - Premium Flower - 14g - Hybrid",
+      "product": "Crunch Berries - Premium Flower - 14g - Hybrid"
+    }
+  },
+  {
+    "name": "Green Genius",
+    "address": "131 W 28th St",
+    "neighborhood": "Chelsea",
+    "menuUrlOverride": "https://greengeniusnyc.com/shop/",
+    "dealsUrlOverride": null,
+    "sourceNote": "Official custom WordPress shop – NOTE: confirmed address is 214 3rd Ave (Gramercy), not 131 W 28th St; flower page at /flower/ returns 403",
+    "menuUrl": "https://greengeniusnyc.com/shop/",
+    "dealsUrl": null,
+    "status": "no_target_sizes",
+    "ounceListings": [],
+    "halfOunceListings": [],
+    "deals": [],
+    "error": "Menu loaded, but no 1 oz or 1/2 oz flower listings were found. Flower products seen: 0.",
+    "totalProducts": 1,
+    "flowerProducts": 0,
+    "provider": "generic",
+    "cheapestOunce": null,
+    "cheapestHalfOunce": null
+  },
+  {
+    "name": "VERDI",
+    "address": "205 W 28th St",
+    "neighborhood": "Chelsea",
+    "menuUrlOverride": null,
+    "dealsUrlOverride": null,
+    "sourceNote": "Weedmaps listing removed – business no longer found on Weedmaps",
+    "menuUrl": null,
+    "dealsUrl": null,
+    "status": "skipped",
+    "ounceListings": [],
+    "halfOunceListings": [],
+    "deals": [],
+    "error": "No confirmed menu URL configured.",
+    "totalProducts": 0,
+    "flowerProducts": 0,
+    "provider": "unknown",
+    "cheapestOunce": null,
+    "cheapestHalfOunce": null
+  },
+  {
+    "name": "KushKlub NYC",
+    "address": "119 W 25th St",
+    "neighborhood": "Chelsea",
+    "menuUrlOverride": "https://menu.kushklub.com/nyc",
+    "dealsUrlOverride": null,
+    "sourceNote": "Alternative menu URL (menu.kushklub.com) – shop.kushklub.com had cert issues; NYC location confirmed at 186 Orchard St per multiple sources; 119 W 25th may be stale",
+    "menuUrl": "https://menu.kushklub.com/nyc",
+    "dealsUrl": null,
+    "status": "no_target_sizes",
+    "ounceListings": [],
+    "halfOunceListings": [],
+    "deals": [],
+    "error": "Menu loaded, but no 1 oz or 1/2 oz flower listings were found. Flower products seen: 0.",
+    "totalProducts": 0,
+    "flowerProducts": 0,
+    "provider": "generic",
+    "cheapestOunce": null,
+    "cheapestHalfOunce": null
+  },
+  {
+    "name": "Smiley Exotics",
+    "address": "218 W 23rd St",
+    "neighborhood": "Chelsea",
+    "menuUrlOverride": "https://dutchie.com/dispensary/smiley-exotics/categories/flower",
+    "dealsUrlOverride": null,
+    "sourceNote": "Dutchie storefront (slug: smiley-exotics) – NOTE: official address is 201 E 30th St, not 218 W 23rd St; smileyexoticsny.com is live",
+    "menuUrl": "https://dutchie.com/dispensary/smiley-exotics/categories/flower",
+    "dealsUrl": null,
+    "status": "no_target_sizes",
+    "ounceListings": [],
+    "halfOunceListings": [],
+    "deals": [],
+    "error": "Menu loaded, but no 1 oz or 1/2 oz flower listings were found. Flower products seen: 0.",
+    "totalProducts": 0,
+    "flowerProducts": 0,
+    "provider": "generic",
+    "cheapestOunce": null,
+    "cheapestHalfOunce": null
+  }
+]
