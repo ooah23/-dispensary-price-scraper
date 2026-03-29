@@ -1,0 +1,23 @@
+{
+  "_comment": [
+    "HOW THIS WORKS:",
+    "  - Vercel hosts the static site (public/) and API (api/) for free.",
+    "  - The scraper still runs locally — Playwright cannot run in Vercel serverless.",
+    "  - Workflow: run scraper locally → commit output/dispensary-prices.json → git push → Vercel auto-redeploys in ~30 seconds.",
+    "  - To add nycweedprice.org: Vercel dashboard → Project Settings → Domains → add nycweedprice.org → follow DNS instructions.",
+    "  - The Cloudflare Tunnel setup can coexist with Vercel — use whichever you prefer.",
+    "    Vercel is better for reliability and uptime; Cloudflare Tunnel is fine for low traffic.",
+    "    If running both, point nycweedprice.org at Vercel and keep the tunnel as a local fallback."
+  ],
+  "version": 2,
+  "builds": [
+    { "src": "api/*.js", "use": "@vercel/node" },
+    { "src": "public/**", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/api/data",         "dest": "/api/data.js" },
+    { "src": "/api/health",       "dest": "/api/health.js" },
+    { "src": "/api/alert-signup", "dest": "/api/alert-signup.js" },
+    { "src": "/(.*)",             "dest": "/public/$1" }
+  ]
+}

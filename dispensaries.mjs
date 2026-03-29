@@ -5,48 +5,48 @@ export const dispensaries = [
     address: "750 Broadway",
     neighborhood: "NoHo",
     menuUrlOverride: "https://hwcannabis.co/menu/broadway/categories/flower/",
-    dealsUrlOverride: null,
+    dealsUrlOverride: "https://hwcannabis.co/menu/broadway/specials/",
     sourceNote: "Official Blaze storefront"
   },
   {
     name: "Smacked Village",
-    address: "99 MacDougal St",
+    address: "144 Bleecker St",
     neighborhood: "Greenwich Village",
     menuUrlOverride: "https://getsmacked.online/categories/flower/",
     dealsUrlOverride: null,
-    sourceNote: "Joint/Surfside storefront – NOTE: store is actually at 144 Bleecker St per official site; address in this file may be stale"
+    sourceNote: "Joint/Surfside storefront"
   },
   {
     name: "The Travel Agency",
-    address: "33 Christopher St",
-    neighborhood: "West Village",
+    address: "835 Broadway",
+    neighborhood: "Union Square",
     menuUrlOverride: "https://www.thetravelagency.co/flower/",
-    dealsUrlOverride: null,
-    sourceNote: "Official Blaze storefront"
+    dealsUrlOverride: "https://www.thetravelagency.co/specials/",
+    sourceNote: "Official Blaze storefront – chain-wide menu"
   },
   {
     name: "Dazed",
-    address: "287 Hudson St",
-    neighborhood: "Hudson Square",
-    menuUrlOverride: null,
-    dealsUrlOverride: null,
-    sourceNote: "Address mismatch: Dazed NYC only has 33 Union Sq W location confirmed online; no 287 Hudson St location found – may be wrong store or closed"
+    address: "33 Union Square W",
+    neighborhood: "Union Square",
+    menuUrlOverride: "https://dazed.fun/menu/union-square-nyc-ny/categories/flower/",
+    dealsUrlOverride: "https://dazed.fun/menu/union-square-nyc-ny/specials/",
+    sourceNote: "Joint eCommerce storefront (client-side route – base menu: /menu/union-square-nyc-ny/)"
   },
   {
     name: "The Alchemy (Flatiron)",
-    address: "22 W 23rd St",
+    address: "12 W 18th St",
     neighborhood: "Flatiron",
     menuUrlOverride: "https://www.thealchemy.nyc/flatiron/shop-flatiron?dtche%5Bcategory%5D=flower",
     dealsUrlOverride: null,
-    sourceNote: "Dutchie embed on official site (slug: the-alchemy-flatiron) – NOTE: official address is 12 W 18th St, not 22 W 23rd St"
+    sourceNote: "Dutchie embed on official site (slug: the-alchemy-flatiron)"
   },
   {
     name: "The Alchemy (Chelsea)",
-    address: "254 W 29th St",
+    address: "302 8th Ave",
     neighborhood: "Chelsea",
     menuUrlOverride: "https://www.thealchemy.nyc/shop?dtche%5Bcategory%5D=flower",
     dealsUrlOverride: null,
-    sourceNote: "Dutchie embed on official site (slug: blazinup) – NOTE: official address is 302 8th Ave, not 254 W 29th St"
+    sourceNote: "Dutchie embed on official site (slug: blazinup)"
   },
   {
     name: "Stoops NYC",
@@ -56,19 +56,19 @@ export const dispensaries = [
   },
   {
     name: "Blue Forest Farms",
-    address: "55 W 17th St",
-    neighborhood: "Flatiron",
-    menuUrlOverride: "https://shop.blueforestfarmsdispensary.com/",
+    address: "122 E 25th St",
+    neighborhood: "Gramercy",
+    menuUrlOverride: "https://shop.blueforestfarmsdispensary.com/shop-cannabis-flower/",
     dealsUrlOverride: null,
-    sourceNote: "Official WordPress shop – NOTE: official address appears to be 122 E 25th St, not 55 W 17th St; no direct flower-category URL available (503 on /flower/)"
+    sourceNote: "Custom WordPress/WooCommerce shop – flower category page"
   },
   {
     name: "Mighty Lucky",
-    address: "234 W 14th St",
-    neighborhood: "Chelsea",
-    menuUrlOverride: "https://mighty-lucky.com/collections/all?dtche%5Bpath%5D=products&dtche%5Bcategory%5D=flower",
+    address: "259 Bowery",
+    neighborhood: "Bowery",
+    menuUrlOverride: "https://weedmaps.com/dispensaries/mighty-lucky/menu",
     dealsUrlOverride: null,
-    sourceNote: "Dutchie-embedded Shopify storefront (mightylucky.myshopify.com) – NOTE: official address is 259 Bowery, not 234 W 14th St"
+    sourceNote: "Weedmaps menu (259 Bowery) – updated from legacy moonlight sub-path"
   },
 
   // ── Gotham – patched to official location-specific menus ────────────────────
@@ -94,52 +94,84 @@ export const dispensaries = [
     name: "New Amsterdam",
     address: "245 W 14th St",
     neighborhood: "Chelsea",
-    menuUrlOverride: "https://shop.newamsterdam.nyc/products?store=245-w-14th-st",
-    dealsUrlOverride: null,
-    sourceNote: "Mosaic storefront"
+    menuUrlOverride: "https://shop.newamsterdam.nyc/",
+    dealsUrlOverride: "https://shop.newamsterdam.nyc/specials/",
+    sourceNote: "Official Mosaic storefront (shop.newamsterdam.nyc)"
   },
 
-  // ── CONBUD – dedicated weight-filter extractor ───────────────────────────────
+  // ── CONBUD ───────────────────────────────────────────────────────────────────
   {
     name: "CONBUD",
-    address: "100 Delancey St",
+    address: "85 Delancey St",
     neighborhood: "LES",
     menuUrlOverride: "https://conbud.com/stores/conbud-les/products/flower",
-    dealsUrlOverride: null,
+    dealsUrlOverride: "https://conbud.com/stores/conbud-les/specials",
     sourceNote: "Official CONBUD storefront – weight filters scraped"
   },
 
-  // ── Weedmaps stores (mixed results) ─────────────────────────────────────────
+  // ── Other stores ─────────────────────────────────────────────────────────────
   {
     name: "Green Genius",
-    address: "131 W 28th St",
-    neighborhood: "Chelsea",
-    menuUrlOverride: "https://greengeniusnyc.com/shop/",
+    address: "214 3rd Ave",
+    neighborhood: "Gramercy",
+    menuUrlOverride: "https://greengeniusnyc.com/stores/green-genius-nyc/products/flower",
     dealsUrlOverride: null,
-    sourceNote: "Official custom WordPress shop – NOTE: confirmed address is 214 3rd Ave (Gramercy), not 131 W 28th St; flower page at /flower/ returns 403"
+    sourceNote: "Joint/Dutchie Plus SPA — joint extractor with body-text fallback"
   },
   {
     name: "VERDI",
-    address: "205 W 28th St",
+    address: "158 W 23rd St",
     neighborhood: "Chelsea",
-    menuUrlOverride: null,
-    dealsUrlOverride: null,
-    sourceNote: "Weedmaps listing removed – business no longer found on Weedmaps"
+    menuUrlOverride: "https://verdicannabis.com/stores/verdi/products/flower",
+    dealsUrlOverride: "https://verdicannabis.com/stores/verdi/specials",
+    sourceNote: "Joint eCommerce storefront (verdicannabis.com – blocks automated fetches with 403, but URL is Google-indexed as 'Cannabis Flower | Verdi - Chelsea')"
   },
   {
     name: "KushKlub NYC",
-    address: "119 W 25th St",
-    neighborhood: "Chelsea",
+    address: "186 Orchard St",
+    neighborhood: "LES",
     menuUrlOverride: "https://menu.kushklub.com/nyc",
     dealsUrlOverride: null,
-    sourceNote: "Alternative menu URL (menu.kushklub.com) – shop.kushklub.com had cert issues; NYC location confirmed at 186 Orchard St per multiple sources; 119 W 25th may be stale"
+    sourceNote: "Official menu URL"
   },
   {
     name: "Smiley Exotics",
-    address: "218 W 23rd St",
-    neighborhood: "Chelsea",
-    menuUrlOverride: "https://dutchie.com/dispensary/smiley-exotics/categories/flower",
+    address: "201 E 30th St",
+    neighborhood: "Kips Bay",
+    menuUrlOverride: "https://dutchie.com/embedded-menu/smiley-exotics",
     dealsUrlOverride: null,
-    sourceNote: "Dutchie storefront (slug: smiley-exotics) – NOTE: official address is 201 E 30th St, not 218 W 23rd St; smileyexoticsny.com is live"
+    sourceNote: "Dutchie storefront (slug: smiley-exotics) – /categories/flower suffix returns 404; root embed URL works"
+  },
+
+  // ── Expansion stores ─────────────────────────────────────────────────────────
+  {
+    name: "Housing Works Cannabis Co (NoMad)",
+    address: "846 6th Ave",
+    neighborhood: "NoMad",
+    leaflySlug: "housing-works-cannabis-co-nomad",
+    sourceNote: "Leafly storefront (slug: housing-works-cannabis-co-nomad) – Blaze menu not yet live for this location"
+  },
+  {
+    name: "Superfly",
+    address: "57 W 86th St",
+    neighborhood: "Upper West Side",
+    menuUrlOverride: "https://dutchie.com/embedded-menu/afny",
+    dealsUrlOverride: null,
+    sourceNote: "Dutchie storefront (slug: afny) – root embed URL, no /categories/flower suffix"
+  },
+  {
+    name: "Midnight Moon",
+    address: "1536 Amsterdam Ave",
+    neighborhood: "Washington Heights",
+    leaflySlug: "midnight-moon",
+    sourceNote: "Leafly storefront (slug: midnight-moon)"
+  },
+  {
+    name: "Terp Bros (Astoria)",
+    address: "36-10 Ditmars Blvd",
+    neighborhood: "Astoria, Queens",
+    menuUrlOverride: "https://dutchie.com/embedded-menu/terp-bros-astoria",
+    dealsUrlOverride: null,
+    sourceNote: "Dutchie storefront (slug: terp-bros-astoria) – root embed URL, first Queens location"
   }
 ];

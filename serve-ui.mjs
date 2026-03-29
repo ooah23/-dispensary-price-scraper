@@ -6,6 +6,35 @@ const PORT = process.env.PORT ?? 4173;
 const OUTPUT_DIR = path.resolve("output");
 const JSON_PATH = path.join(OUTPUT_DIR, "dispensary-prices.json");
 const PUBLIC_DIR = path.resolve("public");
+const LOGS_DIR = path.resolve("logs");
+const ANALYTICS_LOG = path.join(LOGS_DIR, "analytics.jsonl");
+const ALERTS_FILE = path.join(LOGS_DIR, "alert-signups.jsonl");
+
+// Ensure logs directory exists on startup
+await fs.mkdir(LOGS_DIR, { recursive: true });
+
+/**
+ * Log an API request to logs/analytics.jsonl.
+ * IP is truncated to first 3 octets (IPv4) for privacy.
+ */
+async function logRequest(req) {
+  try {
+    const rawIp = req.headers["x-forwarded-for"]?.split(",")[0].trim()
+      ?? req.socket?.remoteAddress
+      ?? "unknown";
+    // Keep only first 3 octets for IPv4 (e.g. 1.2.3.4 → 1.2.3.x)
+    const ip = rawIp.replace(/^(\d+\.\d+\.\d+)\.\d+$/, "$1.x");
+    const entry = JSON.stringify({
+      ts: new Date().toISOString(),
+      ip,
+      userAgent: req.headers["user-agent"] ?? "",
+      ref: req.headers["referer"] ?? req.headers["referrer"] ?? "",
+    });
+    await fs.appendFile(ANALYTICS_LOG, entry + "\n", "utf8");
+  } catch {
+    // Non-fatal — never let logging break the server
+  }
+}
 
 const MIME = {
   ".html": "text/html",
@@ -16,6 +45,8 @@ const MIME = {
   ".svg":  "image/svg+xml",
   ".ico":  "image/x-icon",
   ".json": "application/json",
+  ".xml":  "text/xml; charset=utf-8",
+  ".txt":  "text/plain; charset=utf-8",
 };
 
 const HTML = `<!DOCTYPE html>
@@ -408,9 +439,27 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // /api/alert-signup  (POST)
+  if (pathname === "/api/alert-signup" && req.method === "POST") {
+    setCorsHeaders(res);
+    try {
+      let body = "";
+      for await (const chunk of req) body += chunk;
+      const { email } = JSON.parse(body);
+      if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        const entry = JSON.stringify({ ts: new Date().toISOString(), email }) + "\n";
+        await fs.appendFile(ALERTS_FILE, entry, "utf8");
+      }
+    } catch { /* non-fatal */ }
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ ok: true }));
+    return;
+  }
+
   // /api/data
   if (pathname === "/api/data") {
     setCorsHeaders(res);
+    logRequest(req); // fire-and-forget analytics log
     try {
       const raw = await fs.readFile(JSON_PATH, "utf8");
       res.writeHead(200, { "Content-Type": "application/json", "Cache-Control": "public, max-age=300" });

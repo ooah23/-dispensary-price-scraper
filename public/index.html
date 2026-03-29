@@ -3,22 +3,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NYC Cannabis Price Tracker | Best Weed Deals in Manhattan</title>
-  <meta name="description" content="Compare weed prices across NYC dispensaries in real time. Find the cheapest ounce and half-ounce flower deals in Manhattan, updated daily.">
+  <title>NYC Cannabis Price Tracker | Cheapest Weed Deals in NYC</title>
+  <meta name="description" content="Compare real-time flower prices at licensed NYC dispensaries. Find the cheapest ounce, half-ounce, and eighth deals across Manhattan, Queens, and beyond. Updated daily.">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#0f172a">
+  <link rel="canonical" href="https://nycweedprice.org/">
+  <meta name="geo.region" content="US-NY">
+  <meta name="geo.placename" content="New York City">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="NYC Cannabis Price Tracker | Best Weed Deals in Manhattan">
-  <meta property="og:description" content="Compare flower prices across Manhattan dispensaries. Find the cheapest ounce and half-ounce deals, updated daily.">
-  <meta property="og:url" content="https://nycweedprices.com/">
-  <meta property="og:image" content="https://nycweedprices.com/og-image.png">
+  <meta property="og:title" content="NYC Cannabis Price Tracker | Cheapest Weed Deals in NYC">
+  <meta property="og:description" content="Compare flower prices across NYC licensed dispensaries. Find the cheapest ounce, half-ounce, and eighth deals. Updated daily.">
+  <meta property="og:url" content="https://nycweedprice.org/">
+  <meta property="og:image" content="https://nycweedprice.org/og-image.svg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="NYC Cannabis Price Tracker">
   <meta name="twitter:description" content="Find the cheapest weed in NYC. Real-time dispensary price comparisons for Manhattan.">
+  <meta name="twitter:image" content="https://nycweedprice.org/og-image.svg">
 
   <style>
     /* ─── Reset & Base ─────────────────────────────────────── */
@@ -281,12 +287,12 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      overflow: hidden;
+      overflow: clip;
     }
     .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
     table { width: 100%; border-collapse: collapse; }
-    thead { position: sticky; top: 56px; z-index: 10; }
     th {
+      position: sticky; top: 56px; z-index: 10;
       background: var(--bg-card2);
       color: var(--text-muted);
       text-align: left;
@@ -314,17 +320,25 @@
     tr:hover td { background: rgba(255,255,255,.025); }
 
     /* best price rows */
-    tr.best-oz   td { background: rgba(34,197,94,.05); }
-    tr.best-half td { background: rgba(167,139,250,.05); }
-    tr.best-oz:hover   td { background: rgba(34,197,94,.09); }
-    tr.best-half:hover td { background: rgba(167,139,250,.09); }
+    tr.best-oz      td { background: rgba(34,197,94,.05); }
+    tr.best-half    td { background: rgba(167,139,250,.05); }
+    tr.best-quarter td { background: rgba(251,191,36,.05); }
+    tr.best-eighth  td { background: rgba(248,113,113,.05); }
+    tr.best-oz:hover      td { background: rgba(34,197,94,.09); }
+    tr.best-half:hover    td { background: rgba(167,139,250,.09); }
+    tr.best-quarter:hover td { background: rgba(251,191,36,.09); }
+    tr.best-eighth:hover  td { background: rgba(248,113,113,.09); }
+
+    tr.pre-ground td { font-style: italic; }
 
     .store-name { font-weight: 600; font-size: 14px; }
     .store-nbhd { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
     .store-address { font-size: 11px; color: var(--text-dim); }
 
     .price { font-weight: 800; font-size: 17px; color: var(--green); }
-    tr.best-half .price { color: var(--purple); }
+    tr.best-half    .price { color: var(--purple); }
+    tr.best-quarter .price { color: var(--amber); }
+    tr.best-eighth  .price { color: var(--red); }
 
     .size-tag {
       display: inline-flex; align-items: center;
@@ -332,8 +346,21 @@
       font-size: 11px; font-weight: 700;
       white-space: nowrap;
     }
-    .tag-oz   { background: rgba(96,165,250,.12); color: var(--blue); border: 1px solid rgba(96,165,250,.25); }
-    .tag-half { background: rgba(167,139,250,.12); color: var(--purple); border: 1px solid rgba(167,139,250,.25); }
+    .tag-oz      { background: rgba(96,165,250,.12); color: var(--blue);   border: 1px solid rgba(96,165,250,.25); }
+    .tag-half    { background: rgba(167,139,250,.12); color: var(--purple); border: 1px solid rgba(167,139,250,.25); }
+    .tag-quarter { background: rgba(251,191,36,.12);  color: var(--amber);  border: 1px solid rgba(251,191,36,.25); }
+    .tag-eighth  { background: rgba(248,113,113,.12); color: var(--red);    border: 1px solid rgba(248,113,113,.25); }
+
+    .pg-badge {
+      display: inline-flex; align-items: center;
+      background: rgba(148,163,184,.1);
+      color: var(--text-dim);
+      border: 1px solid rgba(148,163,184,.2);
+      font-size: 9px; font-weight: 700;
+      padding: 1px 5px; border-radius: 4px;
+      margin-left: 5px; vertical-align: middle;
+      text-transform: uppercase; letter-spacing: .4px;
+    }
 
     .product-name { font-size: 13px; color: var(--text-muted); max-width: 280px; line-height: 1.4; }
     .product-name .best-badge {
@@ -363,6 +390,57 @@
       padding: 16px 20px;
       font-size: 14px;
       display: flex; gap: 10px; align-items: center;
+    }
+
+    /* ─── Deals & Specials ──────────────────────────────────── */
+    .deals-section { padding: 0 20px 60px; }
+    .deals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px;
+    }
+    .deal-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      transition: border-color .2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .deal-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--amber);
+    }
+    .deal-card:hover { border-color: var(--amber); }
+    .deal-card-store {
+      font-weight: 700; font-size: 14px;
+      margin-bottom: 4px;
+    }
+    .deal-card-nbhd {
+      font-size: 11px; color: var(--text-dim);
+      margin-bottom: 10px;
+    }
+    .deal-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .deal-list li {
+      font-size: 13px; color: var(--text-muted);
+      padding: 6px 10px;
+      background: rgba(251,191,36,.05);
+      border: 1px solid rgba(251,191,36,.15);
+      border-radius: 6px;
+      line-height: 1.4;
+    }
+    .deals-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 14px;
+      padding: 40px 20px;
     }
 
     /* ─── How It Works ──────────────────────────────────────── */
@@ -398,6 +476,89 @@
     }
     .how-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
     .how-card p { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+
+    /* ─── Alert CTA ────────────────────────────────────────── */
+    .alert-section {
+      padding: 0 20px 64px;
+    }
+    .alert-inner {
+      max-width: 760px; margin: 0 auto;
+      background: var(--bg-card);
+      border: 1px solid rgba(34,197,94,.3);
+      border-radius: var(--radius);
+      padding: 32px 36px;
+      display: flex; align-items: center; gap: 32px;
+      background: linear-gradient(135deg, var(--bg-card) 0%, rgba(34,197,94,.04) 100%);
+    }
+    .alert-copy { flex: 1; }
+    .alert-copy h2 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .alert-copy p { font-size: 14px; color: var(--text-muted); line-height: 1.55; }
+    .alert-form {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .alert-form input[type="email"] {
+      flex: 1; min-width: 200px;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); color: var(--text);
+      font-size: 14px; padding: 10px 14px; outline: none;
+      transition: border-color .15s;
+    }
+    .alert-form input[type="email"]:focus { border-color: var(--green); }
+    .alert-form input[type="email"]::placeholder { color: var(--text-dim); }
+    .alert-form button {
+      background: var(--green); color: #000;
+      border: none; border-radius: var(--radius-sm);
+      font-size: 14px; font-weight: 700; padding: 10px 22px;
+      cursor: pointer; white-space: nowrap;
+      transition: background .15s;
+    }
+    .alert-form button:hover { background: var(--green-dim); }
+    .alert-icon {
+      font-size: 48px; flex-shrink: 0;
+    }
+    .alert-success {
+      display: none; color: var(--green);
+      font-size: 14px; font-weight: 600; margin-top: 10px;
+    }
+    @media (max-width: 600px) {
+      .alert-inner { flex-direction: column; gap: 16px; padding: 24px 20px; }
+      .alert-icon { display: none; }
+    }
+
+    /* ─── FAQ ──────────────────────────────────────────────── */
+    .faq-section {
+      padding: 0 20px 64px;
+    }
+    .faq-inner { max-width: 760px; margin: 0 auto; }
+    .faq-list { margin-top: 20px; display: flex; flex-direction: column; gap: 8px; }
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .faq-q {
+      width: 100%; text-align: left;
+      background: none; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 16px 18px;
+      font-size: 14px; font-weight: 600; color: var(--text);
+      line-height: 1.4;
+    }
+    .faq-q:hover { color: var(--green); }
+    .faq-chevron {
+      flex-shrink: 0; color: var(--text-dim);
+      transition: transform .2s;
+    }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+    .faq-a {
+      display: none;
+      padding: 0 18px 16px;
+      font-size: 13px; color: var(--text-muted); line-height: 1.65;
+      border-top: 1px solid rgba(51,65,85,.5);
+    }
+    .faq-item.open .faq-a { display: block; }
 
     /* ─── Footer ────────────────────────────────────────────── */
     footer {
@@ -448,8 +609,6 @@
       th, td { padding: 10px 10px; }
       .product-name { max-width: 160px; }
 
-      thead { top: 56px; }
-
       .how-grid { grid-template-columns: 1fr; }
     }
 
@@ -490,6 +649,108 @@
     .back-to-top.visible { display: flex; }
     .back-to-top:hover { transform: translateY(-2px); }
   </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://nycweedprice.org/#website",
+        "url": "https://nycweedprice.org/",
+        "name": "NYC Weed Price Tracker",
+        "description": "Compare real-time flower prices at NYC licensed dispensaries. Find the cheapest ounce and half-ounce deals in Manhattan.",
+        "inLanguage": "en-US",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://nycweedprice.org/?q={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://nycweedprice.org/#pricelist",
+        "name": "NYC Dispensary Flower Prices",
+        "description": "Live price comparison for 1 oz, 1/2 oz, 1/4 oz, and 1/8 oz cannabis flower at licensed Manhattan dispensaries.",
+        "url": "https://nycweedprice.org/",
+        "itemListOrder": "https://schema.org/ItemListOrderAscending",
+        "itemListElement": [
+          {"@type":"ListItem","position":1,"name":"Housing Works Cannabis Co — NoHo","url":"https://nycweedprice.org/#prices"},
+          {"@type":"ListItem","position":2,"name":"Smacked Village — Greenwich Village","url":"https://nycweedprice.org/#prices"},
+          {"@type":"ListItem","position":3,"name":"The Travel Agency — West Village","url":"https://nycweedprice.org/#prices"},
+          {"@type":"ListItem","position":4,"name":"Dazed — Union Square","url":"https://nycweedprice.org/#prices"},
+          {"@type":"ListItem","position":5,"name":"The Alchemy — Flatiron & Chelsea","url":"https://nycweedprice.org/#prices"},
+          {"@type":"ListItem","position":6,"name":"Stoops NYC — SoHo","url":"https://nycweedprice.org/#prices"},
+          {"@type":"ListItem","position":7,"name":"Blue Forest Farms — Gramercy","url":"https://nycweedprice.org/#prices"},
+          {"@type":"ListItem","position":8,"name":"Gotham — Bowery & Chelsea","url":"https://nycweedprice.org/#prices"},
+          {"@type":"ListItem","position":9,"name":"New Amsterdam — Midtown","url":"https://nycweedprice.org/#prices"},
+          {"@type":"ListItem","position":10,"name":"CONBUD — Downtown","url":"https://nycweedprice.org/#prices"},
+          {"@type":"ListItem","position":11,"name":"Green Genius — Gramercy","url":"https://nycweedprice.org/#prices"},
+          {"@type":"ListItem","position":12,"name":"VERDI — Chelsea","url":"https://nycweedprice.org/#prices"},
+          {"@type":"ListItem","position":13,"name":"KushKlub NYC — LES","url":"https://nycweedprice.org/#prices"},
+          {"@type":"ListItem","position":14,"name":"Smiley Exotics — Midtown","url":"https://nycweedprice.org/#prices"}
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://nycweedprice.org/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How much does an ounce of weed cost in NYC?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ounce prices at licensed NYC dispensaries typically range from $180 to $350+, depending on the store and strain tier. NYC Weed Price Tracker updates prices daily so you can find the cheapest ounce available right now."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the cheapest dispensary in Manhattan?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The cheapest dispensary changes daily as stores update their menus. NYC Weed Price Tracker shows a live price table sorted by price so you can always find the best deal at a glance. Check the Price Table section above for today's lowest prices."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is buying weed legal in New York City?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Cannabis is legal for adults 21+ in New York State under the MRTA (Marihuana Regulation and Taxation Act). Only purchase from licensed dispensaries — all stores listed on NYC Weed Price Tracker are state-licensed."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How often are dispensary prices updated?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Prices are scraped automatically from each dispensary's live menu once per day. The timestamp at the top of the page shows when data was last refreshed."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What sizes are compared on this site?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "NYC Weed Price Tracker compares prices for 1 oz (28g), 1/2 oz (14g), 1/4 oz (7g), and 1/8 oz (3.5g) flower listings. Use the size filter buttons above the table to view your preferred size."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do NYC dispensaries accept credit cards?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Most NYC licensed dispensaries accept debit cards and cash. Some accept credit cards via third-party payment processors. It is always a good idea to bring cash or a debit card to be safe."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -508,6 +769,7 @@
   <div class="topnav-links">
     <a href="#prices">Prices</a>
     <a href="#how-it-works">How It Works</a>
+    <a href="#faq">FAQ</a>
   </div>
   <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu" aria-expanded="false">
     <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -522,6 +784,7 @@
 <div class="mobile-menu" id="mobileMenu" role="menu">
   <a href="#prices" onclick="closeMobileMenu()">Prices</a>
   <a href="#how-it-works" onclick="closeMobileMenu()">How It Works</a>
+  <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
 </div>
 
 <!-- Hero -->
@@ -555,11 +818,22 @@
       </div>
 
       <div class="filter-group">
+        <span class="filter-label">Type:</span>
+        <div id="typeFilter" style="display:flex;gap:6px;flex-wrap:wrap;">
+          <button class="pill active" data-type="all"        onclick="setType(this)">All Flower</button>
+          <button class="pill"        data-type="whole"      onclick="setType(this)">Whole Flower</button>
+          <button class="pill"        data-type="pre-ground" onclick="setType(this)">Pre-Ground / Infused</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
         <span class="filter-label">Size:</span>
         <div id="sizeFilter" style="display:flex;gap:6px;flex-wrap:wrap;">
-          <button class="pill active" data-size="all"   onclick="setSize(this)">All</button>
-          <button class="pill"        data-size="1 oz"  onclick="setSize(this)">1 oz</button>
-          <button class="pill"        data-size="1/2 oz" onclick="setSize(this)">&#189; oz</button>
+          <button class="pill active" data-size="all"     onclick="setSize(this)">All sizes</button>
+          <button class="pill"        data-size="1 oz"    onclick="setSize(this)">1 oz</button>
+          <button class="pill"        data-size="1/2 oz"  onclick="setSize(this)">&#189; oz</button>
+          <button class="pill"        data-size="1/4 oz"  onclick="setSize(this)">&#188; oz</button>
+          <button class="pill"        data-size="1/8 oz"  onclick="setSize(this)">&#8539; oz</button>
         </div>
       </div>
 
@@ -595,6 +869,16 @@
   </div>
 </section>
 
+<!-- Deals & Specials -->
+<section class="deals-section" id="deals" aria-label="Deals and specials">
+  <div class="section-inner">
+    <h2 class="section-title"><span class="dot" aria-hidden="true"></span>Deals &amp; Specials</h2>
+    <div class="deals-grid" id="dealsGrid">
+      <!-- injected by JS -->
+    </div>
+  </div>
+</section>
+
 <!-- How It Works -->
 <section class="how-section" id="how-it-works" aria-label="How it works">
   <div class="how-inner">
@@ -616,10 +900,84 @@
         <p>All prices are sorted cheapest-first so you can immediately see which dispensary has the best deal for your preferred quantity.</p>
       </div>
       <div class="how-card">
-        <div class="how-step" aria-hidden="true">&#128204;</div>
-        <h3>Manhattan Only</h3>
-        <p>We focus exclusively on licensed dispensaries in Manhattan, NYC, ensuring all listed stores are legal, regulated, and verifiable.</p>
+        <div class="how-step" aria-hidden="true">&#128205;</div>
+        <h3>NYC &amp; Growing</h3>
+        <p>We track licensed dispensaries across NYC &mdash; Manhattan, Queens, and expanding &mdash; ensuring all listed stores are legal, regulated, and verifiable.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- Price Alert Signup -->
+<section class="alert-section" id="alerts" aria-label="Price drop alerts">
+  <div class="alert-inner">
+    <div class="alert-icon" aria-hidden="true">🔔</div>
+    <div class="alert-copy">
+      <h2>Get Price Drop Alerts</h2>
+      <p>Enter your email and we'll notify you when ounce prices drop in NYC. No spam — just deals.</p>
+      <form class="alert-form" id="alertForm" onsubmit="submitAlert(event)">
+        <input type="email" id="alertEmail" placeholder="you@email.com" required autocomplete="email" aria-label="Email address">
+        <button type="submit">Notify Me</button>
+      </form>
+      <p class="alert-success" id="alertSuccess">You're on the list! We'll email you when prices drop.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq" aria-label="Frequently asked questions">
+  <div class="faq-inner">
+    <h2 class="section-title"><span class="dot" aria-hidden="true"></span>Frequently Asked Questions</h2>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          How much does an ounce of weed cost in NYC?
+          <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="2,5 8,11 14,5"/></svg>
+        </button>
+        <div class="faq-a" role="region">Ounce prices at licensed NYC dispensaries typically range from $180 to $350+, depending on the store and strain tier. NYC Weed Price Tracker updates prices daily so you can find the cheapest ounce available right now.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          What is the cheapest dispensary in Manhattan?
+          <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="2,5 8,11 14,5"/></svg>
+        </button>
+        <div class="faq-a" role="region">The cheapest dispensary changes daily as stores update their menus. The price table above is sorted cheapest-first so you can always spot today's best deal at a glance. Filter by size (1&nbsp;oz, &frac12;&nbsp;oz, etc.) to narrow results.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          Is buying weed legal in New York City?
+          <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="2,5 8,11 14,5"/></svg>
+        </button>
+        <div class="faq-a" role="region">Yes. Cannabis is legal for adults 21+ in New York State under the MRTA (Marihuana Regulation and Taxation Act). Only purchase from licensed dispensaries &mdash; all stores listed on NYC Weed Price Tracker are state-licensed retail locations.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          How often are dispensary prices updated?
+          <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="2,5 8,11 14,5"/></svg>
+        </button>
+        <div class="faq-a" role="region">Prices are scraped automatically from each dispensary's live online menu once per day. The timestamp shown on this page indicates when data was last refreshed.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          What sizes are compared on this site?
+          <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="2,5 8,11 14,5"/></svg>
+        </button>
+        <div class="faq-a" role="region">NYC Weed Price Tracker compares prices for 1&nbsp;oz (28g), &frac12;&nbsp;oz (14g), &frac14;&nbsp;oz (7g), and &frac18;&nbsp;oz (3.5g) flower listings. Use the size filter buttons above the table to focus on your preferred quantity.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          Do NYC dispensaries accept credit cards?
+          <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="2,5 8,11 14,5"/></svg>
+        </button>
+        <div class="faq-a" role="region">Most NYC licensed dispensaries accept debit cards and cash. Some accept credit cards through third-party payment processors. It is always a good idea to bring cash or a debit card as backup.</div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -643,13 +1001,16 @@
 'use strict';
 
 /* ─── State ──────────────────────────────────────── */
-let allData       = [];
-let activeSizeFilter = 'all';
-let activeNbhd    = 'all';
-let sortKey       = 'price';
-let sortDir       = 'asc';
-let bestOzPrice   = Infinity;
-let bestHalfPrice = Infinity;
+let allData            = [];
+let activeSizeFilter   = 'all';
+let activeTypeFilter   = 'all';
+let activeNbhd         = 'all';
+let sortKey            = 'price';
+let sortDir            = 'asc';
+let bestOzPrice        = Infinity;
+let bestHalfPrice      = Infinity;
+let bestQuarterPrice   = Infinity;
+let bestEighthPrice    = Infinity;
 
 /* ─── Helpers ────────────────────────────────────── */
 function esc(s) {
@@ -677,6 +1038,13 @@ function setSize(el) {
   document.querySelectorAll('#sizeFilter .pill').forEach(p => p.classList.remove('active'));
   el.classList.add('active');
   activeSizeFilter = el.dataset.size;
+  renderTable();
+}
+
+function setType(el) {
+  document.querySelectorAll('#typeFilter .pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  activeTypeFilter = el.dataset.type;
   renderTable();
 }
 
@@ -724,12 +1092,16 @@ function buildRows() {
 
   for (const d of allData) {
     const listings = [
-      ...(d.ounceListings     || []),
-      ...(d.halfOunceListings || [])
+      ...(d.ounceListings        || []),
+      ...(d.halfOunceListings    || []),
+      ...(d.quarterOunceListings || []),
+      ...(d.eighthOunceListings  || [])
     ];
     for (const l of listings) {
       if (activeSizeFilter !== 'all' && l.size !== activeSizeFilter) continue;
       if (activeNbhd       !== 'all' && d.neighborhood !== activeNbhd) continue;
+      if (activeTypeFilter === 'whole'      &&  l.preGround) continue;
+      if (activeTypeFilter === 'pre-ground' && !l.preGround) continue;
       if (q) {
         const haystack = [d.name, d.neighborhood, l.product, d.address].join(' ').toLowerCase();
         if (!haystack.includes(q)) continue;
@@ -740,16 +1112,20 @@ function buildRows() {
         address:      d.address      || '',
         size:         l.size,
         price:        l.price,
-        product:      l.product || ''
+        product:      l.product  || '',
+        preGround:    !!l.preGround
       });
     }
   }
+
+  // Sort order for sizes (largest first within same price sort)
+  const sizeOrder = { '1 oz': 0, '1/2 oz': 1, '1/4 oz': 2, '1/8 oz': 3 };
 
   rows.sort((a, b) => {
     let cmp = 0;
     if      (sortKey === 'price') cmp = a.price - b.price;
     else if (sortKey === 'store') cmp = a.store.localeCompare(b.store);
-    else if (sortKey === 'size')  cmp = a.size.localeCompare(b.size) || a.price - b.price;
+    else if (sortKey === 'size')  cmp = (sizeOrder[a.size] ?? 9) - (sizeOrder[b.size] ?? 9) || a.price - b.price;
     return sortDir === 'asc' ? cmp : -cmp;
   });
 
@@ -781,16 +1157,30 @@ function renderTable() {
   }
 
   tbody.innerHTML = rows.map(r => {
-    const isOz       = r.size === '1 oz';
-    const isBestOz   = isOz      && r.price === bestOzPrice;
-    const isBestHalf = !isOz     && r.price === bestHalfPrice;
-    const rowCls     = isBestOz ? 'best-oz' : isBestHalf ? 'best-half' : '';
+    const isBestOz      = r.size === '1 oz'    && r.price === bestOzPrice;
+    const isBestHalf    = r.size === '1/2 oz'  && r.price === bestHalfPrice;
+    const isBestQuarter = r.size === '1/4 oz'  && r.price === bestQuarterPrice;
+    const isBestEighth  = r.size === '1/8 oz'  && r.price === bestEighthPrice;
 
-    const sizeTag = isOz
-      ? '<span class="size-tag tag-oz">1 oz</span>'
-      : '<span class="size-tag tag-half">&frac12; oz</span>';
+    const rowCls = [
+      isBestOz      ? 'best-oz'      : '',
+      isBestHalf    ? 'best-half'    : '',
+      isBestQuarter ? 'best-quarter' : '',
+      isBestEighth  ? 'best-eighth'  : '',
+      r.preGround   ? 'pre-ground'   : ''
+    ].filter(Boolean).join(' ');
 
-    const bestBadge = (isBestOz || isBestHalf)
+    const sizeTags = {
+      '1 oz':   '<span class="size-tag tag-oz">1 oz</span>',
+      '1/2 oz': '<span class="size-tag tag-half">&frac12; oz</span>',
+      '1/4 oz': '<span class="size-tag tag-quarter">&frac14; oz</span>',
+      '1/8 oz': '<span class="size-tag tag-eighth">&#8539; oz</span>'
+    };
+    const sizeTag = sizeTags[r.size] || `<span class="size-tag tag-oz">${esc(r.size)}</span>`;
+
+    const pgBadge = r.preGround ? '<span class="pg-badge">PG</span>' : '';
+
+    const bestBadge = (isBestOz || isBestHalf || isBestQuarter || isBestEighth)
       ? '<span class="best-badge">Best deal</span>'
       : '';
 
@@ -799,7 +1189,7 @@ function renderTable() {
         <div class="store-name">${esc(r.store)}</div>
         <div class="store-nbhd">${esc(r.neighborhood)}</div>
       </td>
-      <td>${sizeTag}</td>
+      <td>${sizeTag}${pgBadge}</td>
       <td class="price">${fmt(r.price)}</td>
       <td class="product-name">${esc(r.product)}${bestBadge}</td>
     </tr>`;
@@ -808,16 +1198,30 @@ function renderTable() {
 
 /* ─── Stats cards ────────────────────────────────── */
 function renderStats() {
-  const okStores  = allData.filter(d => d.status === 'ok');
-  const allOz     = allData.flatMap(d => d.ounceListings     || []);
-  const allHalf   = allData.flatMap(d => d.halfOunceListings || []);
-  const total     = allOz.length + allHalf.length;
+  const okStores      = allData.filter(d => d.status === 'ok');
+  const allOz         = allData.flatMap(d => d.ounceListings        || []);
+  const allHalf       = allData.flatMap(d => d.halfOunceListings    || []);
+  const allQuarter    = allData.flatMap(d => d.quarterOunceListings || []);
+  const allEighth     = allData.flatMap(d => d.eighthOunceListings  || []);
+  const total         = allOz.length + allHalf.length + allQuarter.length + allEighth.length;
 
-  bestOzPrice   = allOz.length   ? Math.min(...allOz.map(l => l.price))   : Infinity;
-  bestHalfPrice = allHalf.length ? Math.min(...allHalf.map(l => l.price)) : Infinity;
+  // Prefer whole flower for the headline stat cards; fall back to all
+  const wholeOz     = allOz.filter(l => !l.preGround);
+  const wholeHalf   = allHalf.filter(l => !l.preGround);
+  const wholeEighth = allEighth.filter(l => !l.preGround);
 
-  const cheapOzStore   = allOz.length   ? allData.find(d => (d.ounceListings     || []).some(l => l.price === bestOzPrice))   : null;
-  const cheapHalfStore = allHalf.length ? allData.find(d => (d.halfOunceListings || []).some(l => l.price === bestHalfPrice)) : null;
+  const ozPool     = wholeOz.length   ? wholeOz   : allOz;
+  const halfPool   = wholeHalf.length ? wholeHalf : allHalf;
+  const eighthPool = wholeEighth.length ? wholeEighth : allEighth;
+
+  bestOzPrice      = ozPool.length     ? Math.min(...ozPool.map(l => l.price))     : Infinity;
+  bestHalfPrice    = halfPool.length   ? Math.min(...halfPool.map(l => l.price))   : Infinity;
+  bestQuarterPrice = allQuarter.length ? Math.min(...allQuarter.map(l => l.price)) : Infinity;
+  bestEighthPrice  = eighthPool.length ? Math.min(...eighthPool.map(l => l.price)) : Infinity;
+
+  const cheapOzStore      = ozPool.length     ? allData.find(d => (d.ounceListings        || []).some(l => l.price === bestOzPrice      && (wholeOz.length   ? !l.preGround : true))) : null;
+  const cheapHalfStore    = halfPool.length   ? allData.find(d => (d.halfOunceListings    || []).some(l => l.price === bestHalfPrice    && (wholeHalf.length ? !l.preGround : true))) : null;
+  const cheapEighthStore  = eighthPool.length ? allData.find(d => (d.eighthOunceListings  || []).some(l => l.price === bestEighthPrice  && (wholeEighth.length ? !l.preGround : true))) : null;
 
   const cards = [
     {
@@ -829,7 +1233,7 @@ function renderStats() {
     {
       label:   'Total Listings',
       value:   total,
-      sub:     allOz.length + ' oz &middot; ' + allHalf.length + ' half-oz',
+      sub:     allOz.length + ' oz &middot; ' + allHalf.length + ' half &middot; ' + allQuarter.length + ' qtr &middot; ' + allEighth.length + ' eighth',
       accent:  'var(--blue)',
     },
     ...(bestOzPrice < Infinity ? [{
@@ -843,6 +1247,12 @@ function renderStats() {
       value:   fmt(bestHalfPrice),
       sub:     esc(cheapHalfStore?.name || ''),
       accent:  'var(--purple)',
+    }] : []),
+    ...(bestEighthPrice < Infinity ? [{
+      label:   'Cheapest &#8539; oz',
+      value:   fmt(bestEighthPrice),
+      sub:     esc(cheapEighthStore?.name || ''),
+      accent:  'var(--red)',
     }] : []),
   ];
 
@@ -873,6 +1283,28 @@ function buildNbhdFilter() {
   ].join('');
 }
 
+/* ─── Deals section ─────────────────────────────── */
+function renderDeals() {
+  const grid = document.getElementById('dealsGrid');
+  if (!grid) return;
+
+  const storesWithDeals = allData.filter(d => Array.isArray(d.deals) && d.deals.length > 0);
+
+  if (!storesWithDeals.length) {
+    grid.innerHTML = '<p class="deals-empty">No deals currently available. Check back soon!</p>';
+    return;
+  }
+
+  grid.innerHTML = storesWithDeals.map(d => `
+    <div class="deal-card">
+      <div class="deal-card-store">${esc(d.name)}</div>
+      <div class="deal-card-nbhd">${esc(d.neighborhood || '')}</div>
+      <ul class="deal-list">
+        ${d.deals.map(deal => `<li>${esc(deal)}</li>`).join('')}
+      </ul>
+    </div>`).join('');
+}
+
 /* ─── Last updated ───────────────────────────────── */
 function renderLastUpdated() {
   const el = document.getElementById('lastUpdated');
@@ -895,6 +1327,13 @@ function hideLoader() {
   setTimeout(() => overlay.remove(), 400);
 }
 
+// Pre-fill search from ?q= URL param (supports schema.org SearchAction)
+const _qParam = new URLSearchParams(window.location.search).get('q');
+if (_qParam) {
+  const si = document.getElementById('searchInput');
+  if (si) si.value = _qParam;
+}
+
 fetch('/api/data')
   .then(r => {
     if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -909,6 +1348,13 @@ fetch('/api/data')
     buildNbhdFilter();
     renderLastUpdated();
     renderTable();
+    renderDeals();
+
+    // Dynamically update page title with cheapest oz price for SEO/tab visibility
+    if (bestOzPrice < Infinity) {
+      document.title = `NYC's Cheapest Weed: $${bestOzPrice.toFixed(0)}/oz Today | nycweedprice.org`;
+    }
+
     hideLoader();
   })
   .catch(err => {
@@ -942,12 +1388,42 @@ function closeMobileMenu() {
   document.getElementById('hamburgerBtn').setAttribute('aria-expanded', 'false');
 }
 
+/* ─── Alert signup ──────────────────────────────── */
+function submitAlert(e) {
+  e.preventDefault();
+  const email = document.getElementById('alertEmail').value.trim();
+  if (!email) return;
+  fetch('/api/alert-signup', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email })
+  }).then(() => {
+    document.getElementById('alertForm').style.display = 'none';
+    document.getElementById('alertSuccess').style.display = 'block';
+  }).catch(() => {
+    document.getElementById('alertForm').style.display = 'none';
+    document.getElementById('alertSuccess').style.display = 'block';
+  });
+}
+
+/* ─── FAQ accordion ─────────────────────────────── */
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const open = !item.classList.contains('open');
+  item.classList.toggle('open', open);
+  btn.setAttribute('aria-expanded', String(open));
+}
+
 /* ─── Back to top ────────────────────────────────── */
 window.addEventListener('scroll', function() {
   const btn = document.getElementById('backToTop');
   btn.classList.toggle('visible', window.scrollY > 400);
 }, { passive: true });
 </script>
+
+<!-- Cloudflare Web Analytics -->
+<!-- Replace PLACEHOLDER_TOKEN with your Cloudflare Analytics token from dash.cloudflare.com → Analytics → Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "PLACEHOLDER_TOKEN"}'></script>
 
 </body>
 </html>
