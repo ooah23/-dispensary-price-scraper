@@ -428,8 +428,8 @@
     @media (max-width: 600px) {
       .deal-product-mobile { display: block; }
       .deal-col-product { display: none; }
-      /* Hide main price table Product column */
-      table th:nth-child(4), table td:nth-child(4) { display: none; }
+      /* Hide main price table Product column (col 4) — scoped so deals table Price col is not affected */
+      .main-section table th:nth-child(4), .main-section table td:nth-child(4) { display: none; }
       /* Hero CTA full-width */
       .hero-cta { display: flex; justify-content: center; width: 100%; max-width: 320px; }
     }
