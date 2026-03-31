@@ -68,8 +68,8 @@ if %COMMIT_EXIT% neq 0 (
     exit /b 0
 )
 
-echo [%TIME%] Pushing to origin master...
-git push origin master
+echo [%TIME%] Pushing to origin main...
+git push origin main
 if %ERRORLEVEL% neq 0 (
     echo ERROR: git push failed.
     exit /b 1
