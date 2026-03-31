@@ -304,7 +304,6 @@
     .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
     table { width: 100%; border-collapse: collapse; }
     th {
-      position: sticky; top: 56px; z-index: 10;
       background: var(--bg-card2);
       color: var(--text-muted);
       text-align: left;
@@ -409,10 +408,6 @@
     }
 
     /* ─── Best Value Picks ──────────────────────────────────── */
-    /* Deals table headers must NOT be sticky — inside overflow-x:auto the
-       sticky anchor is the scroll container, so top:56px would push the
-       header 56px into the rows. Override to static. */
-    .deals-section .table-scroll th { position: static; }
     .deals-section { padding: 0 20px 48px; }
     .deals-section-header {
       display: flex; align-items: center; justify-content: space-between;
