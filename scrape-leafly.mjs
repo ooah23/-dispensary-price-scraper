@@ -84,6 +84,11 @@ function urlProvider(url) {
   ) {
     return "dutchie";
   }
+  // Dutchie Plus standalone storefronts — hosted on the dispensary's own domain
+  // e.g. midnightmoon.nyc/stores/midnight-moon/products/flower
+  if (/\/stores\/[^/]+\/products\//.test(url)) {
+    return "dutchie-plus";
+  }
   return "generic";
 }
 
@@ -1510,6 +1515,51 @@ async function extractDutchieEntries(page, menuUrl) {
   return filterListingEntries(entries);
 }
 
+// Dutchie Plus — standalone storefronts on the dispensary's own domain
+// (e.g. midnightmoon.nyc). Products come via GraphQL at /graphql?operationName=FilteredProducts.
+// Options/Prices are parallel arrays; we map known oz weight strings to standard sizes.
+async function extractDutchiePlusEntries(page, menuUrl) {
+  const OPTION_TO_SIZE = {
+    "1oz":   "1 oz",
+    "1/2oz": "1/2 oz",
+    "1/4oz": "1/4 oz",
+    "1/8oz": "1/8 oz",
+  };
+
+  const captured = [];
+  const onResponse = async (res) => {
+    const url = res.url();
+    if (url.includes("/graphql") && url.includes("FilteredProducts")) {
+      try {
+        const body = await res.json();
+        const products = body?.data?.filteredProducts?.products ?? [];
+        captured.push(...products);
+      } catch {}
+    }
+  };
+  page.on("response", onResponse);
+
+  await gotoWithRetries(page, menuUrl, { attempts: 3, timeout: 60000 });
+  await page.waitForTimeout(4000);
+
+  page.off("response", onResponse);
+
+  const entries = [];
+  for (const product of captured) {
+    if (product.type !== "Flower") continue;
+    const options = product.Options ?? [];
+    const prices  = product.recPrices ?? product.Prices ?? [];
+    for (let i = 0; i < options.length; i++) {
+      const size = OPTION_TO_SIZE[options[i]];
+      if (!size) continue;
+      const price = Number(prices[i]);
+      if (!price || price <= 0) continue;
+      entries.push({ product: cleanText(product.Name ?? ""), size, price });
+    }
+  }
+  return filterListingEntries(entries);
+}
+
 async function acceptGothamAgeGate(page) {
   const yesButton = page.getByText(/Yes, let's go/i).first();
   try {
@@ -1708,6 +1758,10 @@ async function scrapeStore(page, dispensary) {
       result.flowerProducts = allEntries.length;
     } else if (menuProvider === "dutchie") {
       allEntries = await extractDutchieEntries(page, result.menuUrl);
+      result.totalProducts = allEntries.length;
+      result.flowerProducts = allEntries.length;
+    } else if (menuProvider === "dutchie-plus") {
+      allEntries = await extractDutchiePlusEntries(page, result.menuUrl);
       result.totalProducts = allEntries.length;
       result.flowerProducts = allEntries.length;
     } else if (menuProvider === "woocommerce") {

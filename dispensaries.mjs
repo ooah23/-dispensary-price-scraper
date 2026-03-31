@@ -163,8 +163,9 @@ export const dispensaries = [
     name: "Midnight Moon",
     address: "1536 Amsterdam Ave",
     neighborhood: "Washington Heights",
-    leaflySlug: "midnight-moon",
-    sourceNote: "Leafly storefront (slug: midnight-moon)"
+    menuUrlOverride: "https://midnightmoon.nyc/stores/midnight-moon/products/flower",
+    dealsUrlOverride: "https://midnightmoon.nyc/stores/midnight-moon/specials",
+    sourceNote: "Dutchie standalone storefront (midnightmoon.nyc) — was incorrectly using Leafly slug which returned 0 flower products"
   },
   {
     name: "Terp Bros (Astoria)",
