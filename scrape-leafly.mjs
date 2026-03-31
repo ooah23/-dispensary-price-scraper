@@ -1542,6 +1542,12 @@ async function extractDutchiePlusEntries(page, menuUrl) {
   await gotoWithRetries(page, menuUrl, { attempts: 3, timeout: 60000 });
   await page.waitForTimeout(4000);
 
+  // If page served from cache the response listener won't fire — force a reload.
+  if (captured.length === 0) {
+    await page.reload({ waitUntil: "networkidle", timeout: 60000 });
+    await page.waitForTimeout(3000);
+  }
+
   page.off("response", onResponse);
 
   const entries = [];

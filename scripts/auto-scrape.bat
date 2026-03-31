@@ -48,8 +48,9 @@ if %SCRAPE_EXIT% neq 0 (
     exit /b %SCRAPE_EXIT%
 )
 
-:: Allow SYSTEM account to access this repo (git ownership check)
-git config --global --add safe.directory C:/Users/Claudius/dispensary-price-scraper
+:: Pin HOME so git always reads Claudius's .gitconfig (works whether task runs as
+:: Claudius or SYSTEM — that config has safe.directory for this repo).
+set HOME=C:\Users\Claudius
 
 :: Commit and push updated output
 echo [%TIME%] Staging output/ directory...
