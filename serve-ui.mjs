@@ -440,8 +440,9 @@ const server = http.createServer(async (req, res) => {
       const scrapedAt = meta.scrapedAt ? new Date(meta.scrapedAt) : null;
       const ageHours = scrapedAt ? (Date.now() - scrapedAt.getTime()) / 3600000 : Infinity;
       const stale = ageHours > 36; // >36h since last scrape = stale
-      const status = stale ? 503 : 200;
-      res.writeHead(status, { "Content-Type": "application/json", "Cache-Control": "no-cache" });
+      // Always 200 — Railway uses this for health checks; 503 kills the container.
+      // Callers can check the `stale` field themselves.
+      res.writeHead(200, { "Content-Type": "application/json", "Cache-Control": "no-cache" });
       res.end(JSON.stringify({
         ok: !stale,
         timestamp: new Date().toISOString(),
