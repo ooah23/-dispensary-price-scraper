@@ -18,50 +18,13 @@
         "preGround": false
       }
     ],
-    "halfOunceListings": [
-      {
-        "size": "1/2 oz",
-        "price": 100,
-        "line": "14.0 grams",
-        "product": "ITHACA CULTIVATED | SOUR DIESEL - 14G - FLOWER",
-        "preGround": false
-      },
-      {
-        "size": "1/2 oz",
-        "price": 100,
-        "line": "14.0 grams",
-        "product": "BACK HOME CANNABIS COMPANY | SUPER LEMON HAZE - 14G FLOWER",
-        "preGround": false
-      },
-      {
-        "size": "1/2 oz",
-        "price": 100,
-        "line": "14.0 grams",
-        "product": "BACK HOME CANNABIS COMPANY | JACK HERER - 14G FLOWER",
-        "preGround": false
-      },
-      {
-        "size": "1/2 oz",
-        "price": 100,
-        "line": "14.0 grams",
-        "product": "ITHACA CULTIVATED | SPRITZER - 14G - FLOWER",
-        "preGround": false
-      }
-    ],
+    "halfOunceListings": [],
     "quarterOunceListings": [],
-    "eighthOunceListings": [
-      {
-        "size": "1/8 oz",
-        "price": 50,
-        "line": "1/8 oz",
-        "product": "ZIZZLE | SILVER HAZE - 3.5G FLOWER",
-        "preGround": false
-      }
-    ],
+    "eighthOunceListings": [],
     "deals": [],
     "error": null,
-    "totalProducts": 6,
-    "flowerProducts": 6,
+    "totalProducts": 1,
+    "flowerProducts": 1,
     "provider": "blaze",
     "cheapestOunce": {
       "size": "1 oz",
@@ -70,21 +33,9 @@
       "product": "RYTHM | 95 COOKIES - 28G FLOWER",
       "preGround": false
     },
-    "cheapestHalfOunce": {
-      "size": "1/2 oz",
-      "price": 100,
-      "line": "14.0 grams",
-      "product": "ITHACA CULTIVATED | SOUR DIESEL - 14G - FLOWER",
-      "preGround": false
-    },
+    "cheapestHalfOunce": null,
     "cheapestQuarterOunce": null,
-    "cheapestEighthOunce": {
-      "size": "1/8 oz",
-      "price": 50,
-      "line": "1/8 oz",
-      "product": "ZIZZLE | SILVER HAZE - 3.5G FLOWER",
-      "preGround": false
-    },
+    "cheapestEighthOunce": null,
     "cheapestOunceFlower": {
       "size": "1 oz",
       "price": 220,
@@ -92,21 +43,9 @@
       "product": "RYTHM | 95 COOKIES - 28G FLOWER",
       "preGround": false
     },
-    "cheapestHalfOunceFlower": {
-      "size": "1/2 oz",
-      "price": 100,
-      "line": "14.0 grams",
-      "product": "ITHACA CULTIVATED | SOUR DIESEL - 14G - FLOWER",
-      "preGround": false
-    },
+    "cheapestHalfOunceFlower": null,
     "cheapestQuarterOunceFlower": null,
-    "cheapestEighthOunceFlower": {
-      "size": "1/8 oz",
-      "price": 50,
-      "line": "1/8 oz",
-      "product": "ZIZZLE | SILVER HAZE - 3.5G FLOWER",
-      "preGround": false
-    }
+    "cheapestEighthOunceFlower": null
   },
   {
     "name": "Smacked Village",
@@ -132,6 +71,13 @@
         "line": "$125.00/28g",
         "product": "Smoakland - Maui Wowie - Flower",
         "preGround": false
+      },
+      {
+        "size": "1 oz",
+        "price": 125,
+        "line": "$125.00/28g",
+        "product": "Smoakland - Superman Glue - Flower",
+        "preGround": false
       }
     ],
     "halfOunceListings": [
@@ -146,7 +92,7 @@
         "size": "1/2 oz",
         "price": 102,
         "line": "$102.00/14g",
-        "product": "1937 - Pink Passionfruit - Flower",
+        "product": "Sativa Hybrid 1937 - Pink Passionfruit - Flower",
         "preGround": false
       }
     ],
@@ -164,6 +110,13 @@
         "price": 30,
         "line": "$30.00/3.5g",
         "product": "Splash Cannabis Co SPLASH - G33 - Flower",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 51,
+        "line": "$51.00/3.5g",
+        "product": "Operator - Hell's OG (Healer) - Flower",
         "preGround": false
       },
       {
@@ -191,35 +144,21 @@
         "size": "1/8 oz",
         "price": 55,
         "line": "$55.00/3.5g",
-        "product": "TICAL Tical - Medellin - Indoor Flower",
+        "product": "TICAL Tical - Dutch Treat - Indoor Flower - 3.5",
         "preGround": false
       },
       {
         "size": "1/8 oz",
         "price": 55,
         "line": "$55.00/3.5g",
-        "product": "TICAL Tical - Dutch Treat - Indoor Flower - 3.5",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 35,
-        "line": "$35.00/3.5g",
-        "product": "Loud Buzz - Apple Fritter - Flower",
+        "product": "TICAL Tical - Medellin - Indoor Flower",
         "preGround": false
       },
       {
         "size": "1/8 oz",
         "price": 62,
         "line": "$62.00/3.5g",
-        "product": "TICAL Tical - Blue Haze - Indoor Flower",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 62,
-        "line": "$62.00/3.5g",
-        "product": "TICAL Tical - Melted Cherries - Indoor Flower",
+        "product": "LAX Packs - Zero Gravity - Exotic Flower",
         "preGround": false
       },
       {
@@ -233,7 +172,7 @@
         "size": "1/8 oz",
         "price": 35,
         "line": "$35.00/3.5g",
-        "product": "Loud Buzz - NYC Runtz - Flower",
+        "product": "Loud Buzz - Apple Fritter - Flower",
         "preGround": false
       },
       {
@@ -282,7 +221,7 @@
       "size": "1/2 oz",
       "price": 102,
       "line": "$102.00/14g",
-      "product": "1937 - Pink Passionfruit - Flower",
+      "product": "Sativa Hybrid 1937 - Pink Passionfruit - Flower",
       "preGround": false
     },
     "cheapestQuarterOunceFlower": null,
@@ -304,15 +243,7 @@
     "menuUrl": "https://www.thetravelagency.co/flower/",
     "dealsUrl": "https://www.thetravelagency.co/specials/",
     "status": "ok",
-    "ounceListings": [
-      {
-        "size": "1 oz",
-        "price": 175,
-        "line": "$175.00 | 1oz",
-        "product": "FIND. Modified Goat",
-        "preGround": false
-      }
-    ],
+    "ounceListings": [],
     "halfOunceListings": [
       {
         "size": "1/2 oz",
@@ -351,6 +282,13 @@
         "price": 50,
         "line": "$50.00 | 1/8oz",
         "product": "Strawberry Bubbles SATIVA HYBRID",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 40,
+        "line": "$40.00 | 1/8oz",
+        "product": "FLORETTE Gary Payton",
         "preGround": false
       },
       {
@@ -450,13 +388,7 @@
     "totalProducts": 19,
     "flowerProducts": 19,
     "provider": "blaze",
-    "cheapestOunce": {
-      "size": "1 oz",
-      "price": 175,
-      "line": "$175.00 | 1oz",
-      "product": "FIND. Modified Goat",
-      "preGround": false
-    },
+    "cheapestOunce": null,
     "cheapestHalfOunce": {
       "size": "1/2 oz",
       "price": 110,
@@ -475,16 +407,10 @@
       "size": "1/8 oz",
       "price": 40,
       "line": "$40.00 | 1/8oz",
-      "product": "FLORETTE Honey Banana",
+      "product": "FLORETTE Gary Payton",
       "preGround": false
     },
-    "cheapestOunceFlower": {
-      "size": "1 oz",
-      "price": 175,
-      "line": "$175.00 | 1oz",
-      "product": "FIND. Modified Goat",
-      "preGround": false
-    },
+    "cheapestOunceFlower": null,
     "cheapestHalfOunceFlower": {
       "size": "1/2 oz",
       "price": 110,
@@ -503,7 +429,7 @@
       "size": "1/8 oz",
       "price": 40,
       "line": "$40.00 | 1/8oz",
-      "product": "FLORETTE Honey Banana",
+      "product": "FLORETTE Gary Payton",
       "preGround": false
     }
   },
@@ -517,37 +443,36 @@
     "menuUrl": "https://dazed.fun/menu/union-square-nyc-ny/categories/flower/",
     "dealsUrl": "https://dazed.fun/menu/union-square-nyc-ny/specials/",
     "status": "ok",
-    "ounceListings": [
-      {
-        "size": "1 oz",
-        "price": 160,
-        "line": "$160.00/28g",
-        "product": "Lemon Cherry Gelato - 28g - Synergy",
-        "preGround": false
-      }
-    ],
+    "ounceListings": [],
     "halfOunceListings": [],
     "quarterOunceListings": [],
     "eighthOunceListings": [
       {
         "size": "1/8 oz",
         "price": 45,
-        "line": "Permanent Marker - 3.5g - Budd",
-        "product": "Permanent Marker - 3.5g - Budd",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 45,
         "line": "$45.00/3.5g",
-        "product": "BUDD Permanent Marker - 3.5g - Budd",
+        "product": "Galactic Warheads - 3.5g - Alter",
         "preGround": false
       },
       {
         "size": "1/8 oz",
-        "price": 70,
-        "line": "$70.00/3.5g",
-        "product": "Sherbanger Terp Bomb - Flower x 1g Live Resin - California Honey",
+        "price": 52,
+        "line": "$52.00/3.5g",
+        "product": "Sherblato - 3.5g - Clearly Faded",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 40,
+        "line": "$40.00/3.5g",
+        "product": "RS11 - 3.5g - Aeterna",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 40,
+        "line": "$40.00/3.5g",
+        "product": "Ego Checker - 3.5g - Aeterna",
         "preGround": false
       }
     ],
@@ -556,36 +481,24 @@
     "totalProducts": 4,
     "flowerProducts": 4,
     "provider": "joint",
-    "cheapestOunce": {
-      "size": "1 oz",
-      "price": 160,
-      "line": "$160.00/28g",
-      "product": "Lemon Cherry Gelato - 28g - Synergy",
-      "preGround": false
-    },
+    "cheapestOunce": null,
     "cheapestHalfOunce": null,
     "cheapestQuarterOunce": null,
     "cheapestEighthOunce": {
       "size": "1/8 oz",
-      "price": 45,
-      "line": "Permanent Marker - 3.5g - Budd",
-      "product": "Permanent Marker - 3.5g - Budd",
+      "price": 40,
+      "line": "$40.00/3.5g",
+      "product": "RS11 - 3.5g - Aeterna",
       "preGround": false
     },
-    "cheapestOunceFlower": {
-      "size": "1 oz",
-      "price": 160,
-      "line": "$160.00/28g",
-      "product": "Lemon Cherry Gelato - 28g - Synergy",
-      "preGround": false
-    },
+    "cheapestOunceFlower": null,
     "cheapestHalfOunceFlower": null,
     "cheapestQuarterOunceFlower": null,
     "cheapestEighthOunceFlower": {
       "size": "1/8 oz",
-      "price": 45,
-      "line": "Permanent Marker - 3.5g - Budd",
-      "product": "Permanent Marker - 3.5g - Budd",
+      "price": 40,
+      "line": "$40.00/3.5g",
+      "product": "RS11 - 3.5g - Aeterna",
       "preGround": false
     }
   },
@@ -756,15 +669,15 @@
       {
         "size": "1/8 oz",
         "price": 33,
-        "line": "Back Home | Flower | Northern Lights | 3.5g",
-        "product": "Back Home | Flower | Northern Lights | 3.5g",
+        "line": "Back Home | Flower | Gorilla Glue | 3.5g",
+        "product": "Back Home | Flower | Gorilla Glue | 3.5g",
         "preGround": false
       },
       {
         "size": "1/8 oz",
         "price": 33,
-        "line": "Back Home | Flower | Gorilla Glue | 3.5g",
-        "product": "Back Home | Flower | Gorilla Glue | 3.5g",
+        "line": "Back Home | Flower | Northern Lights | 3.5g",
+        "product": "Back Home | Flower | Northern Lights | 3.5g",
         "preGround": false
       },
       {
@@ -798,6 +711,13 @@
       {
         "size": "1/8 oz",
         "price": 39,
+        "line": "Matter | Flower | Grape Gas | 3.5g",
+        "product": "Matter | Flower | Grape Gas | 3.5g",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 39,
         "line": "Matter | Flower | Jelly Cake | 3.5g",
         "product": "Matter | Flower | Jelly Cake | 3.5g",
         "preGround": false
@@ -811,9 +731,9 @@
       },
       {
         "size": "1/8 oz",
-        "price": 39,
-        "line": "Matter | Flower | Grape Gas | 3.5g",
-        "product": "Matter | Flower | Grape Gas | 3.5g",
+        "price": 50,
+        "line": "VLSNY | Flower | Lemon Mints | 3.5g",
+        "product": "VLSNY | Flower | Lemon Mints | 3.5g",
         "preGround": false
       },
       {
@@ -826,29 +746,8 @@
       {
         "size": "1/8 oz",
         "price": 50,
-        "line": "VLSNY | Flower | Lemon Mints | 3.5g",
-        "product": "VLSNY | Flower | Lemon Mints | 3.5g",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 50,
         "line": "VLSNY | Flower | Eggroll | 3.5g",
         "product": "VLSNY | Flower | Eggroll | 3.5g",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 33,
-        "line": "Back Home | Flower | Jack Herer | 3.5g",
-        "product": "Back Home | Flower | Jack Herer | 3.5g",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 33,
-        "line": "Back Home | Flower | Super Lemon Haze | 3.5g",
-        "product": "Back Home | Flower | Super Lemon Haze | 3.5g",
         "preGround": false
       },
       {
@@ -861,8 +760,22 @@
       {
         "size": "1/8 oz",
         "price": 33,
+        "line": "Back Home | Flower | Super Lemon Haze | 3.5g",
+        "product": "Back Home | Flower | Super Lemon Haze | 3.5g",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 33,
         "line": "Back Home | Flower | Maui Wowie | 3.5g",
         "product": "Back Home | Flower | Maui Wowie | 3.5g",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 33,
+        "line": "Back Home | Flower | Jack Herer | 3.5g",
+        "product": "Back Home | Flower | Jack Herer | 3.5g",
         "preGround": false
       },
       {
@@ -875,15 +788,15 @@
       {
         "size": "1/8 oz",
         "price": 44,
-        "line": "Heady Tree | Flower | Yellow Mermaid | 3.5g",
-        "product": "Heady Tree | Flower | Yellow Mermaid | 3.5g",
+        "line": "Heady Tree | Flower | Tear Gas | 3.5g",
+        "product": "Heady Tree | Flower | Tear Gas | 3.5g",
         "preGround": false
       },
       {
         "size": "1/8 oz",
         "price": 44,
-        "line": "Heady Tree | Flower | Tear Gas | 3.5g",
-        "product": "Heady Tree | Flower | Tear Gas | 3.5g",
+        "line": "Heady Tree | Flower | Yellow Mermaid | 3.5g",
+        "product": "Heady Tree | Flower | Yellow Mermaid | 3.5g",
         "preGround": false
       },
       {
@@ -1405,15 +1318,15 @@
       {
         "size": "1 oz",
         "price": 220,
-        "line": "Rythm | Granny Candy | 28g Flower | Sativa",
-        "product": "Rythm | Granny Candy | 28g Flower | Sativa",
+        "line": "Rythm | Taffy Twist | 28g Flower | Indica Dominant",
+        "product": "Rythm | Taffy Twist | 28g Flower | Indica Dominant",
         "preGround": false
       },
       {
         "size": "1 oz",
         "price": 220,
-        "line": "Rythm | Taffy Twist | 28g Flower | Indica Dominant",
-        "product": "Rythm | Taffy Twist | 28g Flower | Indica Dominant",
+        "line": "Rythm | Granny Candy | 28g Flower | Sativa",
+        "product": "Rythm | Granny Candy | 28g Flower | Sativa",
         "preGround": false
       },
       {
@@ -1505,15 +1418,15 @@
       {
         "size": "1/2 oz",
         "price": 90,
-        "line": "1937 | Private Reserve OG | 14g Mixed Flower | Indica",
-        "product": "1937 | Private Reserve OG | 14g Mixed Flower | Indica",
+        "line": "1937 | Paztelito | 14g Mixed bud | Hybrid",
+        "product": "1937 | Paztelito | 14g Mixed bud | Hybrid",
         "preGround": false
       },
       {
         "size": "1/2 oz",
         "price": 90,
-        "line": "1937 | Paztelito | 14g Mixed bud | Hybrid",
-        "product": "1937 | Paztelito | 14g Mixed bud | Hybrid",
+        "line": "1937 | Private Reserve OG | 14g Mixed Flower | Indica",
+        "product": "1937 | Private Reserve OG | 14g Mixed Flower | Indica",
         "preGround": false
       },
       {
@@ -1548,13 +1461,6 @@
       }
     ],
     "eighthOunceListings": [
-      {
-        "size": "1/8 oz",
-        "price": 50,
-        "line": "Dada Exotics | Hash Burger | 3.5g | Hybrid",
-        "product": "Dada Exotics | Hash Burger | 3.5g | Hybrid",
-        "preGround": false
-      },
       {
         "size": "1/8 oz",
         "price": 30,
@@ -1600,6 +1506,13 @@
       {
         "size": "1/8 oz",
         "price": 50,
+        "line": "Rythm | Donut Trip | 3.5g Flower | Hybrid",
+        "product": "Rythm | Donut Trip | 3.5g Flower | Hybrid",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 50,
         "line": "Rythm | 95 Cookies | 3.5g Flower | Hybrid",
         "product": "Rythm | 95 Cookies | 3.5g Flower | Hybrid",
         "preGround": false
@@ -1614,13 +1527,6 @@
       {
         "size": "1/8 oz",
         "price": 50,
-        "line": "Rythm | Donut Trip | 3.5g Flower | Hybrid",
-        "product": "Rythm | Donut Trip | 3.5g Flower | Hybrid",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 50,
         "line": "Rythm | THaze | 3.5g Flower | Sativa Dom",
         "product": "Rythm | THaze | 3.5g Flower | Sativa Dom",
         "preGround": false
@@ -1628,15 +1534,15 @@
       {
         "size": "1/8 oz",
         "price": 50,
-        "line": "Rythm | Jack 's Delight | 3.5g Flower | Sativa",
-        "product": "Rythm | Jack 's Delight | 3.5g Flower | Sativa",
+        "line": "Rythm | Jet Fuel OG | 3.5g Flower | Hybrid",
+        "product": "Rythm | Jet Fuel OG | 3.5g Flower | Hybrid",
         "preGround": false
       },
       {
         "size": "1/8 oz",
         "price": 50,
-        "line": "Rythm | Jet Fuel OG | 3.5g Flower | Hybrid",
-        "product": "Rythm | Jet Fuel OG | 3.5g Flower | Hybrid",
+        "line": "Rythm | Jack 's Delight | 3.5g Flower | Sativa",
+        "product": "Rythm | Jack 's Delight | 3.5g Flower | Sativa",
         "preGround": false
       },
       {
@@ -1663,15 +1569,15 @@
       {
         "size": "1/8 oz",
         "price": 23,
-        "line": "Packs | Junk Food | 3.5g Flower | Hybrid",
-        "product": "Packs | Junk Food | 3.5g Flower | Hybrid",
+        "line": "Packs | Orange Cloudz | 3.5g Flower | Sativa",
+        "product": "Packs | Orange Cloudz | 3.5g Flower | Sativa",
         "preGround": false
       },
       {
         "size": "1/8 oz",
         "price": 23,
-        "line": "Packs | Orange Cloudz | 3.5g Flower | Sativa",
-        "product": "Packs | Orange Cloudz | 3.5g Flower | Sativa",
+        "line": "Packs | Junk Food | 3.5g Flower | Hybrid",
+        "product": "Packs | Junk Food | 3.5g Flower | Hybrid",
         "preGround": false
       },
       {
@@ -1684,22 +1590,22 @@
       {
         "size": "1/8 oz",
         "price": 26,
-        "line": "Dr.Jekyll and Mr.High | ice Cream Swirl | 3.5G Flower",
-        "product": "Dr.Jekyll and Mr.High | ice Cream Swirl | 3.5G Flower",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 26,
         "line": "Dr.Jekyll and Mr.High | Vanilla Frosting | 3.5G Flower",
         "product": "Dr.Jekyll and Mr.High | Vanilla Frosting | 3.5G Flower",
         "preGround": false
       },
       {
         "size": "1/8 oz",
+        "price": 26,
+        "line": "Dr.Jekyll and Mr.High | ice Cream Swirl | 3.5G Flower",
+        "product": "Dr.Jekyll and Mr.High | ice Cream Swirl | 3.5G Flower",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
         "price": 30,
-        "line": "Back Home Cannabis | White Widow | 3.5g Flower | Hybrid",
-        "product": "Back Home Cannabis | White Widow | 3.5g Flower | Hybrid",
+        "line": "Kings & Queens | Petrol Station | 3.5g Flower | Hybrid",
+        "product": "Kings & Queens | Petrol Station | 3.5g Flower | Hybrid",
         "preGround": false
       },
       {
@@ -1707,6 +1613,13 @@
         "price": 30,
         "line": "Revert | Cap Junkie | 3.5g | Flower | Hybrid",
         "product": "Revert | Cap Junkie | 3.5g | Flower | Hybrid",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 30,
+        "line": "Back Home Cannabis | White Widow | 3.5g Flower | Hybrid",
+        "product": "Back Home Cannabis | White Widow | 3.5g Flower | Hybrid",
         "preGround": false
       },
       {
@@ -1747,13 +1660,6 @@
       {
         "size": "1/8 oz",
         "price": 50,
-        "line": "Dada Exotics | McLovin | 3.5g | Hybrid",
-        "product": "Dada Exotics | McLovin | 3.5g | Hybrid",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 50,
         "line": "Dada Exotics | Custard Cream | 3.5g | Indica",
         "product": "Dada Exotics | Custard Cream | 3.5g | Indica",
         "preGround": false
@@ -1767,9 +1673,16 @@
       },
       {
         "size": "1/8 oz",
-        "price": 55,
-        "line": "J Cannabis | Big Daddy Blue | 3.5g Premium Flower | Hybrid",
-        "product": "J Cannabis | Big Daddy Blue | 3.5g Premium Flower | Hybrid",
+        "price": 50,
+        "line": "Dada Exotics | McLovin | 3.5g | Hybrid",
+        "product": "Dada Exotics | McLovin | 3.5g | Hybrid",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 50,
+        "line": "Dada Exotics | Hash Burger | 3.5g | Hybrid",
+        "product": "Dada Exotics | Hash Burger | 3.5g | Hybrid",
         "preGround": false
       },
       {
@@ -1777,6 +1690,13 @@
         "price": 55,
         "line": "J Cannabis | King Kong Gelato | 3.5g Premium Flower | Hybrid",
         "product": "J Cannabis | King Kong Gelato | 3.5g Premium Flower | Hybrid",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 55,
+        "line": "J Cannabis | Big Daddy Blue | 3.5g Premium Flower | Hybrid",
+        "product": "J Cannabis | Big Daddy Blue | 3.5g Premium Flower | Hybrid",
         "preGround": false
       },
       {
@@ -4408,16 +4328,16 @@
       },
       {
         "size": "1/8 oz",
-        "price": 35.2,
+        "price": 50,
         "line": "3.5g",
-        "product": "ElectraLeaf COCO PINA",
+        "product": "Milkweed Indoor PINK MELONZ",
         "preGround": false
       },
       {
         "size": "1/8 oz",
-        "price": 50,
+        "price": 35.2,
         "line": "3.5g",
-        "product": "Milkweed Indoor PINK MELONZ",
+        "product": "ElectraLeaf COCO PINA",
         "preGround": false
       },
       {
@@ -5872,6 +5792,13 @@
       {
         "size": "1/8 oz",
         "price": 50,
+        "line": "Priscilla's Garden | Lunch Money | 3.5g",
+        "product": "Priscilla's Garden | Lunch Money | 3.5g",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 50,
         "line": "Priscilla's Garden | Zoomies | 3.5g",
         "product": "Priscilla's Garden | Zoomies | 3.5g",
         "preGround": false
@@ -6087,8 +6014,8 @@
       }
     ],
     "error": null,
-    "totalProducts": 190,
-    "flowerProducts": 190,
+    "totalProducts": 191,
+    "flowerProducts": 191,
     "provider": "newamsterdam",
     "cheapestOunce": {
       "size": "1 oz",
@@ -6224,55 +6151,13 @@
         "line": "1/2 oz",
         "product": "Crunch Berries - Premium Flower - 14g - Hybrid To The Moon",
         "preGround": false
-      },
-      {
-        "size": "1/2 oz",
-        "price": 75,
-        "line": "1/2 oz",
-        "product": "Revert | 14g Kief Infused Ground Flower | Maui Wowie",
-        "preGround": true
-      },
-      {
-        "size": "1/2 oz",
-        "price": 75,
-        "line": "1/2 oz",
-        "product": "Revert Cannabis | 14g Kief Infused Ground Flower | NYC Diesel",
-        "preGround": true
-      },
-      {
-        "size": "1/2 oz",
-        "price": 75,
-        "line": "1/2 oz",
-        "product": "Revert Cannabis | 14g Kief Infused Ground Flower | Hawaiian Haze",
-        "preGround": true
-      },
-      {
-        "size": "1/2 oz",
-        "price": 75,
-        "line": "1/2 oz",
-        "product": "Revert Cannabis | 14g Infused Ground Flower | Sour Blue Diesel",
-        "preGround": true
-      },
-      {
-        "size": "1/2 oz",
-        "price": 75,
-        "line": "1/2 oz",
-        "product": "Revert Cannabis | 14g Infused Ground Flower | Monster Cookies",
-        "preGround": true
-      },
-      {
-        "size": "1/2 oz",
-        "price": 75,
-        "line": "1/2 oz",
-        "product": "Revert Cannabis | 14g Infused Ground Flower | Galactic Jack",
-        "preGround": true
       }
     ],
     "quarterOunceListings": [
       {
         "size": "1/4 oz",
         "price": 65,
-        "line": "Cheevo | 7g Whole Flower | RS11",
+        "line": "1/4 oz",
         "product": "Cheevo | 7g Whole Flower | RS11",
         "preGround": false
       },
@@ -6287,13 +6172,6 @@
     "eighthOunceListings": [
       {
         "size": "1/8 oz",
-        "price": 30,
-        "line": "Cheevo | 3.5g Flower | Baby Yoda",
-        "product": "Cheevo | 3.5g Flower | Baby Yoda",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
         "price": 55,
         "line": "RUNTZ | 3.5g Flower | Lemon Candy Runtz",
         "product": "RUNTZ | 3.5g Flower | Lemon Candy Runtz",
@@ -6304,13 +6182,6 @@
         "price": 55,
         "line": "1/8 oz",
         "product": "Runtz Staff Pick",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 30,
-        "line": "1/8 oz",
-        "product": "Cheevo | 3.5g Flower | Death Star",
         "preGround": false
       },
       {
@@ -6539,6 +6410,20 @@
       },
       {
         "size": "1/8 oz",
+        "price": 30,
+        "line": "1/8 oz",
+        "product": "Cheevo | 3.5g Flower | Death Star",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 30,
+        "line": "1/8 oz",
+        "product": "Cheevo | 3.5g Flower | Baby Yoda",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
         "price": 27,
         "line": "1/8 oz",
         "product": "Dragonfly | Flower 3.5g | Sour Diesel",
@@ -6617,8 +6502,8 @@
     ],
     "deals": [],
     "error": null,
-    "totalProducts": 64,
-    "flowerProducts": 64,
+    "totalProducts": 58,
+    "flowerProducts": 58,
     "provider": "conbud",
     "cheapestOunce": {
       "size": "1 oz",
@@ -6629,15 +6514,15 @@
     },
     "cheapestHalfOunce": {
       "size": "1/2 oz",
-      "price": 75,
-      "line": "1/2 oz",
-      "product": "Revert | 14g Kief Infused Ground Flower | Maui Wowie",
-      "preGround": true
+      "price": 84,
+      "line": "Crunch Berries - Premium Flower - 14g - Hybrid",
+      "product": "Crunch Berries - Premium Flower - 14g - Hybrid",
+      "preGround": false
     },
     "cheapestQuarterOunce": {
       "size": "1/4 oz",
       "price": 65,
-      "line": "Cheevo | 7g Whole Flower | RS11",
+      "line": "1/4 oz",
       "product": "Cheevo | 7g Whole Flower | RS11",
       "preGround": false
     },
@@ -6665,7 +6550,7 @@
     "cheapestQuarterOunceFlower": {
       "size": "1/4 oz",
       "price": 65,
-      "line": "Cheevo | 7g Whole Flower | RS11",
+      "line": "1/4 oz",
       "product": "Cheevo | 7g Whole Flower | RS11",
       "preGround": false
     },
@@ -6700,13 +6585,6 @@
         "price": 150,
         "line": "1 oz",
         "product": "LivWell | Purple Sunset Flower | 28g",
-        "preGround": false
-      },
-      {
-        "size": "1 oz",
-        "price": 200,
-        "line": "1 oz",
-        "product": "Frozen Margarita | 28g",
         "preGround": false
       },
       {
@@ -6748,6 +6626,13 @@
         "size": "1 oz",
         "price": 200,
         "line": "1 oz",
+        "product": "Frozen Margarita | 28g",
+        "preGround": false
+      },
+      {
+        "size": "1 oz",
+        "price": 200,
+        "line": "1 oz",
         "product": "Durban Poison x Soap | 28g",
         "preGround": false
       },
@@ -6769,17 +6654,17 @@
     "halfOunceListings": [
       {
         "size": "1/2 oz",
-        "price": 135,
-        "line": "1/2 oz",
-        "product": "Titan Express (Smalls) | 14g",
-        "preGround": false
-      },
-      {
-        "size": "1/2 oz",
         "price": 80,
         "line": "1/2 oz",
         "product": "Bubba Kush Kief Infused Ground Flower | 14g",
         "preGround": true
+      },
+      {
+        "size": "1/2 oz",
+        "price": 135,
+        "line": "1/2 oz",
+        "product": "Titan Express (Smalls) | 14g",
+        "preGround": false
       },
       {
         "size": "1/2 oz",
@@ -6992,7 +6877,7 @@
         "size": "1/8 oz",
         "price": 45,
         "line": "1/8 oz",
-        "product": "Sour Jack | 3.5g",
+        "product": "Sugar Breath | 3.5g",
         "preGround": false
       },
       {
@@ -7126,6 +7011,13 @@
         "price": 53,
         "line": "Sour OG | 3.5g",
         "product": "Sour OG | 3.5g",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 45,
+        "line": "1/8 oz",
+        "product": "Sour Jack | 3.5g",
         "preGround": false
       },
       {
@@ -7278,8 +7170,8 @@
     ],
     "deals": [],
     "error": null,
-    "totalProducts": 83,
-    "flowerProducts": 83,
+    "totalProducts": 84,
+    "flowerProducts": 84,
     "provider": "joint",
     "cheapestOunce": {
       "size": "1 oz",
@@ -7974,23 +7866,23 @@
         "line": "$160.00/28g",
         "product": "Hepworth (28G)",
         "preGround": false
+      },
+      {
+        "size": "1 oz",
+        "price": 181,
+        "line": "(28G)",
+        "product": "(28G)",
+        "preGround": false
+      },
+      {
+        "size": "1 oz",
+        "price": 181,
+        "line": "$181.00/28g",
+        "product": "Grocery (28G)",
+        "preGround": false
       }
     ],
     "halfOunceListings": [
-      {
-        "size": "1/2 oz",
-        "price": 91,
-        "line": "(14G)",
-        "product": "(14G)",
-        "preGround": false
-      },
-      {
-        "size": "1/2 oz",
-        "price": 91,
-        "line": "$91.00/14g",
-        "product": "Dank (14G)",
-        "preGround": false
-      },
       {
         "size": "1/2 oz",
         "price": 84,
@@ -8003,6 +7895,20 @@
         "price": 84,
         "line": "$84.00/14g",
         "product": "Infused Ready-to-Roll (14G)",
+        "preGround": false
+      },
+      {
+        "size": "1/2 oz",
+        "price": 91,
+        "line": "(14G)",
+        "product": "(14G)",
+        "preGround": false
+      },
+      {
+        "size": "1/2 oz",
+        "price": 91,
+        "line": "$91.00/14g",
+        "product": "Dank (14G)",
         "preGround": false
       },
       {
@@ -8049,20 +7955,6 @@
       },
       {
         "size": "1/2 oz",
-        "price": 99,
-        "line": "(14G)",
-        "product": "(14G)",
-        "preGround": false
-      },
-      {
-        "size": "1/2 oz",
-        "price": 99,
-        "line": "$99.00/14g",
-        "product": "Revert Cannabis (14G)",
-        "preGround": false
-      },
-      {
-        "size": "1/2 oz",
         "price": 102,
         "line": "(14G)",
         "product": "(14G)",
@@ -8072,6 +7964,20 @@
         "size": "1/2 oz",
         "price": 102,
         "line": "$102.00/14g",
+        "product": "Revert Cannabis (14G)",
+        "preGround": false
+      },
+      {
+        "size": "1/2 oz",
+        "price": 99,
+        "line": "(14G)",
+        "product": "(14G)",
+        "preGround": false
+      },
+      {
+        "size": "1/2 oz",
+        "price": 99,
+        "line": "$99.00/14g",
         "product": "Revert Cannabis (14G)",
         "preGround": false
       },
@@ -8170,16 +8076,16 @@
       },
       {
         "size": "1/4 oz",
-        "price": 80,
+        "price": 66,
         "line": "(7G)",
         "product": "(7G)",
         "preGround": false
       },
       {
         "size": "1/4 oz",
-        "price": 80,
-        "line": "$80.00/7g",
-        "product": "Florist Farms (7G)",
+        "price": 66,
+        "line": "$66.00/7g",
+        "product": "Cheevo (7G)",
         "preGround": false
       },
       {
@@ -8212,20 +8118,6 @@
       },
       {
         "size": "1/4 oz",
-        "price": 66,
-        "line": "(7G)",
-        "product": "(7G)",
-        "preGround": false
-      },
-      {
-        "size": "1/4 oz",
-        "price": 66,
-        "line": "$66.00/7g",
-        "product": "Cheevo (7G)",
-        "preGround": false
-      },
-      {
-        "size": "1/4 oz",
         "price": 72,
         "line": "(7G)",
         "product": "(7G)",
@@ -8236,6 +8128,20 @@
         "price": 72,
         "line": "$72.00/7g",
         "product": "dada (7G)",
+        "preGround": false
+      },
+      {
+        "size": "1/4 oz",
+        "price": 80,
+        "line": "(7G)",
+        "product": "(7G)",
+        "preGround": false
+      },
+      {
+        "size": "1/4 oz",
+        "price": 80,
+        "line": "$80.00/7g",
+        "product": "Florist Farms (7G)",
         "preGround": false
       },
       {
@@ -8263,20 +8169,6 @@
       },
       {
         "size": "1/8 oz",
-        "price": 35,
-        "line": "(3.5G)",
-        "product": "(3.5G)",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 35,
-        "line": "$35.00/3.5g",
-        "product": "The Ladies (3.5G)",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
         "price": 50,
         "line": "(3.5G)",
         "product": "(3.5G)",
@@ -8291,13 +8183,6 @@
       },
       {
         "size": "1/8 oz",
-        "price": 50,
-        "line": "$50.00/3.5g",
-        "product": "Rolling Green (3.5G)",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
         "price": 46,
         "line": "(3.5G)",
         "product": "(3.5G)",
@@ -8308,6 +8193,13 @@
         "price": 46,
         "line": "$46.00/3.5g",
         "product": "The Ladies (3.5G)",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 50,
+        "line": "$50.00/3.5g",
+        "product": "Rolling Green (3.5G)",
         "preGround": false
       },
       {
@@ -8354,13 +8246,6 @@
       },
       {
         "size": "1/8 oz",
-        "price": 37,
-        "line": "$37.00/3.5g",
-        "product": "Umamii (3.5G, 14G)",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
         "price": 40,
         "line": "(3.5G)",
         "product": "(3.5G)",
@@ -8375,30 +8260,16 @@
       },
       {
         "size": "1/8 oz",
+        "price": 37,
+        "line": "$37.00/3.5g",
+        "product": "Umamii (3.5G, 14G)",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
         "price": 50,
         "line": "$50.00/3.5g",
         "product": "Dank (3.5G)",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 34,
-        "line": "$34.00/3.5g",
-        "product": "The Ladies (3.5G)",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 46,
-        "line": "$46.00/3.5g",
-        "product": "Golden Garden (3.5G)",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 50,
-        "line": "$50.00/3.5g",
-        "product": "Electraleaf (3.5G)",
         "preGround": false
       },
       {
@@ -8413,6 +8284,27 @@
         "price": 63,
         "line": "$63.00/3.5g",
         "product": "dada (3.5G)",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 34,
+        "line": "$34.00/3.5g",
+        "product": "The Ladies (3.5G)",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 30,
+        "line": "(3.5G)",
+        "product": "(3.5G)",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 30,
+        "line": "$30.00/3.5g",
+        "product": "High Falls Canna (3.5G)",
         "preGround": false
       },
       {
@@ -8438,23 +8330,30 @@
       },
       {
         "size": "1/8 oz",
-        "price": 30,
+        "price": 46,
+        "line": "$46.00/3.5g",
+        "product": "Florette (3.5G)",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 41,
         "line": "(3.5G)",
         "product": "(3.5G)",
         "preGround": false
       },
       {
         "size": "1/8 oz",
-        "price": 30,
-        "line": "$30.00/3.5g",
-        "product": "High Falls Canna (3.5G)",
+        "price": 41,
+        "line": "$41.00/3.5g",
+        "product": "Lobo (3.5G)",
         "preGround": false
       },
       {
         "size": "1/8 oz",
-        "price": 46,
-        "line": "$46.00/3.5g",
-        "product": "Florette (3.5G)",
+        "price": 50,
+        "line": "$50.00/3.5g",
+        "product": "Electraleaf (3.5G)",
         "preGround": false
       },
       {
@@ -8481,13 +8380,6 @@
       {
         "size": "1/8 oz",
         "price": 41,
-        "line": "(3.5G)",
-        "product": "(3.5G)",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 41,
         "line": "$41.00/3.5g",
         "product": "Umamii (3.5G)",
         "preGround": false
@@ -8501,30 +8393,16 @@
       },
       {
         "size": "1/8 oz",
-        "price": 52,
-        "line": "(3.5G)",
-        "product": "(3.5G)",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 52,
-        "line": "$52.00/3.5g",
-        "product": "ADK Hemp Co (3.5G)",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 50,
-        "line": "$50.00/3.5g",
-        "product": "Heady Tree (3.5G)",
+        "price": 34,
+        "line": "$34.00/3.5g",
+        "product": "Indoor Grown Flower (3.5G)",
         "preGround": false
       }
     ],
     "deals": [],
     "error": null,
-    "totalProducts": 79,
-    "flowerProducts": 79,
+    "totalProducts": 77,
+    "flowerProducts": 77,
     "provider": "kushklub",
     "cheapestOunce": {
       "size": "1 oz",
@@ -8858,7 +8736,7 @@
     "eighthOunceListings": [],
     "deals": [],
     "error": "Menu loaded, but no 1 oz, 1/2 oz, 1/4 oz, or 1/8 oz flower listings were found. Flower products seen: 0.",
-    "totalProducts": 84,
+    "totalProducts": 85,
     "flowerProducts": 0,
     "provider": "leafly",
     "cheapestOunce": null,
@@ -8886,6 +8764,13 @@
         "price": 200,
         "line": "Mango Runtz - 28G",
         "product": "Mango Runtz - 28G",
+        "preGround": false
+      },
+      {
+        "size": "1 oz",
+        "price": 161.95,
+        "line": "Blue Dream - 28G",
+        "product": "Blue Dream - 28G",
         "preGround": false
       }
     ],
@@ -8935,13 +8820,6 @@
         "line": "Bubblegum Gelato Sungrown - 3.5G",
         "product": "Bubblegum Gelato Sungrown - 3.5G",
         "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 30.09,
-        "line": "White Widow - 3.5G",
-        "product": "White Widow - 3.5G",
-        "preGround": false
       }
     ],
     "deals": [],
@@ -8951,9 +8829,9 @@
     "provider": "dutchie",
     "cheapestOunce": {
       "size": "1 oz",
-      "price": 200,
-      "line": "Mango Runtz - 28G",
-      "product": "Mango Runtz - 28G",
+      "price": 161.95,
+      "line": "Blue Dream - 28G",
+      "product": "Blue Dream - 28G",
       "preGround": false
     },
     "cheapestHalfOunce": {
@@ -8979,9 +8857,9 @@
     },
     "cheapestOunceFlower": {
       "size": "1 oz",
-      "price": 200,
-      "line": "Mango Runtz - 28G",
-      "product": "Mango Runtz - 28G",
+      "price": 161.95,
+      "line": "Blue Dream - 28G",
+      "product": "Blue Dream - 28G",
       "preGround": false
     },
     "cheapestHalfOunceFlower": {

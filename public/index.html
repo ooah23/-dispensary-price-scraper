@@ -4,10 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>NYC Cannabis Price Tracker | Cheapest Weed Deals in NYC</title>
-  <meta name="description" content="Compare real-time flower prices at licensed NYC dispensaries. Find the cheapest ounce, half-ounce, and eighth deals across Manhattan, Queens, and beyond. Updated daily.">
+  <meta name="description" content="Cheapest weed in NYC — compare real-time flower prices at licensed dispensaries. Find today's best ounce, half-oz, and eighth deals. No stale menus, updated daily.">
   <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#0f172a">
+  <meta name="theme-color" content="#22c55e">
   <link rel="canonical" href="https://nycweedprice.org/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
+  <link rel="manifest" href="/site.webmanifest">
   <meta name="geo.region" content="US-NY">
   <meta name="geo.placename" content="New York City">
 
@@ -117,7 +120,9 @@
     .hamburger {
       display: none;
       background: none; border: none; cursor: pointer;
-      padding: 6px; color: var(--text-muted);
+      padding: 0; color: var(--text-muted);
+      width: 44px; height: 44px;
+      align-items: center; justify-content: center;
     }
     .hamburger svg { display: block; }
 
@@ -174,7 +179,7 @@
     .stats-section { padding: 0 20px 40px; }
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 12px;
       max-width: 960px;
       margin: 0 auto;
@@ -190,14 +195,19 @@
     }
     .stat-card::before {
       content: '';
-      position: absolute; top: 0; left: 0; right: 0;
-      height: 2px;
+      position: absolute; top: 0; left: 0; bottom: 0;
+      width: 3px;
       background: var(--accent-color, var(--green));
     }
     .stat-card:hover { border-color: var(--accent-color, var(--green)); transform: translateY(-2px); }
     .stat-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .6px; color: var(--text-dim); margin-bottom: 8px; }
     .stat-value { font-size: 28px; font-weight: 800; line-height: 1; color: var(--accent-color, var(--green)); }
     .stat-sub { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+
+    /* ─── Anchor scroll offset (sticky nav = 56px + 12px buffer) ── */
+    .main-section, .deals-section, .how-section, .alert-section, .faq-section {
+      scroll-margin-top: 68px;
+    }
 
     /* ─── Main content ──────────────────────────────────────── */
     .main-section { padding: 0 20px 60px; }
@@ -223,7 +233,7 @@
       display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
     }
     .search-box {
-      position: relative; flex: 1; min-width: 200px;
+      position: relative; flex: 1; min-width: 160px;
     }
     .search-box svg {
       position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
@@ -237,6 +247,7 @@
       color: var(--text);
       font-size: 14px;
       padding: 8px 12px 8px 34px;
+      min-height: 44px;
       outline: none;
       transition: border-color .15s;
     }
@@ -260,6 +271,7 @@
     }
     .pill:hover { border-color: var(--green); color: var(--green); }
     .pill.active { background: var(--green); border-color: var(--green); color: #000; }
+    #dealsOnlyToggle.active { background: var(--amber); border-color: var(--amber); color: #000; }
 
     .filter-meta {
       margin-left: auto;
@@ -287,7 +299,7 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      overflow: clip;
+      overflow: visible;
     }
     .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
     table { width: 100%; border-collapse: collapse; }
@@ -311,7 +323,7 @@
     th.sorted-desc::after { content: ' ↓'; color: var(--green); }
 
     td {
-      padding: 12px 14px;
+      padding: 14px 16px;
       border-bottom: 1px solid rgba(51,65,85,.6);
       vertical-align: middle;
       font-size: 14px;
@@ -324,14 +336,14 @@
     tr.best-half    td { background: rgba(167,139,250,.05); }
     tr.best-quarter td { background: rgba(251,191,36,.05); }
     tr.best-eighth  td { background: rgba(248,113,113,.05); }
-    tr.best-oz:hover      td { background: rgba(34,197,94,.09); }
-    tr.best-half:hover    td { background: rgba(167,139,250,.09); }
-    tr.best-quarter:hover td { background: rgba(251,191,36,.09); }
-    tr.best-eighth:hover  td { background: rgba(248,113,113,.09); }
+    tr.best-oz:hover      td { background: rgba(34,197,94,.12); }
+    tr.best-half:hover    td { background: rgba(167,139,250,.12); }
+    tr.best-quarter:hover td { background: rgba(251,191,36,.12); }
+    tr.best-eighth:hover  td { background: rgba(248,113,113,.12); }
 
     tr.pre-ground td { font-style: italic; }
 
-    .store-name { font-weight: 600; font-size: 14px; }
+    .store-name { font-weight: 700; font-size: 15px; }
     .store-nbhd { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
     .store-address { font-size: 11px; color: var(--text-dim); }
 
@@ -373,6 +385,10 @@
       margin-left: 6px; vertical-align: middle;
       text-transform: uppercase; letter-spacing: .4px;
     }
+    /* best-badge color follows size */
+    tr.best-half    .best-badge { background: rgba(167,139,250,.15); color: var(--purple); border-color: rgba(167,139,250,.3); }
+    tr.best-quarter .best-badge { background: rgba(251,191,36,.15);  color: var(--amber);  border-color: rgba(251,191,36,.3); }
+    tr.best-eighth  .best-badge { background: rgba(248,113,113,.15); color: var(--red);    border-color: rgba(248,113,113,.3); }
 
     .empty-state {
       padding: 60px 20px;
@@ -392,48 +408,87 @@
       display: flex; gap: 10px; align-items: center;
     }
 
-    /* ─── Deals & Specials ──────────────────────────────────── */
-    .deals-section { padding: 0 20px 60px; }
-    .deals-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 14px;
+    /* ─── Best Value Picks ──────────────────────────────────── */
+    /* Deals table headers must NOT be sticky — inside overflow-x:auto the
+       sticky anchor is the scroll container, so top:56px would push the
+       header 56px into the rows. Override to static. */
+    .deals-section .table-scroll th { position: static; }
+    .deals-section { padding: 0 20px 48px; }
+    .deals-section-header {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 6px;
     }
-    .deal-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px 18px;
-      transition: border-color .2s;
-      position: relative;
-      overflow: hidden;
+    .deals-see-all {
+      font-size: 13px; font-weight: 600; color: var(--green);
+      white-space: nowrap;
     }
-    .deal-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--amber);
+    .deals-see-all:hover { text-decoration: underline; }
+    .deals-subtitle {
+      font-size: 13px; color: var(--text-dim);
+      margin-bottom: 14px;
     }
-    .deal-card:hover { border-color: var(--amber); }
-    .deal-card-store {
-      font-weight: 700; font-size: 14px;
-      margin-bottom: 4px;
+    .deal-price { font-weight: 800; font-size: 17px; color: var(--green); }
+    .deal-was { font-size: 11px; color: var(--text-dim); text-decoration: line-through; margin-left: 4px; }
+    .deal-product-mobile { display: none; font-size: 12px; color: var(--text-dim); margin-top: 2px; white-space: normal; max-width: 100%; }
+    @media (max-width: 600px) {
+      .deal-product-mobile { display: block; }
+      .deal-col-product { display: none; }
+      /* Hide main price table Product column */
+      table th:nth-child(4), table td:nth-child(4) { display: none; }
+      /* Hero CTA full-width */
+      .hero-cta { display: flex; justify-content: center; width: 100%; max-width: 320px; }
     }
-    .deal-card-nbhd {
-      font-size: 11px; color: var(--text-dim);
-      margin-bottom: 10px;
+    /* ─── Deal / Value row highlights ──────────────── */
+    tr.row-sale td  { background: rgba(251,191,36,.04); }
+    tr.row-value td { background: rgba(34,197,94,.03); }
+    .deal-tag-sale {
+      display: inline-block; margin-right: 5px;
+      font-size: 9px; font-weight: 800; letter-spacing: .4px;
+      padding: 2px 5px; border-radius: 4px;
+      background: rgba(251,191,36,.2); color: var(--amber);
+      border: 1px solid rgba(251,191,36,.4);
+      text-transform: uppercase; vertical-align: middle;
     }
-    .deal-list {
-      list-style: none;
-      display: flex; flex-direction: column; gap: 6px;
+    .deal-tag-value {
+      display: inline-block; margin-right: 5px;
+      font-size: 9px; font-weight: 800; letter-spacing: .4px;
+      padding: 2px 5px; border-radius: 4px;
+      background: rgba(34,197,94,.15); color: var(--green);
+      border: 1px solid rgba(34,197,94,.3);
+      text-transform: uppercase; vertical-align: middle;
     }
-    .deal-list li {
-      font-size: 13px; color: var(--text-muted);
+
+    /* Structured price-discount deals */
+    .deal-item-structured {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 10px;
       padding: 6px 10px;
-      background: rgba(251,191,36,.05);
-      border: 1px solid rgba(251,191,36,.15);
+      background: rgba(34,197,94,.06);
+      border: 1px solid rgba(34,197,94,.2);
       border-radius: 6px;
-      line-height: 1.4;
+    }
+    .deal-item-name {
+      font-size: 12px; color: var(--text-muted);
+      flex: 1; min-width: 0;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .deal-item-prices {
+      display: flex; align-items: center; gap: 6px;
+      flex-shrink: 0;
+    }
+    .deal-item-original {
+      font-size: 11px; color: var(--text-dim);
+      text-decoration: line-through;
+    }
+    .deal-item-current {
+      font-size: 14px; font-weight: 800; color: var(--green);
+    }
+    .deal-item-pct {
+      font-size: 9px; font-weight: 800;
+      background: rgba(34,197,94,.2); color: var(--green);
+      border: 1px solid rgba(34,197,94,.35);
+      padding: 2px 5px; border-radius: 4px;
+      text-transform: uppercase; letter-spacing: .3px;
     }
     .deals-empty {
       grid-column: 1 / -1;
@@ -535,9 +590,11 @@
     .faq-item {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
+      border-radius: var(--radius);
       overflow: hidden;
+      transition: border-color .15s;
     }
+    .faq-item:hover { border-color: rgba(34,197,94,.3); }
     .faq-q {
       width: 100%; text-align: left;
       background: none; border: none; cursor: pointer;
@@ -545,6 +602,7 @@
       padding: 16px 18px;
       font-size: 14px; font-weight: 600; color: var(--text);
       line-height: 1.4;
+      transition: color .15s;
     }
     .faq-q:hover { color: var(--green); }
     .faq-chevron {
@@ -597,24 +655,35 @@
     /* ─── Responsive ────────────────────────────────────────── */
     @media (max-width: 680px) {
       .topnav-links { display: none; }
-      .hamburger { display: flex; }
+      .hamburger { display: flex; align-items: center; justify-content: center; }
 
       .hero { padding: 40px 16px 36px; }
 
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
 
+      .filter-bar { flex-direction: column; align-items: stretch; }
+      .search-box { min-width: 0; flex: 1 1 auto; }
       .filter-toggle-btn { display: inline-flex; }
       .nbhd-filter-wrap.collapsed { display: none; }
 
       th, td { padding: 10px 10px; }
       .product-name { max-width: 160px; }
+      .deal-tag-sale, .deal-tag-value { font-size: 8px; padding: 2px 4px; }
 
       .how-grid { grid-template-columns: 1fr; }
+
+      .back-to-top { width: 34px; height: 34px; font-size: 16px; bottom: 16px; right: 14px; }
     }
 
     @media (max-width: 400px) {
       .stats-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
       .stat-value { font-size: 22px; }
+      .pill { font-size: 11px; padding: 4px 10px; }
+    }
+
+    @media (max-width: 360px) {
+      .filter-bar { padding: 10px 12px; gap: 8px; }
+      .pill { font-size: 10px; padding: 4px 8px; min-height: 36px; }
     }
 
     /* ─── Mobile nav menu ───────────────────────────────────── */
@@ -768,6 +837,7 @@
   </a>
   <div class="topnav-links">
     <a href="#prices">Prices</a>
+    <a href="#deals">Deals</a>
     <a href="#how-it-works">How It Works</a>
     <a href="#faq">FAQ</a>
   </div>
@@ -783,6 +853,7 @@
 <!-- Mobile menu -->
 <div class="mobile-menu" id="mobileMenu" role="menu">
   <a href="#prices" onclick="closeMobileMenu()">Prices</a>
+  <a href="#deals" onclick="closeMobileMenu()">Deals</a>
   <a href="#how-it-works" onclick="closeMobileMenu()">How It Works</a>
   <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
 </div>
@@ -791,8 +862,12 @@
 <header class="hero" role="banner">
   <div class="hero-badge">&#127807; Live NYC data</div>
   <h1>Find the Cheapest Weed in NYC</h1>
-  <p>Real-time flower price comparisons across Manhattan dispensaries — sorted by price, updated daily.</p>
-  <a class="hero-cta" href="#prices">Compare Prices Now ↓</a>
+  <p>Real-time flower price comparisons across NYC dispensaries &mdash; sorted by price, no stale menus.</p>
+  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:18px;">
+    <a class="hero-cta" href="#prices">See Today's Best Prices</a>
+    <a class="hero-cta" href="#how-it-works" style="background:transparent;border:1px solid var(--border);color:var(--text-muted);">How It Works</a>
+  </div>
+  <p style="font-size:12px;color:var(--text-dim);margin-bottom:12px;">Prices pulled from official dispensary menus daily &mdash; no markups, no guessing.</p>
   <p class="hero-updated" id="lastUpdated">Loading&hellip;</p>
 </header>
 
@@ -800,6 +875,20 @@
 <section class="stats-section" aria-label="Summary statistics">
   <div class="stats-grid" id="statsGrid">
     <!-- injected by JS -->
+  </div>
+</section>
+
+<!-- Best Value Picks -->
+<section class="deals-section" id="deals" aria-label="Best value picks">
+  <div class="section-inner">
+    <div class="deals-section-header">
+      <h2 class="section-title" style="margin-bottom:0"><span class="dot" aria-hidden="true"></span>Best Value Picks</h2>
+      <a href="#prices" class="deals-see-all">See all prices ↓</a>
+    </div>
+    <p class="deals-subtitle">Top value whole-flower listings across all tracked stores &mdash; updated daily.</p>
+    <div id="dealsTableWrap">
+      <!-- injected by JS -->
+    </div>
   </div>
 </section>
 
@@ -846,6 +935,10 @@
         <div class="nbhd-filter-wrap collapsed" id="nbhdFilter"></div>
       </div>
 
+      <div class="filter-group">
+        <button class="pill" id="dealsOnlyToggle" onclick="toggleDealsOnly(this)" aria-pressed="false" title="Show only sale and value-priced listings">Deals only</button>
+      </div>
+
       <span class="filter-meta" id="filterMeta"></span>
     </div>
 
@@ -856,8 +949,8 @@
           <thead>
             <tr>
               <th onclick="sortCol('store')"  id="th-store" scope="col">Store</th>
-              <th onclick="sortCol('size')"   id="th-size"  scope="col">Size</th>
               <th onclick="sortCol('price')"  id="th-price" scope="col" class="sorted-asc">Price</th>
+              <th onclick="sortCol('size')"   id="th-size"  scope="col">Size</th>
               <th scope="col">Product</th>
             </tr>
           </thead>
@@ -869,12 +962,18 @@
   </div>
 </section>
 
-<!-- Deals & Specials -->
-<section class="deals-section" id="deals" aria-label="Deals and specials">
-  <div class="section-inner">
-    <h2 class="section-title"><span class="dot" aria-hidden="true"></span>Deals &amp; Specials</h2>
-    <div class="deals-grid" id="dealsGrid">
-      <!-- injected by JS -->
+<!-- Price Alert Signup -->
+<section class="alert-section" id="alerts" aria-label="Price drop alerts">
+  <div class="alert-inner">
+    <div class="alert-icon" aria-hidden="true">🔔</div>
+    <div class="alert-copy">
+      <h2>Get Price Drop Alerts</h2>
+      <p>Enter your email and we&rsquo;ll notify you when an ounce drops below your target price at any tracked NYC dispensary. One email per day, max &mdash; no spam.</p>
+      <form class="alert-form" id="alertForm" onsubmit="submitAlert(event)">
+        <input type="email" id="alertEmail" placeholder="you@email.com" required autocomplete="email" aria-label="Email address">
+        <button type="submit">Notify Me</button>
+      </form>
+      <p class="alert-success" id="alertSuccess">You're on the list! We'll email you when prices drop.</p>
     </div>
   </div>
 </section>
@@ -887,7 +986,7 @@
       <div class="how-card">
         <div class="how-step" aria-hidden="true">&#128269;</div>
         <h3>Automated Scraping</h3>
-        <p>Our scraper visits licensed NYC dispensary menus daily and pulls live flower product listings directly from their storefronts.</p>
+        <p>Our scraper pulls prices directly from each dispensary's official online menu every day &mdash; no markups, no third-party data.</p>
       </div>
       <div class="how-card">
         <div class="how-step" aria-hidden="true">&#128200;</div>
@@ -904,22 +1003,6 @@
         <h3>NYC &amp; Growing</h3>
         <p>We track licensed dispensaries across NYC &mdash; Manhattan, Queens, and expanding &mdash; ensuring all listed stores are legal, regulated, and verifiable.</p>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- Price Alert Signup -->
-<section class="alert-section" id="alerts" aria-label="Price drop alerts">
-  <div class="alert-inner">
-    <div class="alert-icon" aria-hidden="true">🔔</div>
-    <div class="alert-copy">
-      <h2>Get Price Drop Alerts</h2>
-      <p>Enter your email and we'll notify you when ounce prices drop in NYC. No spam — just deals.</p>
-      <form class="alert-form" id="alertForm" onsubmit="submitAlert(event)">
-        <input type="email" id="alertEmail" placeholder="you@email.com" required autocomplete="email" aria-label="Email address">
-        <button type="submit">Notify Me</button>
-      </form>
-      <p class="alert-success" id="alertSuccess">You're on the list! We'll email you when prices drop.</p>
     </div>
   </div>
 </section>
@@ -978,6 +1061,22 @@
         <div class="faq-a" role="region">Most NYC licensed dispensaries accept debit cards and cash. Some accept credit cards through third-party payment processors. It is always a good idea to bring cash or a debit card as backup.</div>
       </div>
 
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          How current are the prices shown?
+          <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="2,5 8,11 14,5"/></svg>
+        </button>
+        <div class="faq-a" role="region">Prices are scraped once per day from each dispensary&rsquo;s live online menu. The &ldquo;Last updated&rdquo; timestamp at the top of the page tells you exactly when data was last refreshed. Prices change frequently &mdash; always verify on the dispensary&rsquo;s own site before visiting.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          Why is this site free?
+          <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="2,5 8,11 14,5"/></svg>
+        </button>
+        <div class="faq-a" role="region">NYC Weed Price Tracker is a free community resource built to help consumers make informed choices. We have no affiliation with any dispensary and accept no payments for listings. All stores are included based on being licensed, verifiable NYC retailers.</div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1011,6 +1110,7 @@ let bestOzPrice        = Infinity;
 let bestHalfPrice      = Infinity;
 let bestQuarterPrice   = Infinity;
 let bestEighthPrice    = Infinity;
+let showDealsOnly      = false;
 
 /* ─── Helpers ────────────────────────────────────── */
 function esc(s) {
@@ -1055,6 +1155,13 @@ function setNbhd(el) {
   renderTable();
 }
 
+function toggleDealsOnly(el) {
+  showDealsOnly = !showDealsOnly;
+  el.classList.toggle('active', showDealsOnly);
+  el.setAttribute('aria-pressed', String(showDealsOnly));
+  renderTable();
+}
+
 function toggleNbhdFilter() {
   const wrap = document.getElementById('nbhdFilter');
   const btn  = document.getElementById('nbhdToggle');
@@ -1085,9 +1192,44 @@ function updateSortHeaders() {
   });
 }
 
+/* ─── Deal detection helpers ─────────────────────── */
+const DEAL_KEYWORDS = /closeout|clearance|flash\s*sale|daily\s*deal|weekly\s*special|sale\s*price/i;
+const VALUE_THRESHOLD = 0.75; // ≤75% of median = "value" pick
+
+function computeMedians() {
+  const buckets = { '1 oz': [], '1/2 oz': [], '1/4 oz': [], '1/8 oz': [] };
+  for (const d of allData) {
+    for (const l of [
+      ...(d.ounceListings||[]), ...(d.halfOunceListings||[]),
+      ...(d.quarterOunceListings||[]), ...(d.eighthOunceListings||[])
+    ]) {
+      if (!l.preGround && buckets[l.size]) buckets[l.size].push(l.price);
+    }
+  }
+  const medians = {};
+  for (const [sz, prices] of Object.entries(buckets)) {
+    if (!prices.length) { medians[sz] = Infinity; continue; }
+    const sorted = [...prices].sort((a, b) => a - b);
+    medians[sz] = sorted[Math.floor(sorted.length / 2)];
+  }
+  return medians;
+}
+
+function dealTag(listing, medians) {
+  const name = (listing.product || listing.line || '').toLowerCase();
+  if (DEAL_KEYWORDS.test(name)) return 'sale';
+  // Structured deal from scraper (has originalPrice)
+  if (listing.originalPrice && listing.price < listing.originalPrice) return 'sale';
+  // Statistical value: whole flower priced ≤75% of median for that size
+  const med = medians[listing.size];
+  if (!listing.preGround && med && listing.price <= med * VALUE_THRESHOLD) return 'value';
+  return null;
+}
+
 /* ─── Build rows ─────────────────────────────────── */
 function buildRows() {
   const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  const medians = computeMedians();
   const rows = [];
 
   for (const d of allData) {
@@ -1106,6 +1248,8 @@ function buildRows() {
         const haystack = [d.name, d.neighborhood, l.product, d.address].join(' ').toLowerCase();
         if (!haystack.includes(q)) continue;
       }
+      const tag = dealTag(l, medians);
+      if (showDealsOnly && !tag) continue;
       rows.push({
         store:        d.name,
         neighborhood: d.neighborhood || '',
@@ -1113,7 +1257,8 @@ function buildRows() {
         size:         l.size,
         price:        l.price,
         product:      l.product  || '',
-        preGround:    !!l.preGround
+        preGround:    !!l.preGround,
+        dealTag:      tag
       });
     }
   }
@@ -1141,6 +1286,9 @@ function renderTable() {
   meta.innerHTML = '<strong>' + rows.length + '</strong> listing' + (rows.length !== 1 ? 's' : '');
 
   if (!rows.length) {
+    const msg = showDealsOnly
+      ? 'No sale or value picks match your current filters. Try broadening your size or neighborhood filter.'
+      : 'No listings match your filters.';
     tbody.innerHTML = `
       <tr><td colspan="4">
         <div class="empty-state">
@@ -1150,7 +1298,7 @@ function renderTable() {
             <circle cx="15" cy="16" r="2" fill="currentColor"/>
             <circle cx="25" cy="16" r="2" fill="currentColor"/>
           </svg>
-          <p>No listings match your filters.</p>
+          <p>${esc(msg)}</p>
         </div>
       </td></tr>`;
     return;
@@ -1167,7 +1315,9 @@ function renderTable() {
       isBestHalf    ? 'best-half'    : '',
       isBestQuarter ? 'best-quarter' : '',
       isBestEighth  ? 'best-eighth'  : '',
-      r.preGround   ? 'pre-ground'   : ''
+      r.preGround   ? 'pre-ground'   : '',
+      r.dealTag === 'sale'  ? 'row-sale'  : '',
+      r.dealTag === 'value' ? 'row-value' : ''
     ].filter(Boolean).join(' ');
 
     const sizeTags = {
@@ -1183,15 +1333,20 @@ function renderTable() {
     const bestBadge = (isBestOz || isBestHalf || isBestQuarter || isBestEighth)
       ? '<span class="best-badge">Best deal</span>'
       : '';
+    const dealBadge = r.dealTag === 'sale'
+      ? '<span class="deal-tag-sale">SALE</span>'
+      : r.dealTag === 'value'
+      ? '<span class="deal-tag-value">VALUE</span>'
+      : '';
 
     return `<tr class="${rowCls}">
       <td>
         <div class="store-name">${esc(r.store)}</div>
         <div class="store-nbhd">${esc(r.neighborhood)}</div>
       </td>
-      <td>${sizeTag}${pgBadge}</td>
       <td class="price">${fmt(r.price)}</td>
-      <td class="product-name">${esc(r.product)}${bestBadge}</td>
+      <td>${sizeTag}${pgBadge}</td>
+      <td class="product-name">${dealBadge}${esc(r.product)}</td>
     </tr>`;
   }).join('');
 }
@@ -1283,26 +1438,107 @@ function buildNbhdFilter() {
   ].join('');
 }
 
-/* ─── Deals section ─────────────────────────────── */
+/* ─── Best Value Picks table ─────────────────────── */
 function renderDeals() {
-  const grid = document.getElementById('dealsGrid');
-  if (!grid) return;
+  const wrap = document.getElementById('dealsTableWrap');
+  if (!wrap) return;
 
-  const storesWithDeals = allData.filter(d => Array.isArray(d.deals) && d.deals.length > 0);
+  const medians = computeMedians();
 
-  if (!storesWithDeals.length) {
-    grid.innerHTML = '<p class="deals-empty">No deals currently available. Check back soon!</p>';
+  // Collect all value/sale whole-flower listings
+  const allDeals = [];
+  for (const d of allData) {
+    if (d.status !== 'ok') continue;
+    const listings = [
+      ...(d.ounceListings||[]), ...(d.halfOunceListings||[]),
+      ...(d.quarterOunceListings||[]), ...(d.eighthOunceListings||[])
+    ];
+    for (const l of listings) {
+      if (l.preGround) continue;
+      const tag = dealTag(l, medians);
+      if (!tag) continue;
+      allDeals.push({ ...l, store: d.name, neighborhood: d.neighborhood || '', tag });
+    }
+    // Structured deals from scraper (discounted_price set)
+    for (const deal of (d.deals || [])) {
+      if (typeof deal === 'object' && deal.price && deal.originalPrice) {
+        allDeals.push({ ...deal, store: d.name, neighborhood: d.neighborhood || '', tag: 'sale' });
+      }
+    }
+  }
+
+  if (!allDeals.length) {
+    wrap.innerHTML = '<p class="deals-empty">No value picks detected right now. Check back after the next daily scrape!</p>';
     return;
   }
 
-  grid.innerHTML = storesWithDeals.map(d => `
-    <div class="deal-card">
-      <div class="deal-card-store">${esc(d.name)}</div>
-      <div class="deal-card-nbhd">${esc(d.neighborhood || '')}</div>
-      <ul class="deal-list">
-        ${d.deals.map(deal => `<li>${esc(deal)}</li>`).join('')}
-      </ul>
-    </div>`).join('');
+  // Sort: sale first, then by size (large→small), then price asc
+  const sizeOrder = { '1 oz': 0, '1/2 oz': 1, '1/4 oz': 2, '1/8 oz': 3 };
+  allDeals.sort((a, b) => {
+    if (a.tag !== b.tag) return a.tag === 'sale' ? -1 : 1;
+    return (sizeOrder[a.size] ?? 9) - (sizeOrder[b.size] ?? 9) || a.price - b.price;
+  });
+
+  // Cap at 2 per store, 10 total; hide section if fewer than 5
+  const seenStores = {};
+  const picks = [];
+  for (const item of allDeals) {
+    if (picks.length >= 10) break;
+    const n = seenStores[item.store] || 0;
+    if (n >= 2) continue;
+    seenStores[item.store] = n + 1;
+    picks.push(item);
+  }
+
+  const section = document.getElementById('deals');
+  if (picks.length < 5) {
+    if (section) section.style.display = 'none';
+    return;
+  }
+  if (section) section.style.display = '';
+
+  const sizeTags = {
+    '1 oz':   '<span class="size-tag tag-oz">1 oz</span>',
+    '1/2 oz': '<span class="size-tag tag-half">&frac12; oz</span>',
+    '1/4 oz': '<span class="size-tag tag-quarter">&frac14; oz</span>',
+    '1/8 oz': '<span class="size-tag tag-eighth">&#8539; oz</span>'
+  };
+
+  const rows = picks.map(item => {
+    const tagEl = item.tag === 'sale'
+      ? '<span class="deal-tag-sale">SALE</span>'
+      : '<span class="deal-tag-value">VALUE</span>';
+    const sizeTag = sizeTags[item.size] || `<span class="size-tag tag-oz">${esc(item.size)}</span>`;
+    const priceEl = item.originalPrice
+      ? `<span class="deal-price">${fmt(item.price)}</span><span class="deal-was">${fmt(item.originalPrice)}</span>`
+      : `<span class="deal-price">${fmt(item.price)}</span>`;
+    const prod = esc(item.product || '');
+    return `<tr>
+      <td><div class="store-name">${esc(item.store)}</div><div class="store-nbhd">${esc(item.neighborhood)}</div><div class="deal-product-mobile">${prod}</div></td>
+      <td>${sizeTag}</td>
+      <td>${tagEl}</td>
+      <td>${priceEl}</td>
+      <td class="product-name deal-col-product">${prod}</td>
+    </tr>`;
+  }).join('');
+
+  wrap.innerHTML = `
+    <div class="table-wrap" role="region" aria-label="Best value picks table">
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Store</th>
+              <th scope="col">Size</th>
+              <th scope="col">Type</th>
+              <th scope="col">Price</th>
+              <th scope="col" class="deal-col-product">Product</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    </div>`;
 }
 
 /* ─── Last updated ───────────────────────────────── */

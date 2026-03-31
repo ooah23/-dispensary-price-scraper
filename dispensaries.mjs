@@ -94,9 +94,9 @@ export const dispensaries = [
     name: "New Amsterdam",
     address: "245 W 14th St",
     neighborhood: "Chelsea",
-    menuUrlOverride: "https://shop.newamsterdam.nyc/",
-    dealsUrlOverride: "https://shop.newamsterdam.nyc/specials/",
-    sourceNote: "Official Mosaic storefront (shop.newamsterdam.nyc)"
+    menuUrlOverride: "https://newamsterdam.nyc/store/categories/flower",
+    dealsUrlOverride: "https://newamsterdam.nyc/store/categories/flower",
+    sourceNote: "Dispense platform (newamsterdam.nyc) — 170+ flower products"
   },
 
   // ── CONBUD ───────────────────────────────────────────────────────────────────

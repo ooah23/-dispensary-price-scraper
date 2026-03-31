@@ -431,11 +431,30 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // /api/health
+  // /api/health — checks data freshness, not just process liveness
   if (pathname === "/api/health") {
     setCorsHeaders(res);
-    res.writeHead(200, { "Content-Type": "application/json", "Cache-Control": "no-cache" });
-    res.end(JSON.stringify({ ok: true, timestamp: new Date().toISOString() }));
+    try {
+      const metaPath = path.join(OUTPUT_DIR, "metadata.json");
+      const meta = JSON.parse(await fs.readFile(metaPath, "utf8"));
+      const scrapedAt = meta.scrapedAt ? new Date(meta.scrapedAt) : null;
+      const ageHours = scrapedAt ? (Date.now() - scrapedAt.getTime()) / 3600000 : Infinity;
+      const stale = ageHours > 36; // >36h since last scrape = stale
+      const status = stale ? 503 : 200;
+      res.writeHead(status, { "Content-Type": "application/json", "Cache-Control": "no-cache" });
+      res.end(JSON.stringify({
+        ok: !stale,
+        timestamp: new Date().toISOString(),
+        scrapedAt: meta.scrapedAt ?? null,
+        dataAgeHours: Math.round(ageHours * 10) / 10,
+        okStores: meta.okStores ?? null,
+        totalStores: meta.totalStores ?? null,
+        stale,
+      }));
+    } catch {
+      res.writeHead(503, { "Content-Type": "application/json", "Cache-Control": "no-cache" });
+      res.end(JSON.stringify({ ok: false, error: "metadata unavailable", timestamp: new Date().toISOString() }));
+    }
     return;
   }
 

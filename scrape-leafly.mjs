@@ -10,6 +10,10 @@ const METADATA_PATH = path.join(OUTPUT_DIR, "metadata.json");
 const PRICE_CSV_PATH = path.join(OUTPUT_DIR, "dispensary-prices.csv");
 const DEALS_CSV_PATH = path.join(OUTPUT_DIR, "dispensary-deals.csv");
 
+// Cache: menuUrl → deals array, populated by extractNewAmsterdamMosaic so
+// extractNewAmsterdamDeals can read it without re-navigating.
+const mosaicDealsCache = new Map();
+
 const SIZE_PATTERNS = [
   { label: "1 oz", regex: /\b(?:1\s*ounce|1\s*oz|1oz|28g|28\s*g|28(?:\.0+)?\s*grams?)\b/i },
   { label: "1/2 oz", regex: /\b(?:1\/2\s*ounce|1\/2\s*oz|1\/2oz|14g|14\s*g|14(?:\.0+)?\s*grams?|half\s*ounce|0\.5\s*oz)\b/i },
@@ -714,16 +718,99 @@ async function extractWeedmapsDeals(page, dealsUrl, dispensaryName = "") {
 }
 
 async function extractNewAmsterdamEntries(page, menuUrl) {
-  // Try Mosaic API interception first (works for shop.newamsterdam.nyc and
-  // may work for newamsterdam.nyc/products/ if it also calls api.mosaic.green).
-  // Fall back to Range/WordPress DOM parsing if no Mosaic data is captured.
+  // newamsterdam.nyc uses the Dispense app platform (api.dispenseapp.com).
+  // shop.newamsterdam.nyc uses Mosaic. Try Dispense first; fall back to Mosaic, then Range.
+  if (menuUrl.includes("newamsterdam.nyc") && !menuUrl.includes("shop.newamsterdam.nyc")) {
+    const dispenseEntries = await extractDispense(page, menuUrl);
+    if (dispenseEntries.length > 0) return dispenseEntries;
+  }
   const mosaicEntries = await extractNewAmsterdamMosaic(page, menuUrl);
   if (mosaicEntries.length > 0) return mosaicEntries;
   return extractNewAmsterdamRange(page, menuUrl);
 }
 
+// Cache: menuUrl → deals from Dispense scrape
+const dispenseDealsCache = new Map();
+
+async function extractDispense(page, menuUrl) {
+  // Intercepts api.dispenseapp.com product-categories responses.
+  // Uses weightInGrams (3.5/7/14/28) for size, priceWithDiscounts for deal detection.
+  const allProducts = [];
+  dispenseDealsCache.set(menuUrl, []);
+
+  const responseHandler = async (response) => {
+    const url = response.url();
+    if (!url.includes("dispenseapp.com") || !url.includes("products")) return;
+    try {
+      const data = await response.json();
+      const prods = Array.isArray(data?.data) ? data.data : [];
+      if (prods.length) allProducts.push(...prods);
+    } catch {}
+  };
+
+  page.on("response", responseHandler);
+  await gotoWithRetries(page, menuUrl, { attempts: 3, timeout: 90000 });
+  await page.waitForTimeout(3000);
+
+  // Dismiss age gate if present
+  for (const text of [/^Yes$/i, /I am 21/i, /Enter/i, /Continue/i]) {
+    try {
+      const btn = page.getByText(text).first();
+      if (await btn.isVisible({ timeout: 800 })) { await btn.click(); await page.waitForTimeout(1500); break; }
+    } catch {}
+  }
+
+  // Scroll to load all paginated results
+  let prevCount = 0;
+  for (let i = 0; i < 20; i++) {
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await page.waitForTimeout(1200);
+    if (i >= 3 && allProducts.length === prevCount) break;
+    prevCount = allProducts.length;
+  }
+
+  page.off("response", responseHandler);
+
+  const WEIGHT_TO_SIZE = { 3.5: "1/8 oz", 7: "1/4 oz", 14: "1/2 oz", 28: "1 oz" };
+
+  const entries = [];
+  for (const p of allProducts) {
+    const grams = Number(p.weightInGrams);
+    const size = WEIGHT_TO_SIZE[grams];
+    if (!size) continue;
+
+    const basePrice = Number(p.price);
+    if (!basePrice || isNaN(basePrice)) continue;
+
+    // priceWithDiscounts is the actual charged price (equals basePrice when no discount)
+    const actualPrice = (p.priceWithDiscounts != null && Number(p.priceWithDiscounts) > 0)
+      ? Number(p.priceWithDiscounts)
+      : basePrice;
+
+    const productName = normalizeWhitespace(p.name ?? "");
+    entries.push({
+      size,
+      price: actualPrice,
+      line: p.name,
+      product: productName,
+      preGround: isPreGround(productName),
+      ...(actualPrice < basePrice ? { originalPrice: basePrice } : {})
+    });
+
+    // Populate deals cache when a real discount is active
+    if (actualPrice < basePrice) {
+      const savings = Math.round((basePrice - actualPrice) * 100) / 100;
+      const pct = Math.round((savings / basePrice) * 100);
+      dispenseDealsCache.get(menuUrl)?.push({ product: productName, size, price: actualPrice, originalPrice: basePrice, savings, pct });
+    }
+  }
+  return filterListingEntries(entries);
+}
+
 async function extractNewAmsterdamMosaic(page, menuUrl) {
   const allProducts = [];
+  // Pre-initialise the deals cache slot for this URL so the product loop can push into it
+  mosaicDealsCache.set(menuUrl, []);
 
   const responseHandler = async (response) => {
     const url = response.url();
@@ -785,11 +872,24 @@ async function extractNewAmsterdamMosaic(page, menuUrl) {
     const size = detectSize(product.name ?? "");
     if (!size) continue;
     const variant = product.product_variants?.[0];
-    const rawPrice = variant?.price ?? variant?.base_price;
-    const price = Number(rawPrice);
-    if (!price || isNaN(price)) continue;
+    if (!variant) continue;
+
+    // Mosaic API: `price` = original price, `discounted_price` = sale price (null if no deal)
+    const originalPrice = Number(variant.price ?? variant.base_price);
+    if (!originalPrice || isNaN(originalPrice)) continue;
+    const price = (variant.discounted_price != null)
+      ? Number(variant.discounted_price)
+      : originalPrice;
+
     const productName = normalizeWhitespace(product.name);
     entries.push({ size, price, line: product.name, product: productName, preGround: isPreGround(productName) });
+
+    // Populate deals cache when a discount is active
+    if (variant.discounted_price != null && price < originalPrice) {
+      const savings = Math.round((originalPrice - price) * 100) / 100;
+      const pct = Math.round((savings / originalPrice) * 100);
+      mosaicDealsCache.get(menuUrl)?.push({ product: productName, size, price, originalPrice, savings, pct });
+    }
   }
   return filterListingEntries(entries);
 }
@@ -851,101 +951,24 @@ async function extractNewAmsterdamRange(page, menuUrl) {
   return filterListingEntries(parsed);
 }
 
-async function extractNewAmsterdamDeals(page, dealsUrl) {
-  // Try the dedicated specials page first
-  const specialsUrl = dealsUrl.includes("specials")
-    ? dealsUrl
-    : dealsUrl.replace(/\/products(\?|$)/, "/specials$1");
+async function extractNewAmsterdamDeals(_page, dealsUrl) {
+  // Deals are populated during the main menu scrape — read from cache, no re-navigation.
+  const rootUrl = (dealsUrl || "https://newamsterdam.nyc/store/categories/flower")
+    .replace(/\/specials\/?.*$/, "/")
+    .replace(/\/products\/?.*$/, "/")
+    .replace(/\/categories\/.*$/, "/store/categories/flower");
 
-  let dealsFound = [];
-
-  try {
-    await gotoWithRetries(page, specialsUrl, { attempts: 3, timeout: 60000 });
-    await page.waitForTimeout(3000);
-
-    // Intercept Mosaic API responses for specials/promotions data
-    const apiDeals = [];
-    const onResponse = async (response) => {
-      const url = response.url();
-      if (!url.includes("api.mosaic.green")) return;
-      if (!/special|promo|deal|discount/i.test(url)) return;
-      try {
-        const data = await response.json();
-        const items = data?.specials ?? data?.promotions ?? data?.deals ?? data?.items ?? [];
-        for (const item of items) {
-          const label = item?.title ?? item?.name ?? item?.description ?? "";
-          if (label) apiDeals.push(cleanText(label));
-        }
-      } catch {
-        // Non-JSON, skip.
-      }
-    };
-    page.on("response", onResponse);
-    await page.waitForTimeout(2000);
-    page.off("response", onResponse);
-
-    if (apiDeals.length > 0) {
-      dealsFound = apiDeals;
-    } else {
-      // Fall back to body text parsing
-      const bodyText = await page.locator("body").innerText();
-      const lines = bodyText
-        .split("\n")
-        .map((line) => cleanText(line))
-        .filter(Boolean);
-
-      // Look for a "specials" or "deals" heading and collect lines after it
-      const startIdx = lines.findIndex((line) => /^(specials?|deals?|promotions?)$/i.test(line));
-      if (startIdx !== -1) {
-        for (let i = startIdx + 1; i < lines.length; i += 1) {
-          const line = lines[i];
-          if (/^(menu|products?|shop|home|about|contact|cart|login)$/i.test(line)) break;
-          if (/^\$\d/.test(line) || /^\d+%/.test(line)) continue;
-          if (line.length < 4) continue;
-          dealsFound.push(line);
-          if (dealsFound.length >= 10) break;
-        }
-      }
-    }
-  } catch {
-    // Specials page failed, attempt main page fallback
+  // Check Dispense cache first (newamsterdam.nyc main site)
+  for (const [key, deals] of dispenseDealsCache.entries()) {
+    if (key.includes("newamsterdam.nyc") && deals.length > 0) return deals;
   }
-
-  // Fallback: check main products page for deal banners
-  if (dealsFound.length === 0) {
-    try {
-      await gotoWithRetries(page, dealsUrl, { attempts: 3, timeout: 60000 });
-      await page.waitForTimeout(2500);
-
-      // Look for banner/promo elements by common selectors
-      const bannerSelectors = [
-        '[class*="banner"]',
-        '[class*="promo"]',
-        '[class*="deal"]',
-        '[class*="special"]',
-        '[class*="announcement"]',
-        '[class*="notice"]'
-      ];
-      for (const sel of bannerSelectors) {
-        try {
-          const texts = await page.locator(sel).evaluateAll(
-            (nodes) => nodes.map((n) => (n.innerText || n.textContent || "").replace(/\s+/g, " ").trim())
-          );
-          for (const t of texts) {
-            const cleaned = cleanText(t);
-            if (cleaned && cleaned.length > 4) dealsFound.push(cleaned);
-          }
-          if (dealsFound.length > 0) break;
-        } catch {
-          // Selector not found, continue.
-        }
-      }
-    } catch {
-      // Fallback also failed, return empty.
+  // Fall back to Mosaic cache (shop.newamsterdam.nyc)
+  for (const [key, deals] of mosaicDealsCache.entries()) {
+    if (key.includes(rootUrl.replace(/\/$/, "")) || rootUrl.includes(key.replace(/\/$/, ""))) {
+      return deals;
     }
   }
-
-  return Array.from(new Set(dealsFound.map((d) => cleanText(d)).filter(Boolean)));
+  return [];
 }
 
 async function extractJointEntries(page, menuUrl) {
@@ -1096,52 +1119,90 @@ async function extractBlazeDeals(page, dealsUrl) {
 }
 
 async function extractJointDeals(page, dealsUrl) {
-  // Joint/Surfside eCommerce specials page — intercept the API response first,
-  // then fall back to body text parsing if the API is not triggered.
-  const allDeals = [];
+  // Joint/Surfside eCommerce specials page — intercept ALL admin-ajax / joint-ecommerce
+  // API calls (not just ones with "deal/promo" in the URL — the platform uses the same
+  // endpoint for specials, just with a different query param server-side).
+  const allProducts = [];
 
   const responseHandler = async (response) => {
     const url = response.url();
     if (!url.includes("admin-ajax.php") && !url.includes("joint-ecommerce/v1")) return;
-    if (!/special|promo|deal|discount/i.test(url)) return;
     try {
       const data = await response.json();
-      const candidates = [data?.specials, data?.promotions, data?.deals, data?.data?.specials, Array.isArray(data) ? data : null];
+      const candidates = [
+        data?.products, data?.data?.products,
+        data?.items, data?.data?.items,
+        Array.isArray(data) ? data : null
+      ];
       for (const list of candidates) {
         if (Array.isArray(list) && list.length > 0) {
-          for (const item of list) {
-            const label = item?.title ?? item?.name ?? item?.description ?? "";
-            if (label) allDeals.push(cleanText(label));
-          }
+          allProducts.push(...list);
           break;
         }
       }
-    } catch { /* Non-JSON */ }
+    } catch { /* non-JSON */ }
   };
 
+  // Register BEFORE navigation
   page.on("response", responseHandler);
   try {
     await gotoWithRetries(page, dealsUrl, { attempts: 2, timeout: 60000, waitUntil: "domcontentloaded" });
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(4000);
+    for (let i = 0; i < 5; i++) {
+      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+      await page.waitForTimeout(800);
+    }
   } catch { /* ignore navigation errors */ }
   page.off("response", responseHandler);
 
-  if (allDeals.length > 0) return Array.from(new Set(allDeals));
+  if (allProducts.length > 0) {
+    const deals = [];
+    for (const product of allProducts) {
+      const name = product.name ?? product.title ?? product.product_name ?? "";
+      if (!name) continue;
 
-  // Body text fallback
+      // Joint puts discounted price in sale_price, original in regular_price/price
+      const salePrice = product.sale_price ?? product.price_sale ?? product.discounted_price;
+      const basePrice = product.regular_price ?? product.price ?? product.base_price;
+
+      const price = Number(salePrice ?? basePrice);
+      const originalPrice = salePrice != null ? Number(basePrice) : null;
+
+      if (!price || isNaN(price)) continue;
+      if (!originalPrice || isNaN(originalPrice) || originalPrice <= price) continue;
+
+      const weightText = product.weight ?? product.size ?? "";
+      const size = detectSize(`${name} ${weightText}`);
+      if (!size) continue;
+
+      const savings = Math.round((originalPrice - price) * 100) / 100;
+      const pct = Math.round((savings / originalPrice) * 100);
+      deals.push({
+        product: cleanProductName(normalizeWhitespace(name)),
+        size,
+        price,
+        originalPrice,
+        savings,
+        pct
+      });
+    }
+    if (deals.length > 0) return deals;
+  }
+
+  // Body text fallback — returns plain label strings
   const bodyText = await page.locator("body").innerText().catch(() => "");
   const lines = bodyText.split("\n").map(l => cleanText(l)).filter(Boolean);
   const startIdx = lines.findIndex(l => /^(specials?|deals?|promotions?|current deals?)$/i.test(l));
   if (startIdx === -1) return [];
-  const deals = [];
+  const labelDeals = [];
   for (let i = startIdx + 1; i < lines.length; i++) {
     const line = lines[i];
     if (/^(menu|home|shop|products?|cart|login|checkout|about|contact|search|delivery|pickup|open|closed|dispensary info|available for pre-order)$/i.test(line)) break;
     if (/^\$\d/.test(line) || /^\d+%/.test(line) || line.length < 10) continue;
-    deals.push(line);
-    if (deals.length >= 8) break;
+    labelDeals.push(line);
+    if (labelDeals.length >= 8) break;
   }
-  return Array.from(new Set(deals));
+  return Array.from(new Set(labelDeals));
 }
 
 async function extractConbudDeals(page, dealsUrl) {
@@ -1709,7 +1770,10 @@ async function scrapeStore(page, dispensary) {
     }
   }
 
-  result.deals = Array.from(new Set(result.deals.map((deal) => cleanText(deal)).filter(Boolean)));
+  result.deals = result.deals
+    .map(deal => typeof deal === "string" ? cleanText(deal) : deal)
+    .filter(Boolean)
+    .filter((deal, i, arr) => typeof deal !== "string" || arr.indexOf(deal) === i);
 
   return result;
 }
@@ -1857,19 +1921,24 @@ async function main() {
   ];
 
   const dealRows = [
-    ["name", "address", "neighborhood", "status", "deal", "deals_url"],
+    ["name", "address", "neighborhood", "status", "deal", "price", "original_price", "savings_pct", "deals_url"],
     ...summary.flatMap((result) => {
       if (result.deals.length === 0) {
-        return [[result.name, result.address, result.neighborhood, result.status, "", result.dealsUrl ?? ""]];
+        return [[result.name, result.address, result.neighborhood, result.status, "", "", "", "", result.dealsUrl ?? ""]];
       }
-      return result.deals.map((deal) => [
-        result.name,
-        result.address,
-        result.neighborhood,
-        result.status,
-        deal,
-        result.dealsUrl ?? ""
-      ]);
+      return result.deals.map((deal) => {
+        if (typeof deal === "string") {
+          return [result.name, result.address, result.neighborhood, result.status, deal, "", "", "", result.dealsUrl ?? ""];
+        }
+        return [
+          result.name, result.address, result.neighborhood, result.status,
+          deal.product ?? "",
+          deal.price != null ? deal.price : "",
+          deal.originalPrice != null ? deal.originalPrice : "",
+          deal.pct != null ? `${deal.pct}%` : "",
+          result.dealsUrl ?? ""
+        ];
+      });
     })
   ];
 

@@ -1,22 +1,25 @@
-name,address,neighborhood,status,deal,deals_url
-Housing Works Cannabis Co,750 Broadway,NoHo,ok,,https://hwcannabis.co/menu/broadway/specials/
-Smacked Village,144 Bleecker St,Greenwich Village,ok,,
-The Travel Agency,835 Broadway,Union Square,ok,,https://www.thetravelagency.co/specials/
-Dazed,33 Union Square W,Union Square,ok,,https://dazed.fun/menu/union-square-nyc-ny/specials/
-The Alchemy (Flatiron),12 W 18th St,Flatiron,ok,,
-The Alchemy (Chelsea),302 8th Ave,Chelsea,ok,,
-Stoops NYC,182 5th Ave,Flatiron,ok,,https://www.leafly.com/dispensary-info/stoopsnyc/deals
-Blue Forest Farms,122 E 25th St,Gramercy,ok,,
-Mighty Lucky,259 Bowery,Bowery,ok,,
-Gotham (Bowery),3 E 3rd St,Bowery,ok,,
-Gotham (Chelsea),146 10th Ave,Chelsea,ok,,
-New Amsterdam,245 W 14th St,Chelsea,ok,,https://shop.newamsterdam.nyc/specials/
-CONBUD,85 Delancey St,LES,ok,,https://conbud.com/stores/conbud-les/specials
-Green Genius,214 3rd Ave,Gramercy,ok,,
-VERDI,158 W 23rd St,Chelsea,ok,,https://verdicannabis.com/stores/verdi/specials
-KushKlub NYC,186 Orchard St,LES,ok,,
-Smiley Exotics,201 E 30th St,Kips Bay,ok,,
-Housing Works Cannabis Co (NoMad),846 6th Ave,NoMad,no_target_sizes,,https://www.leafly.com/dispensary-info/housing-works-cannabis-co-nomad/deals
-Superfly,57 W 86th St,Upper West Side,ok,,
-Midnight Moon,1536 Amsterdam Ave,Washington Heights,no_target_sizes,,https://www.leafly.com/dispensary-info/midnight-moon/deals
-Terp Bros (Astoria),36-10 Ditmars Blvd,"Astoria, Queens",ok,,
+name,address,neighborhood,status,deal,price,original_price,savings_pct,deals_url
+Housing Works Cannabis Co,750 Broadway,NoHo,ok,,,,,https://hwcannabis.co/menu/broadway/specials/
+Smacked Village,144 Bleecker St,Greenwich Village,ok,,,,,
+The Travel Agency,835 Broadway,Union Square,ok,,,,,https://www.thetravelagency.co/specials/
+Dazed,33 Union Square W,Union Square,ok,,,,,https://dazed.fun/menu/union-square-nyc-ny/specials/
+The Alchemy (Flatiron),12 W 18th St,Flatiron,ok,,,,,
+The Alchemy (Chelsea),302 8th Ave,Chelsea,ok,,,,,
+Stoops NYC,182 5th Ave,Flatiron,ok,,,,,https://www.leafly.com/dispensary-info/stoopsnyc/deals
+Blue Forest Farms,122 E 25th St,Gramercy,ok,,,,,
+Mighty Lucky,259 Bowery,Bowery,ok,,,,,
+Gotham (Bowery),3 E 3rd St,Bowery,ok,,,,,
+Gotham (Chelsea),146 10th Ave,Chelsea,ok,,,,,
+New Amsterdam,245 W 14th St,Chelsea,ok,Smoakland | Girl Scout Cookies | 28g (Sungrown),99,125,21%,https://newamsterdam.nyc/store/categories/flower
+New Amsterdam,245 W 14th St,Chelsea,ok,Smoakland | Ice Cream Cake | 28g (Sungrown),99,125,21%,https://newamsterdam.nyc/store/categories/flower
+New Amsterdam,245 W 14th St,Chelsea,ok,Smoakland | Lemon Cherry Gelato | 28g (Sungrown),99,125,21%,https://newamsterdam.nyc/store/categories/flower
+New Amsterdam,245 W 14th St,Chelsea,ok,Smoakland | Superman Glue | 28g (Sungrown),99,125,21%,https://newamsterdam.nyc/store/categories/flower
+CONBUD,85 Delancey St,LES,ok,,,,,https://conbud.com/stores/conbud-les/specials
+Green Genius,214 3rd Ave,Gramercy,ok,,,,,
+VERDI,158 W 23rd St,Chelsea,ok,,,,,https://verdicannabis.com/stores/verdi/specials
+KushKlub NYC,186 Orchard St,LES,ok,,,,,
+Smiley Exotics,201 E 30th St,Kips Bay,ok,,,,,
+Housing Works Cannabis Co (NoMad),846 6th Ave,NoMad,no_target_sizes,,,,,https://www.leafly.com/dispensary-info/housing-works-cannabis-co-nomad/deals
+Superfly,57 W 86th St,Upper West Side,ok,,,,,
+Midnight Moon,1536 Amsterdam Ave,Washington Heights,no_target_sizes,,,,,https://www.leafly.com/dispensary-info/midnight-moon/deals
+Terp Bros (Astoria),36-10 Ditmars Blvd,"Astoria, Queens",ok,,,,,
