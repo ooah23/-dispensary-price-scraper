@@ -1690,7 +1690,8 @@ function closeMobileMenu() {
 (function() {
   if (localStorage.getItem('popup_dismissed')) return;
   setTimeout(function() {
-    document.getElementById('emailPopup').classList.add('open');
+    const el = document.getElementById('emailPopup');
+    if (el) el.classList.add('open');
   }, 3000);
 })();
 
@@ -1699,8 +1700,9 @@ function closePopup() {
   localStorage.setItem('popup_dismissed', '1');
 }
 
-document.getElementById('emailPopup').addEventListener('click', function(e) {
-  if (e.target === this) closePopup();
+document.addEventListener('click', function(e) {
+  const overlay = document.getElementById('emailPopup');
+  if (overlay && e.target === overlay) closePopup();
 });
 
 function submitPopupAlert(e) {
