@@ -407,6 +407,52 @@
       display: flex; gap: 10px; align-items: center;
     }
 
+    /* ─── Ad units ──────────────────────────────────────────── */
+    .ad-unit {
+      max-width: 960px; margin: 0 auto 32px;
+      text-align: center; min-height: 90px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .ad-unit-label {
+      display: block; font-size: 10px; color: var(--text-dim);
+      text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px;
+    }
+    .ad-row td {
+      padding: 0 !important; border-bottom: none !important;
+      background: transparent !important;
+    }
+    .ad-row-inner {
+      padding: 8px 16px; text-align: center;
+    }
+
+    /* ─── Email popup modal ──────────────────────────────────── */
+    .popup-overlay {
+      display: none; position: fixed; inset: 0; z-index: 1000;
+      background: rgba(0,0,0,.65); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center;
+    }
+    .popup-overlay.open { display: flex; }
+    .popup-modal {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px 32px 32px;
+      max-width: 420px; width: calc(100% - 40px);
+      position: relative;
+      box-shadow: 0 24px 64px rgba(0,0,0,.5);
+    }
+    .popup-close {
+      position: absolute; top: 14px; right: 16px;
+      background: none; border: none; color: var(--text-muted);
+      font-size: 22px; cursor: pointer; line-height: 1;
+      padding: 4px;
+    }
+    .popup-close:hover { color: var(--text); }
+    .popup-modal h2 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .popup-modal p  { font-size: 14px; color: var(--text-muted); line-height: 1.55; margin-bottom: 16px; }
+    .popup-modal .alert-form { margin-top: 0; }
+    .popup-modal .alert-success { display: none; }
+
     /* ─── Best Value Picks ──────────────────────────────────── */
     .deals-section { padding: 0 20px 48px; }
     .deals-section-header {
@@ -873,6 +919,14 @@
   </div>
 </section>
 
+<!-- Ad unit 1: below stats, above deals -->
+<div class="ad-unit" aria-label="Advertisement">
+  <div>
+    <span class="ad-unit-label">Advertisement</span>
+    <!-- MANTIS AD TAG — paste script + ins tag here once approved at mantisadnetwork.com -->
+  </div>
+</div>
+
 <!-- Best Value Picks -->
 <section class="deals-section" id="deals" aria-label="Best value picks">
   <div class="section-inner">
@@ -956,6 +1010,14 @@
 
   </div>
 </section>
+
+<!-- Ad unit 3: below price table, above alert signup -->
+<div class="ad-unit" aria-label="Advertisement">
+  <div>
+    <span class="ad-unit-label">Advertisement</span>
+    <!-- MANTIS AD TAG — paste script + ins tag here once approved at mantisadnetwork.com -->
+  </div>
+</div>
 
 <!-- Price Alert Signup -->
 <section class="alert-section" id="alerts" aria-label="Price drop alerts">
@@ -1299,7 +1361,12 @@ function renderTable() {
     return;
   }
 
-  tbody.innerHTML = rows.map(r => {
+  const adRow = `<tr class="ad-row"><td colspan="4"><div class="ad-row-inner">
+    <span class="ad-unit-label">Advertisement</span>
+    <!-- MANTIS AD TAG — paste here once approved -->
+  </div></td></tr>`;
+
+  tbody.innerHTML = rows.map((r, i) => {
     const isBestOz      = r.size === '1 oz'    && r.price === bestOzPrice;
     const isBestHalf    = r.size === '1/2 oz'  && r.price === bestHalfPrice;
     const isBestQuarter = r.size === '1/4 oz'  && r.price === bestQuarterPrice;
@@ -1342,7 +1409,7 @@ function renderTable() {
       <td class="price">${fmt(r.price)}</td>
       <td>${sizeTag}${pgBadge}</td>
       <td class="product-name">${dealBadge}${esc(r.product)}</td>
-    </tr>`;
+    </tr>${(i + 1) % 12 === 0 ? adRow : ''}`;
   }).join('');
 }
 
@@ -1619,6 +1686,39 @@ function closeMobileMenu() {
   document.getElementById('hamburgerBtn').setAttribute('aria-expanded', 'false');
 }
 
+/* ─── Email popup ───────────────────────────────── */
+(function() {
+  if (localStorage.getItem('popup_dismissed')) return;
+  setTimeout(function() {
+    document.getElementById('emailPopup').classList.add('open');
+  }, 3000);
+})();
+
+function closePopup() {
+  document.getElementById('emailPopup').classList.remove('open');
+  localStorage.setItem('popup_dismissed', '1');
+}
+
+document.getElementById('emailPopup').addEventListener('click', function(e) {
+  if (e.target === this) closePopup();
+});
+
+function submitPopupAlert(e) {
+  e.preventDefault();
+  const email = document.getElementById('popupAlertEmail').value.trim();
+  if (!email) return;
+  fetch('/api/alert-signup', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email })
+  }).finally(() => {
+    document.getElementById('popupAlertForm').style.display = 'none';
+    document.getElementById('popupAlertSuccess').style.display = 'block';
+    localStorage.setItem('popup_dismissed', '1');
+    setTimeout(closePopup, 2000);
+  });
+}
+
 /* ─── Alert signup ──────────────────────────────── */
 function submitAlert(e) {
   e.preventDefault();
@@ -1651,6 +1751,20 @@ window.addEventListener('scroll', function() {
   btn.classList.toggle('visible', window.scrollY > 400);
 }, { passive: true });
 </script>
+
+<!-- Email signup popup -->
+<div class="popup-overlay" id="emailPopup" role="dialog" aria-modal="true" aria-label="Get price drop alerts">
+  <div class="popup-modal">
+    <button class="popup-close" onclick="closePopup()" aria-label="Close">&#215;</button>
+    <h2>Alert Me When Prices Drop</h2>
+    <p>Get a daily email when NYC dispensary prices hit new lows. No spam &mdash; one email per day, max.</p>
+    <form class="alert-form" id="popupAlertForm" onsubmit="submitPopupAlert(event)">
+      <input type="email" id="popupAlertEmail" placeholder="you@email.com" required autocomplete="email" aria-label="Email address">
+      <button type="submit">Alert Me</button>
+    </form>
+    <p class="alert-success" id="popupAlertSuccess">You're on the list!</p>
+  </div>
+</div>
 
 <!-- Cloudflare Web Analytics injected automatically via Cloudflare proxy — no JS snippet needed -->
 
