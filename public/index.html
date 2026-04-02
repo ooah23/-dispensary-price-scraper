@@ -120,6 +120,43 @@
       --nav-h:        56px;
     }
 
+    /* ─── Dark mode token overrides ─────────────────────────────── */
+    html.dark {
+      --page-bg:      #111111;
+      --card-bg:      #1A1A1A;
+      --text-primary: #E8E4DC;
+      --text-muted:   #888888;
+      --border:       #2A2A2A;
+      --border-dark:  #383838;
+      --deal-green:   #4ADE80;
+      --deal-green-bg:#0A2316;
+      --deal-border:  #1A4A2A;
+      --sale-amber:   #FCD34D;
+      --sale-amber-bg:#2D1600;
+    }
+    html.dark tbody tr:hover td { background: #222; }
+    html.dark .tag-oz      { background: #1E3A5F; color: #93C5FD; }
+    html.dark .tag-half    { background: #2E1065; color: #C4B5FD; }
+    html.dark .tag-quarter { background: #431407; color: #FCD34D; }
+    html.dark .tag-eighth  { background: #500724; color: #F9A8D4; }
+    html.dark .pg-badge    { background: #2A2A2A; color: #9CA3AF; border-color: #3A3A3A; }
+    html.dark tr.best-oz td, html.dark tr.best-half td,
+    html.dark tr.best-quarter td, html.dark tr.best-eighth td { background: #0A1A0A; }
+    html.dark tr.row-sale td  { background: #1A0D00; }
+    html.dark tr.row-value td { background: #0A1A0A; }
+    html.dark .ad-row-inner   { background: #1A1A1A; }
+    html.dark .error-banner   { background: #2A0A0A; border-color: #5A1A1A; color: #FCA5A5; }
+    html.dark .popup-modal .alert-form input[type="email"] { background: #111; color: var(--text-primary); }
+    html.dark .popup-modal .alert-form input[type="email"]::placeholder { color: #555; }
+
+    /* dark mode toggle button */
+    .dark-toggle {
+      background: none; border: none; cursor: pointer; padding: 6px;
+      color: #999; display: flex; align-items: center;
+      transition: color .15s;
+    }
+    .dark-toggle:hover { color: var(--text-hero); }
+
     /* ─── Reset ──────────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -481,6 +518,8 @@
 
     /* product col */
     .product-name { font-size: 13px; color: var(--text-muted); max-width: 320px; line-height: 1.4; }
+    .leafly-link { font-size: 11px; color: var(--text-muted); opacity: 0.5; text-decoration: none; vertical-align: middle; }
+    .leafly-link:hover { opacity: 1; color: var(--lime-dark); }
 
     /* ad row */
     .ad-row td { padding: 0 !important; border-bottom: 1px solid var(--border) !important; background: transparent !important; }
@@ -713,6 +752,16 @@
       h2.section-title { font-size: 22px; }
     }
   </style>
+  <script>
+    // Apply dark mode before paint to avoid flash
+    (function() {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (stored === 'dark' || (!stored && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
 </head>
 <body>
 
@@ -731,6 +780,10 @@
     <li><a href="#faq-section">About</a></li>
     <li><a href="#alert-section" class="nav-cta">Get Alerts</a></li>
   </ul>
+  <button class="dark-toggle" id="darkToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+    <svg id="iconMoon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    <svg id="iconSun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  </button>
   <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
@@ -990,6 +1043,16 @@ let showDealsOnly      = false;
 function esc(s) {
   return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
+
+function leaflyLink(product) {
+  let strain = product;
+  if (strain.includes(' | ')) strain = strain.split(' | ').pop();
+  else if (strain.includes(' \u2013 ')) strain = strain.split(' \u2013 ').pop(); // en dash
+  else if (strain.includes(' \u2014 ')) strain = strain.split(' \u2014 ').pop(); // em dash
+  else if (strain.includes(' - ')) strain = strain.split(' - ').pop();
+  const slug = strain.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  return `<a href="https://www.leafly.com/strains/${slug}" target="_blank" rel="noopener noreferrer" class="leafly-link" title="View on Leafly">↗</a>`;
+}
 function fmt(price) {
   return '$' + price.toFixed(2).replace(/\.00$/, '');
 }
@@ -1187,7 +1250,7 @@ function renderTable() {
       <td><div class="store-name">${esc(r.store)}</div><div class="store-nbhd">${esc(r.neighborhood)}</div></td>
       <td class="price">${fmt(r.price)}</td>
       <td>${sizeTag}${pgBadge}</td>
-      <td class="product-name">${bestBadge}${dealBadge}${esc(r.product)}</td>
+      <td class="product-name">${bestBadge}${dealBadge}${esc(r.product)}${r.product ? ' ' + leaflyLink(r.product) : ''}</td>
     </tr>${(i + 1) % 12 === 0 ? adRow : ''}`;
   }).join('');
 }
@@ -1296,12 +1359,13 @@ function renderDeals() {
       ? `<span class="deal-price">${fmt(item.price)}</span><span class="deal-was">${fmt(item.originalPrice)}</span>`
       : `<span class="deal-price">${fmt(item.price)}</span>`;
     const prod = esc(item.product || '');
+    const prodLink = item.product ? prod + ' ' + leaflyLink(item.product) : prod;
     return `<tr>
-      <td><div class="store-name">${esc(item.store)}</div><div class="store-nbhd">${esc(item.neighborhood)}</div><div class="deal-product-mobile">${prod}</div></td>
+      <td><div class="store-name">${esc(item.store)}</div><div class="store-nbhd">${esc(item.neighborhood)}</div><div class="deal-product-mobile">${prodLink}</div></td>
       <td>${sizeTag}</td>
       <td>${tagEl}</td>
       <td>${priceEl}</td>
-      <td class="product-name deal-col-product">${prod}</td>
+      <td class="product-name deal-col-product">${prodLink}</td>
     </tr>`;
   }).join('');
   wrap.innerHTML = `<div class="table-wrap" role="region" aria-label="Best value picks"><div class="table-scroll"><table>
@@ -1392,6 +1456,20 @@ function closeMobileMenu() {
   document.getElementById('mobileMenu').classList.remove('open');
   document.getElementById('hamburgerBtn').setAttribute('aria-expanded', 'false');
 }
+
+/* ─── Dark mode toggle ───────────────────────────── */
+function syncDarkIcon() {
+  const dark = document.documentElement.classList.contains('dark');
+  document.getElementById('iconMoon').style.display = dark ? 'none' : '';
+  document.getElementById('iconSun').style.display  = dark ? '' : 'none';
+}
+document.getElementById('darkToggle').addEventListener('click', function() {
+  const html = document.documentElement;
+  const nowDark = html.classList.toggle('dark');
+  localStorage.setItem('theme', nowDark ? 'dark' : 'light');
+  syncDarkIcon();
+});
+syncDarkIcon();
 
 /* ─── Email popup (exit-intent) ──────────────────── */
 (function() {
