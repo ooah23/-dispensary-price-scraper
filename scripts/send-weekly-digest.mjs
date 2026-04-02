@@ -411,7 +411,7 @@ function buildHtml({ dateRange, bestPrices, bigDrop, consistentStore }) {
       <p style="margin:0;font-size:12px;color:#444;line-height:1.6;">
         You signed up for the weekly digest at <a href="${SITE_URL}" style="color:#666;">nycweedprice.org</a>.
         Prices are pre-tax estimates scraped from official dispensary menus. 21+ only.<br>
-        <a href="${SITE_URL}/unsubscribe" style="color:#555;">Unsubscribe</a>
+        <a href="${SITE_URL}/unsubscribe?email={{EMAIL}}" style="color:#555;">Unsubscribe</a>
       </p>
     </td>
   </tr>
@@ -429,12 +429,9 @@ function buildHtml({ dateRange, bestPrices, bigDrop, consistentStore }) {
 // ---------------------------------------------------------------------------
 
 async function sendEmail({ to, subject, html }) {
-  const body = JSON.stringify({
-    from: FROM_ADDRESS,
-    to: [to],
-    subject,
-    html,
-  });
+
+  // Personalise unsubscribe link
+  const personalised = html.replace(/\{\{EMAIL\}\}/g, encodeURIComponent(to));
 
   let res;
   try {
@@ -444,7 +441,7 @@ async function sendEmail({ to, subject, html }) {
         Authorization: `Bearer ${RESEND_API_KEY}`,
         "Content-Type": "application/json",
       },
-      body,
+      body: JSON.stringify({ from: FROM_ADDRESS, to: [to], subject, html: personalised }),
     });
   } catch (err) {
     console.error(`  Network error sending to ${to}: ${err.message}`);

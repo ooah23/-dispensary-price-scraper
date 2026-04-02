@@ -237,7 +237,7 @@ function buildAlertBody(drops) {
     "You're receiving this because you signed up for price drop alerts at nycweedprice.org."
   );
   lines.push(
-    "To unsubscribe reply with 'unsubscribe' in the subject line."
+    "To unsubscribe: https://nycweedprice.org/unsubscribe?email=YOUR_EMAIL"
   );
 
   return lines.join("\n");

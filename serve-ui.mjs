@@ -419,9 +419,27 @@ function setCorsHeaders(res) {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 }
 
+function unsubscribePage(messageOrEmail, success) {
+  const msg = success
+    ? `<strong>${messageOrEmail}</strong> has been removed from all nycweedprice.org emails.`
+    : messageOrEmail;
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Unsubscribe — nycweedprice.org</title>
+<style>body{margin:0;background:#0D0D0D;font-family:system-ui,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;color:#E8E4DC}
+.box{max-width:420px;text-align:center;padding:40px 24px}.logo{font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#C8FF00;margin-bottom:24px}
+h1{font-size:22px;font-weight:600;margin-bottom:12px}p{font-size:14px;color:#888;line-height:1.6;margin-bottom:24px}
+a{display:inline-block;color:#0D0D0D;background:#C8FF00;padding:10px 24px;border-radius:4px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none}</style>
+</head><body><div class="box">
+<div class="logo">nycweedprice.org</div>
+<h1>${success ? "Unsubscribed" : "Oops"}</h1>
+<p>${msg}</p>
+<a href="/">Back to prices</a>
+</div></body></html>`;
+}
+
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://0.0.0.0:${PORT}`);
-  const { pathname } = url;
+  const { pathname, searchParams } = url;
 
   // Handle CORS preflight for /api/* routes
   if (pathname.startsWith("/api/") && req.method === "OPTIONS") {
@@ -505,6 +523,33 @@ const server = http.createServer(async (req, res) => {
     } catch { /* non-fatal */ }
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ ok: true }));
+    return;
+  }
+
+  // /api/unsubscribe?email=...  or  /unsubscribe?email=...
+  if (pathname === "/api/unsubscribe" || pathname === "/unsubscribe") {
+    const email = searchParams.get("email")?.toLowerCase().trim();
+    if (!email) {
+      res.writeHead(400, { "Content-Type": "text/html" });
+      res.end(unsubscribePage("Missing email address.", false));
+      return;
+    }
+    try {
+      let lines = [];
+      try {
+        const raw = await fs.readFile(ALERTS_FILE, "utf8");
+        lines = raw.split("\n").filter(l => l.trim());
+      } catch { /* file may not exist yet */ }
+      const filtered = lines.filter(l => {
+        try { return JSON.parse(l).email?.toLowerCase().trim() !== email; } catch { return true; }
+      });
+      await fs.writeFile(ALERTS_FILE, filtered.join("\n") + (filtered.length ? "\n" : ""), "utf8");
+      res.writeHead(200, { "Content-Type": "text/html" });
+      res.end(unsubscribePage(email, true));
+    } catch {
+      res.writeHead(500, { "Content-Type": "text/html" });
+      res.end(unsubscribePage("Something went wrong. Please try again.", false));
+    }
     return;
   }
 
