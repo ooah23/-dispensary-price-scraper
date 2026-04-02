@@ -274,113 +274,152 @@ function mostConsistentStore(history) {
 // Email rendering
 // ---------------------------------------------------------------------------
 
-const CSS = `
-  body { font-family: Arial, Helvetica, sans-serif; font-size: 15px;
-         color: #1a1a1a; background: #f5f5f5; margin: 0; padding: 0; }
-  .wrap { max-width: 600px; margin: 24px auto; background: #fff;
-          border-radius: 8px; overflow: hidden;
-          box-shadow: 0 1px 4px rgba(0,0,0,.12); }
-  .header { background: #1a4d2e; color: #fff; padding: 24px 28px 18px; }
-  .header h1 { margin: 0; font-size: 22px; }
-  .header p { margin: 6px 0 0; font-size: 13px; opacity: .8; }
-  .body { padding: 24px 28px; }
-  h2 { font-size: 16px; color: #1a4d2e; margin: 24px 0 10px; border-bottom: 1px solid #e0e0e0; padding-bottom: 4px; }
-  table { width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 8px; }
-  th { text-align: left; padding: 6px 10px; background: #f0f0f0; font-weight: 600; }
-  td { padding: 7px 10px; border-bottom: 1px solid #efefef; }
-  tr:last-child td { border-bottom: none; }
-  .highlight { background: #eaf4ee; }
-  .badge { display: inline-block; background: #1a4d2e; color: #fff;
-           border-radius: 4px; padding: 2px 7px; font-size: 12px; font-weight: 700; }
-  .callout { background: #eaf4ee; border-left: 4px solid #1a4d2e;
-             padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 0 0 16px; }
-  .callout strong { display: block; font-size: 15px; margin-bottom: 2px; }
-  .callout span { font-size: 13px; color: #444; }
-  .footer { padding: 16px 28px; background: #f5f5f5; font-size: 12px; color: #888; }
-  .footer a { color: #1a4d2e; }
-  a { color: #1a4d2e; }
-`.trim();
+function priceRowHtml({ size, price, storeName, neighborhood, date, product }) {
+  const slug = storeName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  const truncProd = product.length > 48 ? product.slice(0, 45) + "…" : product;
+  return `
+  <tr>
+    <td style="padding:14px 16px;border-bottom:1px solid #1E1E1E;white-space:nowrap;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#666;">${SIZE_LABEL[size]}</td>
+    <td style="padding:14px 16px;border-bottom:1px solid #1E1E1E;white-space:nowrap;">
+      <span style="background:#C8FF00;color:#0D0D0D;font-size:16px;font-weight:700;padding:3px 10px;border-radius:3px;font-variant-numeric:tabular-nums;">$${price}</span>
+    </td>
+    <td style="padding:14px 16px;border-bottom:1px solid #1E1E1E;">
+      <a href="${SITE_URL}/dispensaries/${slug}/" style="color:#E8E4DC;text-decoration:none;font-weight:600;font-size:14px;">${storeName}</a>
+      <div style="color:#555;font-size:12px;margin-top:2px;">${neighborhood} &middot; ${friendlyDate(date)}</div>
+    </td>
+    <td style="padding:14px 16px;border-bottom:1px solid #1E1E1E;font-size:12px;color:#666;">${truncProd}</td>
+  </tr>`.trim();
+}
 
 function priceTableHtml(bestPrices) {
-  if (!bestPrices.size) return "<p>No price data available this week.</p>";
-
-  const rows = SIZES
-    .filter((s) => bestPrices.has(s))
-    .map((size) => {
-      const { price, storeName, neighborhood, date, product } = bestPrices.get(size);
-      const truncProd = product.length > 55 ? product.slice(0, 52) + "..." : product;
-      return `
-        <tr>
-          <td><strong>${SIZE_LABEL[size]}</strong></td>
-          <td><span class="badge">$${price}</span></td>
-          <td>${storeName}<br><small style="color:#666">${neighborhood} · ${friendlyDate(date)}</small></td>
-          <td style="font-size:12px;color:#555">${truncProd}</td>
-        </tr>`.trim();
-    });
-
+  if (!bestPrices.size) return `<p style="color:#666;font-size:14px;">No price data available this week.</p>`;
+  const rows = SIZES.filter((s) => bestPrices.has(s)).map((size) =>
+    priceRowHtml({ size, ...bestPrices.get(size) })
+  );
   return `
-    <table>
-      <thead><tr>
-        <th>Size</th><th>Best Price</th><th>Store</th><th>Product</th>
-      </tr></thead>
-      <tbody>${rows.join("")}</tbody>
-    </table>`;
+  <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;background:#111;border-radius:4px;overflow:hidden;">
+    <thead>
+      <tr style="background:#0D0D0D;">
+        <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#444;border-bottom:1px solid #1E1E1E;">Size</th>
+        <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#444;border-bottom:1px solid #1E1E1E;">Best Price</th>
+        <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#444;border-bottom:1px solid #1E1E1E;">Store</th>
+        <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#444;border-bottom:1px solid #1E1E1E;">Product</th>
+      </tr>
+    </thead>
+    <tbody>${rows.join("")}</tbody>
+  </table>`;
+}
+
+function calloutHtml({ label, title, body }) {
+  return `
+  <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin-bottom:8px;">
+    <tr>
+      <td style="background:#111;border-left:3px solid #C8FF00;border-radius:0 4px 4px 0;padding:16px 20px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#C8FF00;margin-bottom:6px;">${label}</div>
+        <div style="font-size:15px;font-weight:600;color:#E8E4DC;margin-bottom:4px;">${title}</div>
+        <div style="font-size:13px;color:#666;line-height:1.5;">${body}</div>
+      </td>
+    </tr>
+  </table>`;
 }
 
 function bigDropHtml(drop) {
-  if (!drop) return "<p>No significant single-day drops this week.</p>";
-  return `
-    <div class="callout">
-      <strong>${drop.storeName} (${drop.neighborhood})</strong>
-      <span>${drop.size}: $${drop.oldPrice} → $${drop.newPrice} on ${friendlyDate(drop.date)}
-      — a $${drop.drop} drop in one day.</span>
-    </div>`;
+  if (!drop) return `<p style="color:#555;font-size:14px;">No significant drops this week.</p>`;
+  return calloutHtml({
+    label: "Biggest Drop",
+    title: `${drop.storeName} — ${drop.size} dropped $${drop.drop}`,
+    body: `Was $${drop.oldPrice}, now $${drop.newPrice} (${friendlyDate(drop.date)}). ${drop.neighborhood}.`,
+  });
 }
 
 function consistentStoreHtml(store) {
-  if (!store) return "<p>Insufficient data this week.</p>";
-  return `
-    <div class="callout">
-      <strong>${store.storeName} (${store.neighborhood})</strong>
-      <span>Averaged $${store.avgPrice} for a ${SIZE_LABEL[store.size]} all week with minimal price swings.</span>
-    </div>`;
+  if (!store) return `<p style="color:#555;font-size:14px;">Insufficient data this week.</p>`;
+  return calloutHtml({
+    label: "Most Consistent Value",
+    title: `${store.storeName}`,
+    body: `Averaged <strong style="color:#C8FF00;">$${store.avgPrice}</strong> for a ${SIZE_LABEL[store.size]} all week with minimal price swings. ${store.neighborhood}.`,
+  });
+}
+
+function sectionHead(text) {
+  return `<div style="margin:32px 0 14px;"><span style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#555;">${text}</span></div>`;
 }
 
 function buildHtml({ dateRange, bestPrices, bigDrop, consistentStore }) {
+  const eighth = bestPrices.get("1/8 oz");
+  const heroSubline = eighth
+    ? `Cheapest eighth this week: <strong style="color:#C8FF00;">$${eighth.price}</strong> at ${eighth.storeName}`
+    : `Weekly cannabis price report for NYC`;
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NYC Weed Prices — Weekly Digest</title>
-<style>${CSS}</style>
+<title>NYC Weed Price — Weekly Digest</title>
 </head>
-<body>
-<div class="wrap">
-  <div class="header">
-    <h1>NYC Weed Price Digest</h1>
-    <p>${dateRange.start} – ${dateRange.end}</p>
-  </div>
-  <div class="body">
-    <h2>Lowest prices this week</h2>
-    ${priceTableHtml(bestPrices)}
+<body style="margin:0;padding:0;background:#0D0D0D;font-family:Arial,Helvetica,sans-serif;">
 
-    <h2>Biggest single-day drop</h2>
-    ${bigDropHtml(bigDrop)}
+<!-- Wrapper -->
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#0D0D0D;">
+<tr><td align="center" style="padding:24px 16px;">
+<table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
 
-    <h2>Most consistent value</h2>
-    ${consistentStoreHtml(consistentStore)}
+  <!-- Header -->
+  <tr>
+    <td style="background:#0D0D0D;padding:32px 32px 0;border-bottom:1px solid #1E1E1E;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:#C8FF00;margin-bottom:10px;">nycweedprice.org</div>
+      <div style="font-size:28px;font-weight:700;color:#F0EDE6;line-height:1.1;margin-bottom:10px;">Weekly Price Digest</div>
+      <div style="font-size:13px;color:#555;margin-bottom:24px;">${dateRange.start} &ndash; ${dateRange.end}</div>
+      <!-- Hero stat strip -->
+      <table width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #1E1E1E;">
+        <tr>
+          <td style="padding:14px 0;font-size:13px;color:#666;">${heroSubline}</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
 
-    <p style="margin-top:24px">
-      <a href="${SITE_URL}">See all current prices at nycweedprice.org →</a>
-    </p>
-  </div>
-  <div class="footer">
-    You're receiving this because you signed up for the weekly digest at
-    <a href="${SITE_URL}">nycweedprice.org</a>.
-    To unsubscribe, reply with "unsubscribe" in the subject line.
-  </div>
-</div>
+  <!-- Body -->
+  <tr>
+    <td style="background:#161616;padding:8px 32px 32px;">
+
+      ${sectionHead("Lowest Prices This Week")}
+      ${priceTableHtml(bestPrices)}
+
+      ${sectionHead("Biggest Single-Day Drop")}
+      ${bigDropHtml(bigDrop)}
+
+      ${sectionHead("Most Consistent Value")}
+      ${consistentStoreHtml(consistentStore)}
+
+      <!-- CTA -->
+      <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:32px;">
+        <tr>
+          <td>
+            <a href="${SITE_URL}" style="display:inline-block;background:#C8FF00;color:#0D0D0D;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:14px 28px;border-radius:4px;text-decoration:none;">See Today's Prices &rarr;</a>
+          </td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+
+  <!-- Footer -->
+  <tr>
+    <td style="background:#0D0D0D;border-top:1px solid #1E1E1E;padding:20px 32px;">
+      <p style="margin:0;font-size:12px;color:#444;line-height:1.6;">
+        You signed up for the weekly digest at <a href="${SITE_URL}" style="color:#666;">nycweedprice.org</a>.
+        Prices are pre-tax estimates scraped from official dispensary menus. 21+ only.<br>
+        <a href="${SITE_URL}/unsubscribe" style="color:#555;">Unsubscribe</a>
+      </p>
+    </td>
+  </tr>
+
+</table>
+</td></tr>
+</table>
+
 </body>
 </html>`;
 }
