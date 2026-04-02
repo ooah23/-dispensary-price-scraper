@@ -72,9 +72,22 @@ if %COMMIT_EXIT% neq 0 (
 echo [%TIME%] Pushing to origin main...
 git push origin main
 if %ERRORLEVEL% neq 0 (
-    echo ERROR: git push failed.
+    echo ERROR: git push to main failed.
     exit /b 1
 )
 
+:: Also push to master so Railway GitHub webhook fires (Railway watches master)
+echo [%TIME%] Pushing to origin master...
+git push origin main:master
+if %ERRORLEVEL% neq 0 (
+    echo WARNING: git push to master failed - Railway may not auto-deploy.
+)
+
 echo [%TIME%] Done. Push succeeded.
+
+:: Send price-drop alerts after a successful scrape + push
+echo [%TIME%] Running price alert mailer: node scripts\send-price-alerts.mjs
+node scripts\send-price-alerts.mjs
+echo [%TIME%] Price alert mailer exited with code %ERRORLEVEL%
+
 exit /b 0
