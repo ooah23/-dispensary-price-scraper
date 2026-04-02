@@ -148,8 +148,9 @@ export const dispensaries = [
     name: "Housing Works Cannabis Co (NoMad)",
     address: "846 6th Ave",
     neighborhood: "NoMad",
-    leaflySlug: "housing-works-cannabis-co-nomad",
-    sourceNote: "Leafly storefront (slug: housing-works-cannabis-co-nomad) – Blaze menu not yet live for this location"
+    menuUrlOverride: null,
+    dealsUrlOverride: null,
+    sourceNote: "No online menu — Leafly listing empty, Weedmaps unclaimed, Blaze only covers Broadway + Delivery locations. Skip until a storefront URL is found."
   },
   {
     name: "Superfly",
