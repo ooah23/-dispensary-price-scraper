@@ -467,8 +467,40 @@ const server = http.createServer(async (req, res) => {
       for await (const chunk of req) body += chunk;
       const { email } = JSON.parse(body);
       if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        // Always save locally as backup
         const entry = JSON.stringify({ ts: new Date().toISOString(), email }) + "\n";
         await fs.appendFile(ALERTS_FILE, entry, "utf8");
+
+        // Forward to Resend if API key is configured
+        const RESEND_API_KEY = process.env.RESEND_API_KEY;
+        if (RESEND_API_KEY) {
+          const RESEND_AUDIENCE_ID = process.env.RESEND_AUDIENCE_ID;
+          const FROM = process.env.RESEND_FROM ?? "NYC Weed Price <alerts@nycweedprice.org>";
+
+          // Add to audience (if audience ID set)
+          if (RESEND_AUDIENCE_ID) {
+            fetch(`https://api.resend.com/audiences/${RESEND_AUDIENCE_ID}/contacts`, {
+              method: "POST",
+              headers: { "Authorization": `Bearer ${RESEND_API_KEY}`, "Content-Type": "application/json" },
+              body: JSON.stringify({ email, unsubscribed: false }),
+            }).catch(() => {}); // fire-and-forget, non-fatal
+          }
+
+          // Send welcome email
+          fetch("https://api.resend.com/emails", {
+            method: "POST",
+            headers: { "Authorization": `Bearer ${RESEND_API_KEY}`, "Content-Type": "application/json" },
+            body: JSON.stringify({
+              from: FROM,
+              to: [email],
+              subject: "You're on the list — NYC's cheapest ounce, daily",
+              html: `<p>You're subscribed to <strong>nycweedprice.org</strong> daily price alerts.</p>
+<p>Every morning we check every licensed NYC dispensary and send you the cheapest ounce available.</p>
+<p>Check today's prices: <a href="https://nycweedprice.org">nycweedprice.org</a></p>
+<p style="color:#999;font-size:12px;margin-top:24px">Prices are pre-tax estimates scraped from dispensary menus. 21+ only.</p>`,
+            }),
+          }).catch(() => {}); // fire-and-forget, non-fatal
+        }
       }
     } catch { /* non-fatal */ }
     res.writeHead(200, { "Content-Type": "application/json" });
