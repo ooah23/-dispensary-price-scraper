@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NYC Cannabis Price Tracker | Cheapest Weed Deals in NYC</title>
-  <meta name="description" content="Cheapest weed in NYC — compare real-time flower prices at licensed dispensaries. Find today's best ounce, half-oz, and eighth deals. No stale menus, updated daily.">
+  <title>NYC Dispensary Prices, Updated Daily | nycweedprice.org</title>
+  <meta name="description" content="Compare cannabis flower prices at 20 NYC licensed dispensaries. Updated daily. Find cheapest eighths, quarters & ounces near you.">
   <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#22c55e">
+  <meta name="theme-color" content="#0D0D0D">
   <link rel="canonical" href="https://nycweedprice.org/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
@@ -16,991 +16,821 @@
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="NYC Cannabis Price Tracker | Cheapest Weed Deals in NYC">
-  <meta property="og:description" content="Compare flower prices across NYC licensed dispensaries. Find the cheapest ounce, half-ounce, and eighth deals. Updated daily.">
+  <meta property="og:title" content="NYC Dispensary Prices, Updated Daily">
+  <meta property="og:description" content="Compare cannabis flower prices at 20 NYC licensed dispensaries. Find cheapest eighths, quarters & ounces near you.">
   <meta property="og:url" content="https://nycweedprice.org/">
   <meta property="og:image" content="https://nycweedprice.org/og-image.svg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="NYC Cannabis Price Tracker">
-  <meta name="twitter:description" content="Find the cheapest weed in NYC. Real-time dispensary price comparisons for Manhattan.">
+  <meta name="twitter:title" content="NYC Dispensary Prices, Updated Daily">
+  <meta name="twitter:description" content="Compare flower prices at 20 licensed NYC dispensaries. Updated daily.">
   <meta name="twitter:image" content="https://nycweedprice.org/og-image.svg">
 
-  <style>
-    /* ─── Reset & Base ─────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --green:       #22c55e;
-      --green-dim:   #16a34a;
-      --green-glow:  rgba(34,197,94,.15);
-      --green-light: rgba(34,197,94,.08);
-      --bg:          #0f172a;
-      --bg-card:     #1e293b;
-      --bg-card2:    #263347;
-      --border:      #334155;
-      --text:        #f1f5f9;
-      --text-muted:  #94a3b8;
-      --text-dim:    #64748b;
-      --red:         #f87171;
-      --amber:       #fbbf24;
-      --blue:        #60a5fa;
-      --purple:      #a78bfa;
-      --radius:      12px;
-      --radius-sm:   8px;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-      font-size: 15px;
-      line-height: 1.6;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-    }
-
-    a { color: var(--green); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    /* ─── Loading overlay ──────────────────────────────────── */
-    #loading-overlay {
-      position: fixed; inset: 0; background: var(--bg);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 16px; z-index: 1000; transition: opacity .3s;
-    }
-    #loading-overlay.hidden { opacity: 0; pointer-events: none; }
-    .spinner {
-      width: 44px; height: 44px;
-      border: 3px solid var(--border);
-      border-top-color: var(--green);
-      border-radius: 50%;
-      animation: spin .8s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .loading-text { color: var(--text-muted); font-size: 14px; }
-
-    /* ─── Top nav ───────────────────────────────────────────── */
-    .topnav {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(15,23,42,.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 20px;
-      display: flex; align-items: center; justify-content: space-between;
-      height: 56px;
-    }
-    .topnav-brand {
-      display: flex; align-items: center; gap: 10px;
-      font-weight: 700; font-size: 16px; color: var(--text);
-      text-decoration: none;
-    }
-    .topnav-brand .leaf {
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 32px; height: 32px;
-      background: var(--green);
-      border-radius: 8px;
-      font-size: 18px;
-    }
-    .topnav-links { display: flex; gap: 4px; }
-    .topnav-links a {
-      padding: 6px 12px; border-radius: 6px;
-      font-size: 13px; font-weight: 500;
-      color: var(--text-muted);
-      transition: color .15s, background .15s;
-    }
-    .topnav-links a:hover { color: var(--text); background: var(--bg-card); text-decoration: none; }
-
-    /* hamburger */
-    .hamburger {
-      display: none;
-      background: none; border: none; cursor: pointer;
-      padding: 0; color: var(--text-muted);
-      width: 44px; height: 44px;
-      align-items: center; justify-content: center;
-    }
-    .hamburger svg { display: block; }
-
-    /* ─── Hero ──────────────────────────────────────────────── */
-    .hero {
-      padding: 56px 20px 48px;
-      text-align: center;
-      background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(34,197,94,.12) 0%, transparent 70%);
-    }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: var(--green-light);
-      border: 1px solid rgba(34,197,94,.3);
-      color: var(--green);
-      font-size: 12px; font-weight: 600;
-      padding: 4px 12px; border-radius: 20px;
-      margin-bottom: 20px;
-      text-transform: uppercase; letter-spacing: .6px;
-    }
-    .hero h1 {
-      font-size: clamp(28px, 6vw, 52px);
-      font-weight: 800;
-      letter-spacing: -1px;
-      line-height: 1.15;
-      margin-bottom: 16px;
-      background: linear-gradient(135deg, #f1f5f9 0%, var(--green) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero p {
-      font-size: clamp(15px, 2.5vw, 18px);
-      color: var(--text-muted);
-      max-width: 560px;
-      margin: 0 auto 28px;
-    }
-    .hero-cta {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--green);
-      color: #000;
-      font-weight: 700; font-size: 15px;
-      padding: 12px 28px; border-radius: 10px;
-      transition: background .15s, transform .1s;
-      text-decoration: none;
-    }
-    .hero-cta:hover { background: #16a34a; transform: translateY(-1px); text-decoration: none; }
-    .hero-updated {
-      margin-top: 18px;
-      font-size: 12px; color: var(--text-dim);
-    }
-    .hero-updated span { color: var(--green); font-weight: 600; }
-
-    /* ─── Stats ─────────────────────────────────────────────── */
-    .stats-section { padding: 0 20px 40px; }
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 12px;
-      max-width: 960px;
-      margin: 0 auto;
-    }
-    .stat-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px 20px;
-      position: relative;
-      overflow: hidden;
-      transition: border-color .2s, transform .15s;
-    }
-    .stat-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; bottom: 0;
-      width: 3px;
-      background: var(--accent-color, var(--green));
-    }
-    .stat-card:hover { border-color: var(--accent-color, var(--green)); transform: translateY(-2px); }
-    .stat-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .6px; color: var(--text-dim); margin-bottom: 8px; }
-    .stat-value { font-size: 28px; font-weight: 800; line-height: 1; color: var(--accent-color, var(--green)); }
-    .stat-sub { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
-
-    /* ─── Anchor scroll offset (sticky nav = 56px + 12px buffer) ── */
-    .main-section, .deals-section, .how-section, .alert-section, .faq-section {
-      scroll-margin-top: 68px;
-    }
-
-    /* ─── Main content ──────────────────────────────────────── */
-    .main-section { padding: 0 20px 60px; }
-    .section-inner { max-width: 960px; margin: 0 auto; }
-    .section-title {
-      font-size: 20px; font-weight: 700;
-      margin-bottom: 16px;
-      display: flex; align-items: center; gap: 10px;
-    }
-    .section-title .dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 8px var(--green);
-    }
-
-    /* ─── Filter bar ────────────────────────────────────────── */
-    .filter-bar {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 14px 16px;
-      margin-bottom: 16px;
-      display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
-    }
-    .search-box {
-      position: relative; flex: 1; min-width: 160px;
-    }
-    .search-box svg {
-      position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
-      color: var(--text-dim); pointer-events: none;
-    }
-    .search-box input {
-      width: 100%;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      color: var(--text);
-      font-size: 14px;
-      padding: 8px 12px 8px 34px;
-      min-height: 44px;
-      outline: none;
-      transition: border-color .15s;
-    }
-    .search-box input::placeholder { color: var(--text-dim); }
-    .search-box input:focus { border-color: var(--green); }
-
-    .filter-group { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-    .filter-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: var(--text-dim); }
-
-    .pill {
-      padding: 5px 14px;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      font-size: 12px; font-weight: 600;
-      cursor: pointer;
-      background: transparent;
-      color: var(--text-muted);
-      transition: all .15s;
-      user-select: none;
-      white-space: nowrap;
-    }
-    .pill:hover { border-color: var(--green); color: var(--green); }
-    .pill.active { background: var(--green); border-color: var(--green); color: #000; }
-    #dealsOnlyToggle.active { background: var(--amber); border-color: var(--amber); color: #000; }
-
-    .filter-meta {
-      margin-left: auto;
-      font-size: 12px; color: var(--text-dim);
-      white-space: nowrap;
-    }
-    .filter-meta strong { color: var(--text); }
-
-    /* collapsible neighborhood filter on mobile */
-    .filter-toggle-btn {
-      display: none;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      color: var(--text-muted);
-      font-size: 12px; font-weight: 600;
-      padding: 6px 12px;
-      cursor: pointer;
-      align-items: center; gap: 6px;
-    }
-    .nbhd-filter-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
-
-    /* ─── Table ─────────────────────────────────────────────── */
-    .table-wrap {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: visible;
-    }
-    .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    table { width: 100%; border-collapse: collapse; }
-    th {
-      background: var(--bg-card2);
-      color: var(--text-muted);
-      text-align: left;
-      padding: 11px 14px;
-      font-size: 11px; font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .5px;
-      white-space: nowrap;
-      cursor: pointer;
-      user-select: none;
-      border-bottom: 1px solid var(--border);
-      transition: color .15s;
-    }
-    th:hover { color: var(--text); }
-    th.sorted-asc::after  { content: ' ↑'; color: var(--green); }
-    th.sorted-desc::after { content: ' ↓'; color: var(--green); }
-
-    td {
-      padding: 14px 16px;
-      border-bottom: 1px solid rgba(51,65,85,.6);
-      vertical-align: middle;
-      font-size: 14px;
-    }
-    tr:last-child td { border-bottom: none; }
-    tr:hover td { background: rgba(255,255,255,.025); }
-
-    /* best price rows */
-    tr.best-oz      td { background: rgba(34,197,94,.05); }
-    tr.best-half    td { background: rgba(167,139,250,.05); }
-    tr.best-quarter td { background: rgba(251,191,36,.05); }
-    tr.best-eighth  td { background: rgba(248,113,113,.05); }
-    tr.best-oz:hover      td { background: rgba(34,197,94,.12); }
-    tr.best-half:hover    td { background: rgba(167,139,250,.12); }
-    tr.best-quarter:hover td { background: rgba(251,191,36,.12); }
-    tr.best-eighth:hover  td { background: rgba(248,113,113,.12); }
-
-    tr.pre-ground td { font-style: italic; }
-
-    .store-name { font-weight: 700; font-size: 15px; }
-    .store-nbhd { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
-    .store-address { font-size: 11px; color: var(--text-dim); }
-
-    .price { font-weight: 800; font-size: 17px; color: var(--green); text-align: right; font-variant-numeric: tabular-nums; }
-    th#th-price { text-align: right; }
-    tr.best-half    .price { color: var(--purple); }
-    tr.best-quarter .price { color: var(--amber); }
-    tr.best-eighth  .price { color: var(--red); }
-
-    .size-tag {
-      display: inline-flex; align-items: center;
-      padding: 3px 9px; border-radius: 12px;
-      font-size: 11px; font-weight: 700;
-      white-space: nowrap;
-    }
-    .tag-oz      { background: rgba(96,165,250,.12); color: var(--blue);   border: 1px solid rgba(96,165,250,.25); }
-    .tag-half    { background: rgba(167,139,250,.12); color: var(--purple); border: 1px solid rgba(167,139,250,.25); }
-    .tag-quarter { background: rgba(251,191,36,.12);  color: var(--amber);  border: 1px solid rgba(251,191,36,.25); }
-    .tag-eighth  { background: rgba(248,113,113,.12); color: var(--red);    border: 1px solid rgba(248,113,113,.25); }
-
-    .pg-badge {
-      display: inline-flex; align-items: center;
-      background: rgba(148,163,184,.1);
-      color: var(--text-dim);
-      border: 1px solid rgba(148,163,184,.2);
-      font-size: 9px; font-weight: 700;
-      padding: 1px 5px; border-radius: 4px;
-      margin-left: 5px; vertical-align: middle;
-      text-transform: uppercase; letter-spacing: .4px;
-    }
-
-    .product-name { font-size: 13px; color: var(--text-muted); max-width: 280px; line-height: 1.4; }
-    .product-name .best-badge {
-      display: inline-block;
-      background: var(--green-light);
-      color: var(--green);
-      border: 1px solid rgba(34,197,94,.3);
-      font-size: 10px; font-weight: 700;
-      padding: 1px 6px; border-radius: 6px;
-      margin-left: 6px; vertical-align: middle;
-      text-transform: uppercase; letter-spacing: .4px;
-    }
-    /* best-badge color follows size */
-    tr.best-half    .best-badge { background: rgba(167,139,250,.15); color: var(--purple); border-color: rgba(167,139,250,.3); }
-    tr.best-quarter .best-badge { background: rgba(251,191,36,.15);  color: var(--amber);  border-color: rgba(251,191,36,.3); }
-    tr.best-eighth  .best-badge { background: rgba(248,113,113,.15); color: var(--red);    border-color: rgba(248,113,113,.3); }
-
-    .empty-state {
-      padding: 60px 20px;
-      text-align: center;
-      color: var(--text-dim);
-    }
-    .empty-state svg { display: block; margin: 0 auto 16px; opacity: .3; }
-    .empty-state p { font-size: 14px; }
-
-    .error-banner {
-      background: rgba(248,113,113,.1);
-      border: 1px solid rgba(248,113,113,.3);
-      border-radius: var(--radius);
-      color: var(--red);
-      padding: 16px 20px;
-      font-size: 14px;
-      display: flex; gap: 10px; align-items: center;
-    }
-
-    /* ─── Ad units ──────────────────────────────────────────── */
-    .ad-unit {
-      max-width: 960px; margin: 0 auto 32px;
-      text-align: center; min-height: 90px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .ad-unit-label {
-      display: block; font-size: 10px; color: var(--text-dim);
-      text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px;
-    }
-    .ad-row td {
-      padding: 0 !important; border-bottom: none !important;
-      background: transparent !important;
-    }
-    .ad-row-inner {
-      padding: 8px 16px; text-align: center;
-    }
-
-    /* ─── Email popup modal ──────────────────────────────────── */
-    .popup-overlay {
-      display: none; position: fixed; inset: 0; z-index: 1000;
-      background: rgba(0,0,0,.65); backdrop-filter: blur(4px);
-      align-items: center; justify-content: center;
-    }
-    .popup-overlay.open { display: flex; }
-    .popup-modal {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 36px 32px 32px;
-      max-width: 420px; width: calc(100% - 40px);
-      position: relative;
-      box-shadow: 0 24px 64px rgba(0,0,0,.5);
-    }
-    .popup-close {
-      position: absolute; top: 14px; right: 16px;
-      background: none; border: none; color: var(--text-muted);
-      font-size: 22px; cursor: pointer; line-height: 1;
-      padding: 4px;
-    }
-    .popup-close:hover { color: var(--text); }
-    .popup-modal h2 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
-    .popup-modal p  { font-size: 14px; color: var(--text-muted); line-height: 1.55; margin-bottom: 16px; }
-    .popup-modal .alert-form { margin-top: 0; }
-    .popup-modal .alert-success { display: none; }
-
-    /* ─── Best Value Picks ──────────────────────────────────── */
-    .deals-section { padding: 0 20px 48px; }
-    .deals-section-header {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 12px; margin-bottom: 6px;
-    }
-    .deals-see-all {
-      font-size: 13px; font-weight: 600; color: var(--green);
-      white-space: nowrap;
-    }
-    .deals-see-all:hover { text-decoration: underline; }
-    .deals-subtitle {
-      font-size: 13px; color: var(--text-dim);
-      margin-bottom: 14px;
-    }
-    .deal-price { font-weight: 800; font-size: 17px; color: var(--green); }
-    .deal-was { font-size: 11px; color: var(--text-dim); text-decoration: line-through; margin-left: 4px; }
-    .deal-product-mobile { display: none; font-size: 12px; color: var(--text-dim); margin-top: 2px; white-space: normal; max-width: 100%; }
-    @media (max-width: 600px) {
-      .deal-product-mobile { display: block; }
-      .deal-col-product { display: none; }
-      /* Hide main price table Product column (col 4) — scoped so deals table Price col is not affected */
-      .main-section table th:nth-child(4), .main-section table td:nth-child(4) { display: none; }
-      /* Hero CTA full-width */
-      .hero-cta { display: flex; justify-content: center; width: 100%; max-width: 320px; }
-    }
-    /* ─── Deal / Value row highlights ──────────────── */
-    tr.row-sale td  { background: rgba(251,191,36,.04); }
-    tr.row-value td { background: rgba(34,197,94,.03); }
-    .deal-tag-sale {
-      display: inline-block; margin-right: 5px;
-      font-size: 9px; font-weight: 800; letter-spacing: .4px;
-      padding: 2px 5px; border-radius: 4px;
-      background: rgba(251,191,36,.2); color: var(--amber);
-      border: 1px solid rgba(251,191,36,.4);
-      text-transform: uppercase; vertical-align: middle;
-    }
-    .deal-tag-value {
-      display: inline-block; margin-right: 5px;
-      font-size: 9px; font-weight: 800; letter-spacing: .4px;
-      padding: 2px 5px; border-radius: 4px;
-      background: rgba(34,197,94,.15); color: var(--green);
-      border: 1px solid rgba(34,197,94,.3);
-      text-transform: uppercase; vertical-align: middle;
-    }
-
-    /* Structured price-discount deals */
-    .deal-item-structured {
-      display: flex; justify-content: space-between; align-items: center;
-      gap: 10px;
-      padding: 6px 10px;
-      background: rgba(34,197,94,.06);
-      border: 1px solid rgba(34,197,94,.2);
-      border-radius: 6px;
-    }
-    .deal-item-name {
-      font-size: 12px; color: var(--text-muted);
-      flex: 1; min-width: 0;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-    .deal-item-prices {
-      display: flex; align-items: center; gap: 6px;
-      flex-shrink: 0;
-    }
-    .deal-item-original {
-      font-size: 11px; color: var(--text-dim);
-      text-decoration: line-through;
-    }
-    .deal-item-current {
-      font-size: 14px; font-weight: 800; color: var(--green);
-    }
-    .deal-item-pct {
-      font-size: 9px; font-weight: 800;
-      background: rgba(34,197,94,.2); color: var(--green);
-      border: 1px solid rgba(34,197,94,.35);
-      padding: 2px 5px; border-radius: 4px;
-      text-transform: uppercase; letter-spacing: .3px;
-    }
-    .deals-empty {
-      grid-column: 1 / -1;
-      text-align: center;
-      color: var(--text-dim);
-      font-size: 14px;
-      padding: 40px 20px;
-    }
-
-    /* ─── How It Works ──────────────────────────────────────── */
-    .how-section {
-      padding: 0 20px 64px;
-    }
-    .how-inner {
-      max-width: 960px; margin: 0 auto;
-    }
-    .how-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin-top: 20px;
-    }
-    .how-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px 20px;
-      transition: border-color .2s;
-    }
-    .how-card:hover { border-color: var(--border); }
-    .how-step {
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 36px; height: 36px;
-      background: var(--green-light);
-      border: 1px solid rgba(34,197,94,.25);
-      border-radius: 10px;
-      color: var(--green);
-      font-size: 18px;
-      margin-bottom: 14px;
-    }
-    .how-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
-    .how-card p { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
-
-    /* ─── Alert CTA ────────────────────────────────────────── */
-    .alert-section {
-      padding: 0 20px 64px;
-    }
-    .alert-inner {
-      max-width: 760px; margin: 0 auto;
-      background: var(--bg-card);
-      border: 1px solid rgba(34,197,94,.3);
-      border-radius: var(--radius);
-      padding: 32px 36px;
-      display: flex; align-items: center; gap: 32px;
-      background: linear-gradient(135deg, var(--bg-card) 0%, rgba(34,197,94,.04) 100%);
-    }
-    .alert-copy { flex: 1; }
-    .alert-copy h2 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
-    .alert-copy p { font-size: 14px; color: var(--text-muted); line-height: 1.55; }
-    .alert-form {
-      display: flex; gap: 8px; flex-wrap: wrap;
-      margin-top: 16px;
-    }
-    .alert-form input[type="email"] {
-      flex: 1; min-width: 200px;
-      background: var(--bg); border: 1px solid var(--border);
-      border-radius: var(--radius-sm); color: var(--text);
-      font-size: 14px; padding: 10px 14px; outline: none;
-      transition: border-color .15s;
-    }
-    .alert-form input[type="email"]:focus { border-color: var(--green); }
-    .alert-form input[type="email"]::placeholder { color: var(--text-dim); }
-    .alert-form button {
-      background: var(--green); color: #000;
-      border: none; border-radius: var(--radius-sm);
-      font-size: 14px; font-weight: 700; padding: 10px 22px;
-      cursor: pointer; white-space: nowrap;
-      transition: background .15s;
-    }
-    .alert-form button:hover { background: var(--green-dim); }
-    .alert-icon {
-      font-size: 48px; flex-shrink: 0;
-    }
-    .alert-success {
-      display: none; color: var(--green);
-      font-size: 14px; font-weight: 600; margin-top: 10px;
-    }
-    @media (max-width: 600px) {
-      .alert-inner { flex-direction: column; gap: 16px; padding: 24px 20px; }
-      .alert-icon { display: none; }
-    }
-
-    /* ─── FAQ ──────────────────────────────────────────────── */
-    .faq-section {
-      padding: 0 20px 64px;
-    }
-    .faq-inner { max-width: 760px; margin: 0 auto; }
-    .faq-list { margin-top: 20px; display: flex; flex-direction: column; gap: 8px; }
-    .faq-item {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      transition: border-color .15s;
-    }
-    .faq-item:hover { border-color: rgba(34,197,94,.3); }
-    .faq-q {
-      width: 100%; text-align: left;
-      background: none; border: none; cursor: pointer;
-      display: flex; align-items: center; justify-content: space-between; gap: 12px;
-      padding: 16px 18px;
-      font-size: 14px; font-weight: 600; color: var(--text);
-      line-height: 1.4;
-      transition: color .15s;
-    }
-    .faq-q:hover { color: var(--green); }
-    .faq-chevron {
-      flex-shrink: 0; color: var(--text-dim);
-      transition: transform .2s;
-    }
-    .faq-item.open .faq-chevron { transform: rotate(180deg); }
-    .faq-a {
-      display: none;
-      padding: 0 18px 16px;
-      font-size: 13px; color: var(--text-muted); line-height: 1.65;
-      border-top: 1px solid rgba(51,65,85,.5);
-    }
-    .faq-item.open .faq-a { display: block; }
-
-    /* ─── Footer ────────────────────────────────────────────── */
-    footer {
-      background: var(--bg-card);
-      border-top: 1px solid var(--border);
-      padding: 28px 20px;
-      text-align: center;
-    }
-    .footer-inner { max-width: 960px; margin: 0 auto; }
-    .footer-brand {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-weight: 700; font-size: 15px;
-      color: var(--text);
-      margin-bottom: 10px;
-    }
-    .footer-brand .leaf-sm {
-      width: 24px; height: 24px;
-      background: var(--green);
-      border-radius: 6px;
-      display: inline-flex; align-items: center; justify-content: center;
-      font-size: 13px;
-    }
-    footer p {
-      font-size: 12px;
-      color: var(--text-dim);
-      max-width: 480px;
-      margin: 0 auto;
-      line-height: 1.7;
-    }
-    footer .disclaimer {
-      margin-top: 10px;
-      font-size: 11px;
-      color: var(--text-dim);
-    }
-
-    /* ─── Responsive ────────────────────────────────────────── */
-    @media (max-width: 680px) {
-      .topnav-links { display: none; }
-      .hamburger { display: flex; align-items: center; justify-content: center; }
-
-      .hero { padding: 40px 16px 36px; }
-
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-
-      .filter-bar { flex-direction: column; align-items: stretch; }
-      .search-box { min-width: 0; flex: 1 1 auto; }
-      .filter-toggle-btn { display: inline-flex; }
-      .nbhd-filter-wrap.collapsed { display: none; }
-
-      th, td { padding: 10px 10px; }
-      .product-name { max-width: 160px; }
-      .deal-tag-sale, .deal-tag-value { font-size: 8px; padding: 2px 4px; }
-
-      .how-grid { grid-template-columns: 1fr; }
-
-      .back-to-top { width: 34px; height: 34px; font-size: 16px; bottom: 16px; right: 14px; }
-    }
-
-    @media (max-width: 400px) {
-      .stats-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-      .stat-value { font-size: 22px; }
-      .pill { font-size: 11px; padding: 4px 10px; }
-    }
-
-    @media (max-width: 360px) {
-      .filter-bar { padding: 10px 12px; gap: 8px; }
-      .pill { font-size: 10px; padding: 4px 8px; min-height: 36px; }
-    }
-
-    /* ─── Mobile nav menu ───────────────────────────────────── */
-    .mobile-menu {
-      display: none;
-      background: var(--bg-card);
-      border-bottom: 1px solid var(--border);
-      padding: 8px 16px 12px;
-      flex-direction: column; gap: 2px;
-    }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a {
-      padding: 10px 12px;
-      border-radius: 8px;
-      font-size: 14px; font-weight: 500;
-      color: var(--text-muted);
-    }
-    .mobile-menu a:hover { background: var(--bg); color: var(--text); text-decoration: none; }
-
-    /* ─── Scroll-to-top ─────────────────────────────────────── */
-    .back-to-top {
-      position: fixed; bottom: 24px; right: 20px;
-      background: var(--green); color: #000;
-      width: 40px; height: 40px; border-radius: 50%;
-      border: none; cursor: pointer;
-      display: none; align-items: center; justify-content: center;
-      font-size: 18px;
-      box-shadow: 0 4px 14px rgba(34,197,94,.4);
-      transition: transform .15s, opacity .2s;
-      z-index: 50;
-    }
-    .back-to-top.visible { display: flex; }
-    .back-to-top:hover { transform: translateY(-2px); }
-  </style>
-
+  <!-- Schema: WebSite -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@graph": [
+    "@type": "WebSite",
+    "name": "NYC Weed Price",
+    "url": "https://nycweedprice.org",
+    "description": "Daily cannabis flower price comparison across NYC licensed dispensaries",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": { "@type": "EntryPoint", "urlTemplate": "https://nycweedprice.org/?q={search_term_string}" },
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- Schema: Dataset -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "name": "NYC Licensed Dispensary Cannabis Flower Prices",
+    "description": "Daily-updated cannabis flower prices from 20 New York City licensed dispensaries, including eighths, quarters, halves, and ounces.",
+    "url": "https://nycweedprice.org",
+    "creator": { "@type": "Organization", "name": "NYC Weed Price", "url": "https://nycweedprice.org" },
+    "temporalCoverage": "2024/..",
+    "spatialCoverage": { "@type": "Place", "name": "New York City, NY" },
+    "variableMeasured": "Cannabis flower retail price (USD)",
+    "measurementTechnique": "Automated daily web scraping of licensed dispensary menus"
+  }
+  </script>
+
+  <!-- Schema: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
       {
-        "@type": "WebSite",
-        "@id": "https://nycweedprice.org/#website",
-        "url": "https://nycweedprice.org/",
-        "name": "NYC Weed Price Tracker",
-        "description": "Compare real-time flower prices at NYC licensed dispensaries. Find the cheapest ounce and half-ounce deals in Manhattan.",
-        "inLanguage": "en-US",
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": {
-            "@type": "EntryPoint",
-            "urlTemplate": "https://nycweedprice.org/?q={search_term_string}"
-          },
-          "query-input": "required name=search_term_string"
-        }
+        "@type": "Question",
+        "name": "What is the cheapest dispensary in NYC?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Prices change daily across NYC's 20+ licensed dispensaries. Use our comparison table to see today's lowest prices across all sizes and neighborhoods — updated every morning." }
       },
       {
-        "@type": "ItemList",
-        "@id": "https://nycweedprice.org/#pricelist",
-        "name": "NYC Dispensary Flower Prices",
-        "description": "Live price comparison for 1 oz, 1/2 oz, 1/4 oz, and 1/8 oz cannabis flower at licensed Manhattan dispensaries.",
-        "url": "https://nycweedprice.org/",
-        "itemListOrder": "https://schema.org/ItemListOrderAscending",
-        "itemListElement": [
-          {"@type":"ListItem","position":1,"name":"Housing Works Cannabis Co — NoHo","url":"https://nycweedprice.org/#prices"},
-          {"@type":"ListItem","position":2,"name":"Smacked Village — Greenwich Village","url":"https://nycweedprice.org/#prices"},
-          {"@type":"ListItem","position":3,"name":"The Travel Agency — West Village","url":"https://nycweedprice.org/#prices"},
-          {"@type":"ListItem","position":4,"name":"Dazed — Union Square","url":"https://nycweedprice.org/#prices"},
-          {"@type":"ListItem","position":5,"name":"The Alchemy — Flatiron & Chelsea","url":"https://nycweedprice.org/#prices"},
-          {"@type":"ListItem","position":6,"name":"Stoops NYC — SoHo","url":"https://nycweedprice.org/#prices"},
-          {"@type":"ListItem","position":7,"name":"Blue Forest Farms — Gramercy","url":"https://nycweedprice.org/#prices"},
-          {"@type":"ListItem","position":8,"name":"Gotham — Bowery & Chelsea","url":"https://nycweedprice.org/#prices"},
-          {"@type":"ListItem","position":9,"name":"New Amsterdam — Midtown","url":"https://nycweedprice.org/#prices"},
-          {"@type":"ListItem","position":10,"name":"CONBUD — Downtown","url":"https://nycweedprice.org/#prices"},
-          {"@type":"ListItem","position":11,"name":"Green Genius — Gramercy","url":"https://nycweedprice.org/#prices"},
-          {"@type":"ListItem","position":12,"name":"VERDI — Chelsea","url":"https://nycweedprice.org/#prices"},
-          {"@type":"ListItem","position":13,"name":"KushKlub NYC — LES","url":"https://nycweedprice.org/#prices"},
-          {"@type":"ListItem","position":14,"name":"Smiley Exotics — Midtown","url":"https://nycweedprice.org/#prices"}
-        ]
+        "@type": "Question",
+        "name": "How often are NYC dispensary prices updated?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Prices are scraped and updated every 24 hours directly from each dispensary's online menu. You're always seeing the most recent publicly listed prices." }
       },
       {
-        "@type": "FAQPage",
-        "@id": "https://nycweedprice.org/#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "How much does an ounce of weed cost in NYC?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Ounce prices at licensed NYC dispensaries typically range from $180 to $350+, depending on the store and strain tier. NYC Weed Price Tracker updates prices daily so you can find the cheapest ounce available right now."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What is the cheapest dispensary in Manhattan?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The cheapest dispensary changes daily as stores update their menus. NYC Weed Price Tracker shows a live price table sorted by price so you can always find the best deal at a glance. Check the Price Table section above for today's lowest prices."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Is buying weed legal in New York City?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. Cannabis is legal for adults 21+ in New York State under the MRTA (Marihuana Regulation and Taxation Act). Only purchase from licensed dispensaries — all stores listed on NYC Weed Price Tracker are state-licensed."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How often are dispensary prices updated?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Prices are scraped automatically from each dispensary's live menu once per day. The timestamp at the top of the page shows when data was last refreshed."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What sizes are compared on this site?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "NYC Weed Price Tracker compares prices for 1 oz (28g), 1/2 oz (14g), 1/4 oz (7g), and 1/8 oz (3.5g) flower listings. Use the size filter buttons above the table to view your preferred size."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Do NYC dispensaries accept credit cards?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Most NYC licensed dispensaries accept debit cards and cash. Some accept credit cards via third-party payment processors. It is always a good idea to bring cash or a debit card to be safe."
-            }
-          }
-        ]
+        "@type": "Question",
+        "name": "Are all dispensaries on this site licensed in New York?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every dispensary listed on nycweedprice.org holds an active New York State OCM (Office of Cannabis Management) license. We do not list unlicensed operators." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I buy weed online through this site?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. nycweedprice.org is a price comparison tool, not a marketplace. Prices link to each dispensary's official menu where you can browse or order." }
+      },
+      {
+        "@type": "Question",
+        "name": "What sizes are compared?",
+        "acceptedAnswer": { "@type": "Answer", "text": "We compare 1 oz (28g), 1/2 oz (14g), 1/4 oz (7g), and 1/8 oz (3.5g) flower listings. Use the size filter to focus on your preferred quantity." }
       }
     ]
   }
   </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── Tokens ─────────────────────────────────────────────────── */
+    :root {
+      --hero-bg:      #0D0D0D;
+      --lime:         #C8FF00;
+      --lime-dark:    #A3CC00;
+      --page-bg:      #F7F5F0;
+      --card-bg:      #FFFFFF;
+      --text-hero:    #F0EDE6;
+      --text-primary: #1A1A1A;
+      --text-muted:   #6B6B6B;
+      --border:       #E8E4DC;
+      --border-dark:  #2A2A2A;
+      --deal-green:   #1A6B35;
+      --deal-green-bg:#F0FFF4;
+      --deal-border:  #A7D9B3;
+      --sale-amber:   #92400E;
+      --sale-amber-bg:#FEF3C7;
+      --radius:       4px;
+      --nav-h:        56px;
+    }
+
+    /* ─── Reset ──────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      background: var(--page-bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── Loading overlay ────────────────────────────────────────── */
+    #loading-overlay {
+      position: fixed; inset: 0; background: var(--hero-bg);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 16px; z-index: 9000; transition: opacity .3s;
+    }
+    #loading-overlay.hidden { opacity: 0; pointer-events: none; }
+    .spinner {
+      width: 36px; height: 36px;
+      border: 2px solid #2A2A2A;
+      border-top-color: var(--lime);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { color: #6B6B6B; font-size: 13px; letter-spacing: .08em; }
+
+    /* ─── Nav ────────────────────────────────────────────────────── */
+    .topnav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px;
+      transition: background .15s, border-color .15s;
+      border-bottom: 1px solid transparent;
+    }
+    .topnav.scrolled {
+      background: var(--hero-bg);
+      border-bottom-color: var(--border-dark);
+    }
+    .topnav-brand {
+      font-family: 'Inter', sans-serif;
+      font-size: 15px; font-weight: 500;
+      color: var(--text-hero);
+      letter-spacing: -.01em;
+    }
+    .topnav-brand .tld { color: var(--lime); }
+    .nav-links {
+      display: flex; align-items: center; gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 12px; font-weight: 500;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: #999; transition: color .15s;
+    }
+    .nav-links a:hover { color: var(--text-hero); }
+    .nav-cta {
+      font-size: 12px; font-weight: 500;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--lime) !important;
+      border: 1px solid var(--lime);
+      padding: 6px 16px;
+      border-radius: var(--radius);
+      transition: background .15s, color .15s !important;
+    }
+    .nav-cta:hover { background: var(--lime); color: var(--hero-bg) !important; }
+
+    /* hamburger */
+    .hamburger-btn {
+      display: none;
+      background: none; border: none; cursor: pointer; padding: 8px;
+      flex-direction: column; gap: 5px; align-items: center;
+    }
+    .hamburger-btn span {
+      display: block; width: 22px; height: 1px; background: var(--text-hero);
+      transition: transform .2s, opacity .2s;
+    }
+    .mobile-menu {
+      display: none; position: fixed; inset: 0; background: var(--hero-bg);
+      z-index: 400; flex-direction: column; align-items: center; justify-content: center; gap: 40px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 28px; font-family: 'Playfair Display', serif;
+      color: var(--text-hero); font-weight: 400;
+    }
+    .mobile-menu a:hover { color: var(--lime); }
+    .mobile-menu-close {
+      position: absolute; top: 20px; right: 24px;
+      background: none; border: none; color: #999; font-size: 28px; cursor: pointer;
+    }
+
+    /* ─── Hero ───────────────────────────────────────────────────── */
+    .hero {
+      background: var(--hero-bg);
+      min-height: 100svh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: calc(var(--nav-h) + 40px) 24px 0;
+      position: relative;
+    }
+    /* subtle noise texture */
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: .25em; text-transform: uppercase;
+      color: var(--lime); margin-bottom: 20px;
+    }
+    .hero-headline {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(44px, 7vw, 88px);
+      font-weight: 400; line-height: 1.08;
+      color: var(--text-hero);
+      max-width: 800px;
+      margin-bottom: 24px;
+    }
+    .hero-sub {
+      font-size: 16px; font-weight: 400;
+      color: #888; letter-spacing: .02em;
+      margin-bottom: 36px;
+      max-width: 440px;
+    }
+    .hero-cta {
+      display: inline-block;
+      background: var(--lime); color: var(--hero-bg);
+      font-size: 12px; font-weight: 600;
+      letter-spacing: .12em; text-transform: uppercase;
+      padding: 16px 36px;
+      border-radius: var(--radius);
+      transition: background .15s;
+      margin-bottom: 24px;
+    }
+    .hero-cta:hover { background: var(--lime-dark); }
+    .hero-scroll-line {
+      display: flex; flex-direction: column; align-items: center; gap: 0;
+      margin-bottom: 0;
+    }
+    .hero-scroll-line span {
+      display: block; width: 1px; height: 40px;
+      background: linear-gradient(to bottom, transparent, #444);
+    }
+
+    /* stat bar at bottom of hero */
+    .hero-statbar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      border-top: 1px solid var(--border-dark);
+      display: flex; align-items: center; justify-content: center;
+      gap: 32px; padding: 14px 24px;
+      font-size: 12px; font-weight: 500;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: #666;
+      flex-wrap: wrap;
+    }
+    .hero-statbar .live-dot {
+      display: inline-block; width: 7px; height: 7px;
+      background: var(--lime); border-radius: 50%;
+      margin-right: 8px;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+    .hero-statbar .stat-item { color: #777; }
+    .hero-statbar .stat-item strong { color: var(--text-hero); font-weight: 600; }
+
+    /* ─── Section scaffolding ────────────────────────────────────── */
+    .section { padding: 64px 0; }
+    .section-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .section-label {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 12px;
+    }
+    h2.section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 400; color: var(--text-primary);
+      margin-bottom: 32px; line-height: 1.2;
+    }
+
+    /* ─── Deals section ──────────────────────────────────────────── */
+    #deals { background: var(--page-bg); }
+
+    /* ─── Stats grid ─────────────────────────────────────────────── */
+    #stats-section { background: var(--hero-bg); padding: 40px 0; }
+    #stats-section .section-label { color: #555; }
+    #statsGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1px;
+      background: var(--border-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .stat-card {
+      background: #111;
+      padding: 20px 24px;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .stat-label {
+      font-size: 10px; font-weight: 500;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: #555;
+    }
+    .stat-value {
+      font-size: 28px; font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      color: var(--lime);
+      line-height: 1.1;
+    }
+    .stat-sub { font-size: 12px; color: #555; }
+
+    /* ─── Filter bar ─────────────────────────────────────────────── */
+    .filter-bar {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 20px; flex-wrap: wrap;
+    }
+    .search-wrap { position: relative; flex: 0 0 auto; }
+    .search-wrap svg {
+      position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+      color: var(--text-muted); pointer-events: none;
+    }
+    #searchInput {
+      padding: 9px 12px 9px 36px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--card-bg); font-size: 14px; color: var(--text-primary);
+      font-family: inherit; width: 240px;
+      transition: border-color .15s;
+    }
+    #searchInput:focus { outline: none; border-color: var(--text-muted); }
+    #searchInput::placeholder { color: var(--text-muted); }
+
+    .pill-group { display: flex; gap: 4px; flex-wrap: wrap; }
+    .pill {
+      padding: 7px 14px; border: 1px solid var(--border);
+      border-radius: 20px; font-size: 12px; font-weight: 500;
+      cursor: pointer; background: var(--card-bg); color: var(--text-muted);
+      user-select: none; transition: background .12s, color .12s, border-color .12s;
+      font-family: inherit;
+    }
+    .pill:hover { border-color: var(--text-muted); color: var(--text-primary); }
+    .pill.active {
+      background: var(--text-primary); color: #fff; border-color: var(--text-primary);
+    }
+    .pill-deals.active { background: var(--deal-green); border-color: var(--deal-green); }
+
+    .filter-meta {
+      margin-left: auto; font-size: 12px; color: var(--text-muted);
+      white-space: nowrap;
+    }
+    #filterMeta strong { color: var(--text-primary); }
+
+    .nbhd-group { display: none; width: 100%; }
+    .nbhd-toggle {
+      background: none; border: none; cursor: pointer;
+      font-size: 12px; font-weight: 500; color: var(--text-muted);
+      letter-spacing: .08em; padding: 0; font-family: inherit;
+      display: flex; align-items: center; gap: 6px;
+    }
+    #nbhdFilter { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 8px; }
+    #nbhdFilter.collapsed { display: none; }
+
+    /* ─── Table ──────────────────────────────────────────────────── */
+    .main-section { background: var(--page-bg); }
+    .table-wrap { overflow-x: auto; }
+    .table-scroll { min-width: 580px; }
+
+    table { width: 100%; border-collapse: collapse; background: var(--card-bg); }
+    thead th {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 12px 16px;
+      text-align: left; cursor: pointer; user-select: none;
+      border-bottom: 1px solid var(--border);
+      background: var(--card-bg);
+      white-space: nowrap;
+    }
+    thead th:hover { color: var(--text-primary); }
+    thead th.sorted-asc::after  { content: ' ↑'; color: var(--text-primary); }
+    thead th.sorted-desc::after { content: ' ↓'; color: var(--text-primary); }
+    th#th-price { text-align: right; }
+
+    tbody tr { border-bottom: 1px solid var(--border); transition: background .1s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover td { background: #FAFAF8; }
+    tbody td { padding: 14px 16px; vertical-align: middle; }
+
+    .store-name { font-weight: 600; font-size: 14px; color: var(--text-primary); }
+    .store-nbhd { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+    .price {
+      font-size: 16px; font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-primary);
+      text-align: right; white-space: nowrap;
+    }
+
+    /* size tags */
+    .size-tag {
+      display: inline-block; border-radius: 3px;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: 3px 8px;
+    }
+    .tag-oz      { background: #DBEAFE; color: #1D4ED8; }
+    .tag-half    { background: #EDE9FE; color: #6D28D9; }
+    .tag-quarter { background: #FEF3C7; color: #92400E; }
+    .tag-eighth  { background: #FCE7F3; color: #9D174D; }
+
+    /* deal badges */
+    .deal-tag-sale {
+      display: inline-block; margin-right: 6px;
+      background: var(--sale-amber-bg); color: var(--sale-amber);
+      border: 1px solid #F6D860; border-radius: 3px;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: 2px 7px;
+    }
+    .deal-tag-value {
+      display: inline-block; margin-right: 6px;
+      background: var(--deal-green-bg); color: var(--deal-green);
+      border: 1px solid var(--deal-border); border-radius: 3px;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: 2px 7px;
+    }
+    .best-badge {
+      display: inline-block; margin-right: 6px;
+      background: var(--lime); color: var(--hero-bg);
+      border-radius: 3px; font-size: 10px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: 2px 7px;
+    }
+    .pg-badge {
+      display: inline-block; margin-left: 4px;
+      background: #F3F4F6; color: #6B7280;
+      border: 1px solid #E5E7EB; border-radius: 3px;
+      font-size: 10px; font-weight: 700; letter-spacing: .06em;
+      padding: 1px 5px;
+    }
+
+    /* row highlights */
+    tr.best-oz td, tr.best-half td, tr.best-quarter td, tr.best-eighth td {
+      background: #FAFFF4;
+    }
+    tr.row-sale td  { background: #FFFBEB; }
+    tr.row-value td { background: #F0FFF4; }
+    tr.pre-ground td { opacity: .75; }
+
+    /* product col */
+    .product-name { font-size: 13px; color: var(--text-muted); max-width: 320px; line-height: 1.4; }
+
+    /* ad row */
+    .ad-row td { padding: 0 !important; border-bottom: 1px solid var(--border) !important; background: transparent !important; }
+    .ad-row-inner {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 72px; background: #FAFAF8;
+    }
+    .ad-unit-label { font-size: 10px; color: #CCC; letter-spacing: .1em; text-transform: uppercase; }
+
+    /* empty state */
+    .empty-state { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 48px 24px; color: var(--text-muted); }
+    .empty-state p { font-size: 14px; }
+
+    /* error banner */
+    .error-banner {
+      display: flex; align-items: center; gap: 10px;
+      background: #FEF2F2; border: 1px solid #FECACA;
+      color: #DC2626; border-radius: var(--radius);
+      padding: 12px 16px; font-size: 14px; margin-bottom: 16px;
+    }
+
+    /* deals table — product col mobile hide */
+    .deal-col-product { display: table-cell; }
+    .deal-product-mobile { display: none; font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+    .deal-price { font-weight: 600; font-variant-numeric: tabular-nums; }
+    .deal-was   { font-size: 12px; color: var(--text-muted); text-decoration: line-through; margin-left: 6px; font-variant-numeric: tabular-nums; }
+    .deals-empty { color: var(--text-muted); font-size: 14px; padding: 32px 0; }
+
+    /* ─── Alert / email signup ───────────────────────────────────── */
+    #alert-section { background: var(--hero-bg); padding: 64px 0; }
+    .alert-inner {
+      max-width: 560px; margin: 0 auto; padding: 0 24px;
+      text-align: center;
+    }
+    .alert-inner .section-label { color: #555; }
+    .alert-inner h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(22px, 3vw, 32px); font-weight: 400;
+      color: var(--text-hero); margin-bottom: 12px;
+    }
+    .alert-inner p { font-size: 14px; color: #777; margin-bottom: 28px; }
+    .alert-form {
+      display: flex; gap: 0; max-width: 400px; margin: 0 auto;
+      border: 1px solid #333; border-radius: var(--radius); overflow: hidden;
+    }
+    .alert-form input[type="email"] {
+      flex: 1; padding: 13px 16px;
+      background: #111; color: var(--text-hero);
+      border: none; font-size: 14px; font-family: inherit;
+    }
+    .alert-form input[type="email"]:focus { outline: none; }
+    .alert-form input[type="email"]::placeholder { color: #555; }
+    .alert-form button {
+      padding: 13px 20px; background: var(--lime); color: var(--hero-bg);
+      border: none; cursor: pointer; font-size: 12px; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase; font-family: inherit;
+      white-space: nowrap; transition: background .15s;
+    }
+    .alert-form button:hover { background: var(--lime-dark); }
+    .alert-success { display: none; color: var(--lime); font-size: 14px; margin-top: 16px; }
+
+    /* ─── How it works ───────────────────────────────────────────── */
+    #how-section { background: var(--page-bg); }
+    .how-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 32px; margin-top: 8px;
+    }
+    .how-step { padding: 24px; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); }
+    .how-num {
+      font-size: 11px; font-weight: 700; letter-spacing: .2em;
+      color: var(--lime); margin-bottom: 12px;
+    }
+    .how-step h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+    .how-step p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+    /* ─── FAQ ────────────────────────────────────────────────────── */
+    #faq-section { background: var(--page-bg); padding-top: 0; }
+    .faq-list { border-top: 1px solid var(--border); max-width: 720px; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-q {
+      width: 100%; display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 0; background: none; border: none; cursor: pointer;
+      text-align: left; font-size: 15px; font-weight: 500; color: var(--text-primary);
+      font-family: inherit; gap: 16px;
+    }
+    .faq-q:hover { color: var(--text-muted); }
+    .faq-chevron { flex-shrink: 0; transition: transform .2s; color: var(--text-muted); }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+    .faq-a {
+      display: none; padding-bottom: 18px;
+      font-size: 14px; color: var(--text-muted); line-height: 1.6;
+      max-width: 640px;
+    }
+    .faq-item.open .faq-a { display: block; }
+
+    /* ─── Footer ─────────────────────────────────────────────────── */
+    footer {
+      background: var(--hero-bg);
+      border-top: 1px solid var(--border-dark);
+      padding: 40px 0;
+    }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 24px;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .footer-brand { font-size: 14px; font-weight: 500; color: var(--text-hero); }
+    .footer-brand .tld { color: var(--lime); }
+    .footer-inner p { font-size: 13px; color: #555; line-height: 1.6; }
+    .disclaimer { font-size: 11px !important; color: #444 !important; max-width: 800px; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 12px; color: #555; transition: color .15s; }
+    .footer-links a:hover { color: #999; }
+
+    /* ─── Back to top ────────────────────────────────────────────── */
+    .back-to-top {
+      position: fixed; bottom: 24px; right: 24px; z-index: 200;
+      width: 40px; height: 40px;
+      background: var(--text-primary); color: #fff;
+      border: none; border-radius: 50%; cursor: pointer;
+      font-size: 20px; line-height: 1;
+      opacity: 0; transform: translateY(8px);
+      transition: opacity .2s, transform .2s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .back-to-top.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── Email popup ────────────────────────────────────────────── */
+    .popup-overlay {
+      display: none; position: fixed; inset: 0; z-index: 1000;
+      background: rgba(0,0,0,.7); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 24px;
+    }
+    .popup-overlay.open { display: flex; }
+    .popup-modal {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 40px 36px 36px;
+      max-width: 420px; width: 100%; position: relative;
+    }
+    .popup-close {
+      position: absolute; top: 16px; right: 16px;
+      background: none; border: none; cursor: pointer;
+      font-size: 22px; color: var(--text-muted); line-height: 1;
+    }
+    .popup-modal h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 400; margin-bottom: 10px;
+      color: var(--text-primary); line-height: 1.3;
+    }
+    .popup-modal p { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
+    .popup-modal .alert-form {
+      border-color: var(--border);
+    }
+    .popup-modal .alert-form input[type="email"] {
+      background: var(--page-bg); color: var(--text-primary);
+    }
+    .popup-modal .alert-form input[type="email"]::placeholder { color: #BBB; }
+    .popup-modal .alert-success { color: var(--deal-green); }
+
+    /* ─── last-updated bar ───────────────────────────────────────── */
+    #lastUpdated {
+      font-size: 12px; color: var(--text-muted);
+      margin-bottom: 20px; letter-spacing: .02em;
+    }
+
+    /* ─── Mobile ─────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .topnav { padding: 0 16px; }
+      .nav-links { display: none; }
+      .hamburger-btn { display: flex; }
+
+      .hero { padding-top: calc(var(--nav-h) + 24px); }
+      .hero-statbar { gap: 16px; font-size: 11px; }
+
+      .section { padding: 40px 0; }
+      .section-inner { padding: 0 16px; }
+
+      /* hide table, show cards */
+      .table-scroll { min-width: unset; }
+      table thead { display: none; }
+      table, tbody, tr, td { display: block; width: 100%; }
+      tbody tr {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        margin-bottom: 8px;
+        padding: 14px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+          "store price"
+          "size  size"
+          "prod  prod";
+        gap: 4px 12px;
+      }
+      tbody tr:hover td { background: transparent; }
+      tbody td { padding: 0; border: none; }
+      tbody td:nth-child(1) { grid-area: store; }
+      tbody td:nth-child(2) { grid-area: price; text-align: right; }
+      tbody td:nth-child(3) { grid-area: size; }
+      tbody td:nth-child(4) { grid-area: prod; }
+      .price { font-size: 18px; }
+
+      /* deals table mobile: hide product col, show inline */
+      .deal-col-product { display: none; }
+      .deal-product-mobile { display: block; }
+
+      /* mobile: deals table stays table but simpler */
+      #dealsTableWrap table thead { display: table-header-group; }
+      #dealsTableWrap table { display: table; width: 100%; }
+      #dealsTableWrap tbody { display: table-row-group; }
+      #dealsTableWrap tbody tr { display: table-row; padding: 0; border: none; border-radius: 0; margin: 0; background: transparent; grid-template-areas: none; }
+      #dealsTableWrap tbody td { display: table-cell; padding: 10px 12px; border-bottom: 1px solid var(--border); }
+
+      .filter-bar { gap: 6px; }
+      #searchInput { width: 100%; }
+      .search-wrap { width: 100%; }
+
+      .alert-form { flex-direction: column; border-radius: var(--radius); border: none; gap: 8px; }
+      .alert-form input[type="email"] {
+        border: 1px solid #333; border-radius: var(--radius);
+        padding: 12px 14px;
+      }
+      .alert-form button { border-radius: var(--radius); padding: 14px; }
+
+      .popup-modal { padding: 32px 24px 28px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-statbar .stat-item:nth-child(n+3) { display: none; }
+      h2.section-title { font-size: 22px; }
+    }
+  </style>
 </head>
 <body>
 
 <!-- Loading overlay -->
 <div id="loading-overlay" role="status" aria-live="polite">
-  <div class="spinner"></div>
-  <p class="loading-text">Loading prices from NYC dispensaries&hellip;</p>
+  <div class="spinner" aria-hidden="true"></div>
+  <span class="loading-text">Loading prices from NYC dispensaries…</span>
 </div>
 
-<!-- Top nav -->
-<nav class="topnav" role="navigation" aria-label="Main navigation">
-  <a class="topnav-brand" href="#">
-    <span class="leaf" aria-hidden="true">🌿</span>
-    NYC Weed Prices
-  </a>
-  <div class="topnav-links">
-    <a href="#prices">Prices</a>
-    <a href="#deals">Deals</a>
-    <a href="#how-it-works">How It Works</a>
-    <a href="#faq">FAQ</a>
-  </div>
-  <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu" aria-expanded="false">
-    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-      <line x1="3" y1="6"  x2="19" y2="6"/>
-      <line x1="3" y1="11" x2="19" y2="11"/>
-      <line x1="3" y1="16" x2="19" y2="16"/>
-    </svg>
+<!-- Nav -->
+<nav class="topnav" id="topnav" aria-label="Main navigation">
+  <a href="/" class="topnav-brand">nycweedprice<span class="tld">.org</span></a>
+  <ul class="nav-links" role="list">
+    <li><a href="#deals">Deals</a></li>
+    <li><a href="#prices">Prices</a></li>
+    <li><a href="#faq-section">About</a></li>
+    <li><a href="#alert-section" class="nav-cta">Get Alerts</a></li>
+  </ul>
+  <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
   </button>
 </nav>
 
-<!-- Mobile menu -->
-<div class="mobile-menu" id="mobileMenu" role="menu">
-  <a href="#prices" onclick="closeMobileMenu()">Prices</a>
+<!-- Mobile nav overlay -->
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Mobile navigation">
+  <button class="mobile-menu-close" onclick="closeMobileMenu()" aria-label="Close menu">&#215;</button>
   <a href="#deals" onclick="closeMobileMenu()">Deals</a>
-  <a href="#how-it-works" onclick="closeMobileMenu()">How It Works</a>
-  <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
+  <a href="#prices" onclick="closeMobileMenu()">Prices</a>
+  <a href="#alert-section" onclick="closeMobileMenu()">Get Alerts</a>
+  <a href="#faq-section" onclick="closeMobileMenu()">About</a>
 </div>
 
 <!-- Hero -->
-<header class="hero" role="banner">
-  <div class="hero-badge">&#127807; Live NYC data</div>
-  <h1>Find the Cheapest Weed in NYC</h1>
-  <p>Real-time flower price comparisons across NYC dispensaries &mdash; sorted by price, no stale menus.</p>
-  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:18px;">
-    <a class="hero-cta" href="#deals">See Today's Best Prices</a>
-    <a class="hero-cta" href="#how-it-works" style="background:transparent;border:1px solid var(--border);color:var(--text-muted);">How It Works</a>
-  </div>
-  <p style="font-size:12px;color:var(--text-dim);margin-bottom:12px;">Prices pulled from official dispensary menus daily &mdash; no markups, no guessing.</p>
-  <p class="hero-updated" id="lastUpdated">Loading&hellip;</p>
-</header>
+<section class="hero" aria-labelledby="hero-headline">
+  <p class="hero-eyebrow">NYC Licensed Dispensary Prices</p>
+  <h1 class="hero-headline" id="hero-headline">Today&rsquo;s Best<br>Weed Prices<br>in New York.</h1>
+  <p class="hero-sub">Updated daily. 20 licensed dispensaries. No markup.</p>
+  <a href="#deals" class="hero-cta">See Today&rsquo;s Prices ↓</a>
+  <div class="hero-scroll-line" aria-hidden="true"><span></span></div>
 
-<!-- Best Value Picks — shown before stats so users see value before metadata -->
-<section class="deals-section" id="deals" aria-label="Best value picks">
+  <!-- Stat bar — populated by JS after data loads -->
+  <div class="hero-statbar" id="heroStatbar" aria-label="Live price stats">
+    <span><span class="live-dot" aria-hidden="true"></span>LIVE</span>
+    <span class="stat-item" id="heroLastUpdated">Loading…</span>
+    <span class="stat-item" id="heroStores"></span>
+    <span class="stat-item" id="heroCheapest"></span>
+  </div>
+</section>
+
+<!-- Best Value Picks -->
+<section class="section" id="deals" aria-labelledby="deals-title">
   <div class="section-inner">
-    <div class="deals-section-header">
-      <h2 class="section-title" style="margin-bottom:0"><span class="dot" aria-hidden="true"></span>Best Value Picks</h2>
-      <a href="#prices" class="deals-see-all">See all prices ↓</a>
-    </div>
-    <p class="deals-subtitle">Top value whole-flower listings across all tracked stores &mdash; updated daily.</p>
-    <div id="dealsTableWrap">
-      <!-- injected by JS -->
-    </div>
+    <p class="section-label">Today&rsquo;s Picks</p>
+    <h2 class="section-title" id="deals-title">Best Dispensary Deals in NYC</h2>
+    <div id="dealsTableWrap"></div>
   </div>
 </section>
 
-<!-- Stats — after deals so users see value first, stats serve as social proof -->
-<section class="stats-section" aria-label="Summary statistics">
-  <div class="stats-grid" id="statsGrid">
-    <!-- injected by JS -->
+<!-- Stats -->
+<section id="stats-section" aria-label="Price statistics">
+  <div class="section-inner">
+    <p class="section-label" style="margin-bottom:16px">How NYC Dispensary Prices Compare Right Now</p>
+    <div id="statsGrid"></div>
   </div>
 </section>
-
-<!-- Ad unit 1 -->
-<div class="ad-unit" aria-label="Advertisement">
-  <div>
-    <span class="ad-unit-label">Advertisement</span>
-    <!-- MANTIS AD TAG — paste script + ins tag here once approved at mantisadnetwork.com -->
-  </div>
-</div>
 
 <!-- Price Table -->
-<section class="main-section" id="prices" aria-label="Dispensary prices">
+<section class="section main-section" id="prices" aria-labelledby="prices-title">
   <div class="section-inner">
-    <h2 class="section-title"><span class="dot" aria-hidden="true"></span>Live Price Board</h2>
+    <p class="section-label">All Listings</p>
+    <h2 class="section-title" id="prices-title">Compare Flower Prices Across All NYC Dispensaries</h2>
+
+    <p id="lastUpdated"></p>
 
     <!-- Filter bar -->
-    <div class="filter-bar" role="search">
-      <div class="search-box">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="7" cy="7" r="5"/><line x1="10.5" y1="10.5" x2="14" y2="14"/>
-        </svg>
-        <input type="text" id="searchInput" placeholder="Search strain, brand, or store&hellip;" aria-label="Search strain, brand, or store" oninput="debounceRender()">
+    <div class="filter-bar">
+      <div class="search-wrap">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="6" cy="6" r="5"/><line x1="10" y1="10" x2="14" y2="14"/></svg>
+        <input type="text" id="searchInput" placeholder="Search strain, brand, or store…" oninput="debounceRender()" aria-label="Search listings">
       </div>
 
-      <div class="filter-group">
-        <span class="filter-label">Type:</span>
-        <div id="typeFilter" style="display:flex;gap:6px;flex-wrap:wrap;">
-          <button class="pill active" data-type="all"        onclick="setType(this)">All Flower</button>
-          <button class="pill"        data-type="whole"      onclick="setType(this)">Whole Flower</button>
-          <button class="pill"        data-type="pre-ground" onclick="setType(this)">Pre-Ground / Infused</button>
-        </div>
+      <div class="pill-group" id="sizeFilter" role="group" aria-label="Size filter">
+        <button class="pill active" data-size="all" onclick="setSize(this)">All sizes</button>
+        <button class="pill" data-size="1 oz" onclick="setSize(this)">1 oz</button>
+        <button class="pill" data-size="1/2 oz" onclick="setSize(this)">½ oz</button>
+        <button class="pill" data-size="1/4 oz" onclick="setSize(this)">¼ oz</button>
+        <button class="pill" data-size="1/8 oz" onclick="setSize(this)">⅛ oz</button>
       </div>
 
-      <div class="filter-group">
-        <span class="filter-label">Size:</span>
-        <div id="sizeFilter" style="display:flex;gap:6px;flex-wrap:wrap;">
-          <button class="pill active" data-size="all"     onclick="setSize(this)">All sizes</button>
-          <button class="pill"        data-size="1 oz"    onclick="setSize(this)">1 oz</button>
-          <button class="pill"        data-size="1/2 oz"  onclick="setSize(this)">&#189; oz</button>
-          <button class="pill"        data-size="1/4 oz"  onclick="setSize(this)">&#188; oz</button>
-          <button class="pill"        data-size="1/8 oz"  onclick="setSize(this)">&#8539; oz</button>
-        </div>
+      <div class="pill-group" id="typeFilter" role="group" aria-label="Type filter">
+        <button class="pill active" data-type="all" onclick="setType(this)">All flower</button>
+        <button class="pill" data-type="whole" onclick="setType(this)">Whole bud</button>
+        <button class="pill" data-type="pre-ground" onclick="setType(this)">Pre-ground</button>
       </div>
 
-      <div class="filter-group" id="nbhdGroup" style="display:none;">
-        <span class="filter-label">Area:</span>
-        <button class="filter-toggle-btn" id="nbhdToggle" onclick="toggleNbhdFilter()" aria-expanded="false">
-          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,4 6,8 10,4"/></svg>
-          Neighborhoods
-        </button>
-        <div class="nbhd-filter-wrap collapsed" id="nbhdFilter"></div>
-      </div>
+      <button class="pill pill-deals" onclick="toggleDealsOnly(this)" aria-pressed="false">Deals only</button>
 
-      <div class="filter-group">
-        <button class="pill" id="dealsOnlyToggle" onclick="toggleDealsOnly(this)" aria-pressed="false" title="Show only sale and value-priced listings">Deals only</button>
-      </div>
+      <span class="filter-meta" id="filterMeta" aria-live="polite"></span>
+    </div>
 
-      <span class="filter-meta" id="filterMeta"></span>
+    <!-- Neighborhood filter -->
+    <div class="nbhd-group" id="nbhdGroup">
+      <button class="nbhd-toggle" id="nbhdToggle" onclick="toggleNbhdFilter()" aria-expanded="true">
+        Neighborhood
+        <svg width="10" height="8" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="2,4 5,7 8,4" id="nbhdChevron"/></svg>
+      </button>
+      <div id="nbhdFilter" role="group" aria-label="Neighborhood filter"></div>
     </div>
 
     <!-- Table -->
-    <div class="table-wrap" role="region" aria-label="Price table" aria-live="polite">
+    <div class="table-wrap" role="region" aria-label="Dispensary price comparison table">
       <div class="table-scroll">
         <table>
           <thead>
             <tr>
-              <th onclick="sortCol('store')"  id="th-store" scope="col">Store</th>
-              <th onclick="sortCol('price')"  id="th-price" scope="col" class="sorted-asc">Price</th>
-              <th onclick="sortCol('size')"   id="th-size"  scope="col">Size</th>
+              <th id="th-store" scope="col" onclick="sortCol('store')">Dispensary</th>
+              <th id="th-price" scope="col" onclick="sortCol('price')">Price</th>
+              <th id="th-size"  scope="col" onclick="sortCol('size')">Size</th>
               <th scope="col">Product</th>
             </tr>
           </thead>
@@ -1008,91 +838,66 @@
         </table>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- Ad unit 3: below price table, above alert signup -->
-<div class="ad-unit" aria-label="Advertisement">
-  <div>
-    <span class="ad-unit-label">Advertisement</span>
-    <!-- MANTIS AD TAG — paste script + ins tag here once approved at mantisadnetwork.com -->
-  </div>
-</div>
-
-<!-- Price Alert Signup -->
-<section class="alert-section" id="alerts" aria-label="Price drop alerts">
+<!-- Email signup -->
+<section id="alert-section" aria-labelledby="alert-title">
   <div class="alert-inner">
-    <div class="alert-icon" aria-hidden="true">🔔</div>
-    <div class="alert-copy">
-      <h2>Get Price Drop Alerts</h2>
-      <p>Enter your email and we&rsquo;ll notify you when an ounce drops below your target price at any tracked NYC dispensary. One email per day, max &mdash; no spam.</p>
-      <form class="alert-form" id="alertForm" onsubmit="submitAlert(event)">
-        <input type="email" id="alertEmail" placeholder="you@email.com" required autocomplete="email" aria-label="Email address">
-        <button type="submit">Notify Me</button>
-      </form>
-      <p class="alert-success" id="alertSuccess">You're on the list! We'll email you when prices drop.</p>
-    </div>
+    <p class="section-label">Price Alerts</p>
+    <h2 id="alert-title">Get Notified When Prices Drop</h2>
+    <p>We check every licensed NYC dispensary daily. Get the lowest price sent to you before you head out — free, no spam.</p>
+    <form class="alert-form" id="alertForm" onsubmit="submitAlert(event)">
+      <input type="email" id="alertEmail" placeholder="you@email.com" required autocomplete="email" aria-label="Email address">
+      <button type="submit">Subscribe</button>
+    </form>
+    <p class="alert-success" id="alertSuccess">You&rsquo;re on the list!</p>
   </div>
 </section>
 
-<!-- How It Works -->
-<section class="how-section" id="how-it-works" aria-label="How it works">
-  <div class="how-inner">
-    <h2 class="section-title"><span class="dot" aria-hidden="true"></span>How It Works</h2>
+<!-- How it works -->
+<section class="section" id="how-section" aria-labelledby="how-title">
+  <div class="section-inner">
+    <p class="section-label">How It Works</p>
+    <h2 class="section-title" id="how-title">How We Track NYC Cannabis Prices</h2>
     <div class="how-grid">
-      <div class="how-card">
-        <div class="how-step" aria-hidden="true">&#128269;</div>
-        <h3>Automated Scraping</h3>
-        <p>Our scraper pulls prices directly from each dispensary's official online menu every day &mdash; no markups, no third-party data.</p>
+      <div class="how-step">
+        <div class="how-num">01</div>
+        <h3>Daily scrape at 6am</h3>
+        <p>Our bot visits the online menu of every licensed NYC dispensary every morning and records current flower prices.</p>
       </div>
-      <div class="how-card">
-        <div class="how-step" aria-hidden="true">&#128200;</div>
-        <h3>Price Extraction</h3>
-        <p>We identify 1&nbsp;oz and &frac12;&nbsp;oz flower options, extract the price, and normalize listings across different menu platforms.</p>
+      <div class="how-step">
+        <div class="how-num">02</div>
+        <h3>Prices compared</h3>
+        <p>We normalize sizes (⅛ oz, ¼ oz, ½ oz, 1 oz) and flag listings priced below the city-wide median as value picks.</p>
       </div>
-      <div class="how-card">
-        <div class="how-step" aria-hidden="true">&#9889;</div>
-        <h3>Instant Comparison</h3>
-        <p>All prices are sorted cheapest-first so you can immediately see which dispensary has the best deal for your preferred quantity.</p>
+      <div class="how-step">
+        <div class="how-num">03</div>
+        <h3>Published by 7am</h3>
+        <p>Updated data goes live every morning. The timestamp at the top of the table tells you exactly when we last scraped.</p>
       </div>
-      <div class="how-card">
-        <div class="how-step" aria-hidden="true">&#128205;</div>
-        <h3>NYC &amp; Growing</h3>
-        <p>We track licensed dispensaries across NYC &mdash; Manhattan, Queens, and expanding &mdash; ensuring all listed stores are legal, regulated, and verifiable.</p>
+      <div class="how-step">
+        <div class="how-num">04</div>
+        <h3>100% independent</h3>
+        <p>No dispensary pays for placement. Every licensed NYC retailer under the MRTA is eligible to be listed.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- FAQ -->
-<section class="faq-section" id="faq" aria-label="Frequently asked questions">
-  <div class="faq-inner">
-    <h2 class="section-title"><span class="dot" aria-hidden="true"></span>Frequently Asked Questions</h2>
+<section class="section" id="faq-section" aria-labelledby="faq-title">
+  <div class="section-inner">
+    <p class="section-label">FAQ</p>
+    <h2 class="section-title" id="faq-title">Frequently Asked Questions About NYC Dispensary Prices</h2>
     <div class="faq-list">
 
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
-          How much does an ounce of weed cost in NYC?
+          What is the cheapest dispensary in NYC right now?
           <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="2,5 8,11 14,5"/></svg>
         </button>
-        <div class="faq-a" role="region">Ounce prices at licensed NYC dispensaries typically range from $180 to $350+, depending on the store and strain tier. NYC Weed Price Tracker updates prices daily so you can find the cheapest ounce available right now.</div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
-          What is the cheapest dispensary in Manhattan?
-          <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="2,5 8,11 14,5"/></svg>
-        </button>
-        <div class="faq-a" role="region">The cheapest dispensary changes daily as stores update their menus. The price table above is sorted cheapest-first so you can always spot today's best deal at a glance. Filter by size (1&nbsp;oz, &frac12;&nbsp;oz, etc.) to narrow results.</div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
-          Is buying weed legal in New York City?
-          <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="2,5 8,11 14,5"/></svg>
-        </button>
-        <div class="faq-a" role="region">Yes. Cannabis is legal for adults 21+ in New York State under the MRTA (Marihuana Regulation and Taxation Act). Only purchase from licensed dispensaries &mdash; all stores listed on NYC Weed Price Tracker are state-licensed retail locations.</div>
+        <div class="faq-a">Prices change daily across 20+ licensed NYC dispensaries. Use the price table above — sorted by price ascending by default — to see today's cheapest listings. The "Best deal" badge marks the overall lowest price for each size.</div>
       </div>
 
       <div class="faq-item">
@@ -1100,7 +905,15 @@
           How often are dispensary prices updated?
           <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="2,5 8,11 14,5"/></svg>
         </button>
-        <div class="faq-a" role="region">Prices are scraped automatically from each dispensary's live online menu once per day. The timestamp shown on this page indicates when data was last refreshed.</div>
+        <div class="faq-a">Prices are scraped automatically from each dispensary's live online menu once per day, every morning. The timestamp shown on this page tells you exactly when data was last refreshed. Always verify on the dispensary's own site before visiting.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          Are all stores listed licensed in New York?
+          <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="2,5 8,11 14,5"/></svg>
+        </button>
+        <div class="faq-a">Yes. Every dispensary on nycweedprice.org holds an active OCM (Office of Cannabis Management) license. We do not list unlicensed operators. All stores are verified licensed retailers under New York's Marihuana Regulation and Taxation Act (MRTA).</div>
       </div>
 
       <div class="faq-item">
@@ -1108,7 +921,7 @@
           What sizes are compared on this site?
           <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="2,5 8,11 14,5"/></svg>
         </button>
-        <div class="faq-a" role="region">NYC Weed Price Tracker compares prices for 1&nbsp;oz (28g), &frac12;&nbsp;oz (14g), &frac14;&nbsp;oz (7g), and &frac18;&nbsp;oz (3.5g) flower listings. Use the size filter buttons above the table to focus on your preferred quantity.</div>
+        <div class="faq-a">We compare 1&nbsp;oz (28g), ½&nbsp;oz (14g), ¼&nbsp;oz (7g), and ⅛&nbsp;oz (3.5g) flower listings. Use the size filter buttons above the table to focus on your preferred quantity.</div>
       </div>
 
       <div class="faq-item">
@@ -1116,15 +929,15 @@
           Do NYC dispensaries accept credit cards?
           <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="2,5 8,11 14,5"/></svg>
         </button>
-        <div class="faq-a" role="region">Most NYC licensed dispensaries accept debit cards and cash. Some accept credit cards through third-party payment processors. It is always a good idea to bring cash or a debit card as backup.</div>
+        <div class="faq-a">Most NYC licensed dispensaries accept debit cards and cash. Some accept credit cards through third-party processors. Bring cash or a debit card as backup.</div>
       </div>
 
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
-          How current are the prices shown?
+          Are prices shown pre-tax or post-tax?
           <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="2,5 8,11 14,5"/></svg>
         </button>
-        <div class="faq-a" role="region">Prices are scraped once per day from each dispensary&rsquo;s live online menu. The &ldquo;Last updated&rdquo; timestamp at the top of the page tells you exactly when data was last refreshed. Prices change frequently &mdash; always verify on the dispensary&rsquo;s own site before visiting.</div>
+        <div class="faq-a">Prices are pre-tax as listed on each dispensary's online menu. NYC cannabis is subject to New York State excise tax plus local sales tax — expect 13–20% added at checkout depending on the retailer.</div>
       </div>
 
       <div class="faq-item">
@@ -1132,7 +945,7 @@
           Why is this site free?
           <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="2,5 8,11 14,5"/></svg>
         </button>
-        <div class="faq-a" role="region">NYC Weed Price Tracker is a free community resource built to help consumers make informed choices. We have no affiliation with any dispensary and accept no payments for listings. All stores are included based on being licensed, verifiable NYC retailers.</div>
+        <div class="faq-a">nycweedprice.org is a free community resource. We have no affiliation with any dispensary and accept no payments for listings. Revenue comes from display advertising shown alongside listings.</div>
       </div>
 
     </div>
@@ -1142,11 +955,14 @@
 <!-- Footer -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-brand">
-      <span class="leaf-sm" aria-hidden="true">🌿</span>
-      NYC Weed Prices
+    <div class="footer-brand">nycweedprice<span class="tld">.org</span></div>
+    <p>Comparing flower prices across NYC licensed dispensaries so you don&rsquo;t have to.</p>
+    <div class="footer-links">
+      <a href="#prices">Prices</a>
+      <a href="#deals">Deals</a>
+      <a href="#alert-section">Alerts</a>
+      <a href="#faq-section">FAQ</a>
     </div>
-    <p>Comparing flower prices across Manhattan dispensaries so you don&rsquo;t have to.</p>
     <p class="disclaimer">Prices scraped daily from official dispensary menus — always verify before visiting. Prices shown are pre-tax; NYC cannabis is subject to state and local taxes. This site is independent and not affiliated with any dispensary. We accept no payment for listings. All stores are verified licensed retailers under New York&rsquo;s Marihuana Regulation and Taxation Act (MRTA). For adults 21+ only.</p>
   </div>
 </footer>
@@ -1174,11 +990,9 @@ let showDealsOnly      = false;
 function esc(s) {
   return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
-
 function fmt(price) {
   return '$' + price.toFixed(2).replace(/\.00$/, '');
 }
-
 function relativeTime(iso) {
   if (!iso) return null;
   const diff = Date.now() - new Date(iso).getTime();
@@ -1191,6 +1005,12 @@ function relativeTime(iso) {
   return days + ' day' + (days !== 1 ? 's' : '') + ' ago';
 }
 
+/* ─── Nav scroll effect ──────────────────────────── */
+window.addEventListener('scroll', function() {
+  document.getElementById('topnav').classList.toggle('scrolled', window.scrollY > 40);
+  document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 400);
+}, { passive: true });
+
 /* ─── Filters ────────────────────────────────────── */
 function setSize(el) {
   document.querySelectorAll('#sizeFilter .pill').forEach(p => p.classList.remove('active'));
@@ -1198,35 +1018,30 @@ function setSize(el) {
   activeSizeFilter = el.dataset.size;
   renderTable();
 }
-
 function setType(el) {
   document.querySelectorAll('#typeFilter .pill').forEach(p => p.classList.remove('active'));
   el.classList.add('active');
   activeTypeFilter = el.dataset.type;
   renderTable();
 }
-
 function setNbhd(el) {
   document.querySelectorAll('#nbhdFilter .pill').forEach(p => p.classList.remove('active'));
   el.classList.add('active');
   activeNbhd = el.dataset.nbhd;
   renderTable();
 }
-
 function toggleDealsOnly(el) {
   showDealsOnly = !showDealsOnly;
   el.classList.toggle('active', showDealsOnly);
   el.setAttribute('aria-pressed', String(showDealsOnly));
   renderTable();
 }
-
 function toggleNbhdFilter() {
   const wrap = document.getElementById('nbhdFilter');
   const btn  = document.getElementById('nbhdToggle');
-  const open = wrap.classList.toggle('collapsed') === false;
-  btn.setAttribute('aria-expanded', String(!open));
-  // rotate chevron
-  btn.querySelector('svg polyline').setAttribute('points', open ? '2,8 6,4 10,8' : '2,4 6,8 10,4');
+  const collapsed = wrap.classList.toggle('collapsed');
+  btn.setAttribute('aria-expanded', String(!collapsed));
+  document.getElementById('nbhdChevron').setAttribute('points', collapsed ? '2,7 5,4 8,7' : '2,4 5,7 8,4');
 }
 
 /* ─── Sort ───────────────────────────────────────── */
@@ -1235,12 +1050,11 @@ function sortCol(key) {
     sortDir = sortDir === 'asc' ? 'desc' : 'asc';
   } else {
     sortKey = key;
-    sortDir = key === 'price' ? 'asc' : 'asc';
+    sortDir = 'asc';
   }
   updateSortHeaders();
   renderTable();
 }
-
 function updateSortHeaders() {
   ['store','size','price'].forEach(k => {
     const th = document.getElementById('th-' + k);
@@ -1250,9 +1064,9 @@ function updateSortHeaders() {
   });
 }
 
-/* ─── Deal detection helpers ─────────────────────── */
-const DEAL_KEYWORDS = /closeout|clearance|flash\s*sale|daily\s*deal|weekly\s*special|sale\s*price/i;
-const VALUE_THRESHOLD = 0.75; // ≤75% of median = "value" pick
+/* ─── Deal detection ─────────────────────────────── */
+const DEAL_KEYWORDS   = /closeout|clearance|flash\s*sale|daily\s*deal|weekly\s*special|sale\s*price/i;
+const VALUE_THRESHOLD = 0.75;
 
 let _cachedMedians = null;
 function computeMedians() {
@@ -1276,7 +1090,6 @@ function computeMedians() {
   return medians;
 }
 
-/* search debounce — prevents renderTable on every keystroke */
 let _debounceTimer;
 function debounceRender() {
   clearTimeout(_debounceTimer);
@@ -1286,9 +1099,7 @@ function debounceRender() {
 function dealTag(listing, medians) {
   const name = (listing.product || listing.line || '').toLowerCase();
   if (DEAL_KEYWORDS.test(name)) return 'sale';
-  // Structured deal from scraper (has originalPrice)
   if (listing.originalPrice && listing.price < listing.originalPrice) return 'sale';
-  // Statistical value: whole flower priced ≤75% of median for that size
   const med = medians[listing.size];
   if (!listing.preGround && med && listing.price <= med * VALUE_THRESHOLD) return 'value';
   return null;
@@ -1299,13 +1110,10 @@ function buildRows() {
   const q = document.getElementById('searchInput').value.toLowerCase().trim();
   const medians = computeMedians();
   const rows = [];
-
   for (const d of allData) {
     const listings = [
-      ...(d.ounceListings        || []),
-      ...(d.halfOunceListings    || []),
-      ...(d.quarterOunceListings || []),
-      ...(d.eighthOunceListings  || [])
+      ...(d.ounceListings||[]), ...(d.halfOunceListings||[]),
+      ...(d.quarterOunceListings||[]), ...(d.eighthOunceListings||[])
     ];
     for (const l of listings) {
       if (activeSizeFilter !== 'all' && l.size !== activeSizeFilter) continue;
@@ -1319,21 +1127,13 @@ function buildRows() {
       const tag = dealTag(l, medians);
       if (showDealsOnly && !tag) continue;
       rows.push({
-        store:        d.name,
-        neighborhood: d.neighborhood || '',
-        address:      d.address      || '',
-        size:         l.size,
-        price:        l.price,
-        product:      l.product  || '',
-        preGround:    !!l.preGround,
-        dealTag:      tag
+        store: d.name, neighborhood: d.neighborhood || '',
+        address: d.address || '', size: l.size, price: l.price,
+        product: l.product || '', preGround: !!l.preGround, dealTag: tag
       });
     }
   }
-
-  // Sort order for sizes (largest first within same price sort)
   const sizeOrder = { '1 oz': 0, '1/2 oz': 1, '1/4 oz': 2, '1/8 oz': 3 };
-
   rows.sort((a, b) => {
     let cmp = 0;
     if      (sortKey === 'price') cmp = a.price - b.price;
@@ -1341,7 +1141,6 @@ function buildRows() {
     else if (sortKey === 'size')  cmp = (sizeOrder[a.size] ?? 9) - (sizeOrder[b.size] ?? 9) || a.price - b.price;
     return sortDir === 'asc' ? cmp : -cmp;
   });
-
   return rows;
 }
 
@@ -1350,175 +1149,102 @@ function renderTable() {
   const rows  = buildRows();
   const tbody = document.getElementById('priceBody');
   const meta  = document.getElementById('filterMeta');
-
   meta.innerHTML = '<strong>' + rows.length + '</strong> listing' + (rows.length !== 1 ? 's' : '');
-
   if (!rows.length) {
-    const msg = showDealsOnly
-      ? 'No sale or value picks match your current filters. Try broadening your size or neighborhood filter.'
-      : 'No listings match your filters.';
-    tbody.innerHTML = `
-      <tr><td colspan="4">
-        <div class="empty-state">
-          <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-            <circle cx="20" cy="20" r="17"/>
-            <path d="M13 27c1.8-3 4.5-5 7-5s5.2 2 7 5"/>
-            <circle cx="15" cy="16" r="2" fill="currentColor"/>
-            <circle cx="25" cy="16" r="2" fill="currentColor"/>
-          </svg>
-          <p>${esc(msg)}</p>
-        </div>
-      </td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="4"><div class="empty-state">
+      <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="20" cy="20" r="17"/><path d="M13 27c1.8-3 4.5-5 7-5s5.2 2 7 5"/><circle cx="15" cy="16" r="2" fill="currentColor"/><circle cx="25" cy="16" r="2" fill="currentColor"/></svg>
+      <p>${esc(showDealsOnly ? 'No deals match your filters. Try broadening your size or neighborhood filter.' : 'No listings match your filters.')}</p>
+    </div></td></tr>`;
     return;
   }
-
   const adRow = `<tr class="ad-row"><td colspan="4"><div class="ad-row-inner">
     <span class="ad-unit-label">Advertisement</span>
     <!-- MANTIS AD TAG — paste here once approved -->
   </div></td></tr>`;
-
+  const sizeTags = {
+    '1 oz':   '<span class="size-tag tag-oz">1 oz</span>',
+    '1/2 oz': '<span class="size-tag tag-half">&frac12; oz</span>',
+    '1/4 oz': '<span class="size-tag tag-quarter">&frac14; oz</span>',
+    '1/8 oz': '<span class="size-tag tag-eighth">&#8539; oz</span>'
+  };
   tbody.innerHTML = rows.map((r, i) => {
-    const isBestOz      = r.size === '1 oz'    && r.price === bestOzPrice;
-    const isBestHalf    = r.size === '1/2 oz'  && r.price === bestHalfPrice;
-    const isBestQuarter = r.size === '1/4 oz'  && r.price === bestQuarterPrice;
-    const isBestEighth  = r.size === '1/8 oz'  && r.price === bestEighthPrice;
-
+    const isBestOz      = r.size === '1 oz'   && r.price === bestOzPrice;
+    const isBestHalf    = r.size === '1/2 oz' && r.price === bestHalfPrice;
+    const isBestQuarter = r.size === '1/4 oz' && r.price === bestQuarterPrice;
+    const isBestEighth  = r.size === '1/8 oz' && r.price === bestEighthPrice;
     const rowCls = [
-      isBestOz      ? 'best-oz'      : '',
-      isBestHalf    ? 'best-half'    : '',
-      isBestQuarter ? 'best-quarter' : '',
-      isBestEighth  ? 'best-eighth'  : '',
-      r.preGround   ? 'pre-ground'   : '',
+      isBestOz||isBestHalf||isBestQuarter||isBestEighth ? (isBestOz?'best-oz':isBestHalf?'best-half':isBestQuarter?'best-quarter':'best-eighth') : '',
+      r.preGround   ? 'pre-ground' : '',
       r.dealTag === 'sale'  ? 'row-sale'  : '',
       r.dealTag === 'value' ? 'row-value' : ''
     ].filter(Boolean).join(' ');
-
-    const sizeTags = {
-      '1 oz':   '<span class="size-tag tag-oz">1 oz</span>',
-      '1/2 oz': '<span class="size-tag tag-half">&frac12; oz</span>',
-      '1/4 oz': '<span class="size-tag tag-quarter">&frac14; oz</span>',
-      '1/8 oz': '<span class="size-tag tag-eighth">&#8539; oz</span>'
-    };
-    const sizeTag = sizeTags[r.size] || `<span class="size-tag tag-oz">${esc(r.size)}</span>`;
-
-    const pgBadge = r.preGround ? '<span class="pg-badge">PG</span>' : '';
-
-    const bestBadge = (isBestOz || isBestHalf || isBestQuarter || isBestEighth)
-      ? '<span class="best-badge">Best deal</span>'
-      : '';
-    const dealBadge = r.dealTag === 'sale'
-      ? '<span class="deal-tag-sale">SALE</span>'
-      : r.dealTag === 'value'
-      ? '<span class="deal-tag-value">BELOW AVG</span>'
-      : '';
-
+    const sizeTag  = sizeTags[r.size] || `<span class="size-tag tag-oz">${esc(r.size)}</span>`;
+    const pgBadge  = r.preGround ? '<span class="pg-badge">PG</span>' : '';
+    const bestBadge = (isBestOz||isBestHalf||isBestQuarter||isBestEighth) ? '<span class="best-badge">Best deal</span>' : '';
+    const dealBadge = r.dealTag === 'sale'  ? '<span class="deal-tag-sale">SALE</span>'
+                    : r.dealTag === 'value' ? '<span class="deal-tag-value">BELOW AVG</span>' : '';
     return `<tr class="${rowCls}">
-      <td>
-        <div class="store-name">${esc(r.store)}</div>
-        <div class="store-nbhd">${esc(r.neighborhood)}</div>
-      </td>
+      <td><div class="store-name">${esc(r.store)}</div><div class="store-nbhd">${esc(r.neighborhood)}</div></td>
       <td class="price">${fmt(r.price)}</td>
       <td>${sizeTag}${pgBadge}</td>
-      <td class="product-name">${dealBadge}${esc(r.product)}</td>
+      <td class="product-name">${bestBadge}${dealBadge}${esc(r.product)}</td>
     </tr>${(i + 1) % 12 === 0 ? adRow : ''}`;
   }).join('');
 }
 
-/* ─── Stats cards ────────────────────────────────── */
+/* ─── Stats ──────────────────────────────────────── */
 function renderStats() {
-  const okStores      = allData.filter(d => d.status === 'ok');
-  const allOz         = allData.flatMap(d => d.ounceListings        || []);
-  const allHalf       = allData.flatMap(d => d.halfOunceListings    || []);
-  const allQuarter    = allData.flatMap(d => d.quarterOunceListings || []);
-  const allEighth     = allData.flatMap(d => d.eighthOunceListings  || []);
-  const total         = allOz.length + allHalf.length + allQuarter.length + allEighth.length;
+  const okStores  = allData.filter(d => d.status === 'ok');
+  const allOz     = allData.flatMap(d => d.ounceListings        || []);
+  const allHalf   = allData.flatMap(d => d.halfOunceListings    || []);
+  const allQuarter= allData.flatMap(d => d.quarterOunceListings || []);
+  const allEighth = allData.flatMap(d => d.eighthOunceListings  || []);
+  const total     = allOz.length + allHalf.length + allQuarter.length + allEighth.length;
 
-  // Prefer whole flower for the headline stat cards; fall back to all
   const wholeOz     = allOz.filter(l => !l.preGround);
   const wholeHalf   = allHalf.filter(l => !l.preGround);
   const wholeEighth = allEighth.filter(l => !l.preGround);
-
-  const ozPool     = wholeOz.length   ? wholeOz   : allOz;
-  const halfPool   = wholeHalf.length ? wholeHalf : allHalf;
-  const eighthPool = wholeEighth.length ? wholeEighth : allEighth;
+  const ozPool      = wholeOz.length     ? wholeOz     : allOz;
+  const halfPool    = wholeHalf.length   ? wholeHalf   : allHalf;
+  const eighthPool  = wholeEighth.length ? wholeEighth : allEighth;
 
   bestOzPrice      = ozPool.length     ? Math.min(...ozPool.map(l => l.price))     : Infinity;
   bestHalfPrice    = halfPool.length   ? Math.min(...halfPool.map(l => l.price))   : Infinity;
   bestQuarterPrice = allQuarter.length ? Math.min(...allQuarter.map(l => l.price)) : Infinity;
   bestEighthPrice  = eighthPool.length ? Math.min(...eighthPool.map(l => l.price)) : Infinity;
 
-  const cheapOzStore      = ozPool.length     ? allData.find(d => (d.ounceListings        || []).some(l => l.price === bestOzPrice      && (wholeOz.length   ? !l.preGround : true))) : null;
-  const cheapHalfStore    = halfPool.length   ? allData.find(d => (d.halfOunceListings    || []).some(l => l.price === bestHalfPrice    && (wholeHalf.length ? !l.preGround : true))) : null;
-  const cheapEighthStore  = eighthPool.length ? allData.find(d => (d.eighthOunceListings  || []).some(l => l.price === bestEighthPrice  && (wholeEighth.length ? !l.preGround : true))) : null;
+  const cheapOzStore     = ozPool.length     ? allData.find(d => (d.ounceListings       ||[]).some(l => l.price===bestOzPrice     && (wholeOz.length    ?!l.preGround:true))) : null;
+  const cheapHalfStore   = halfPool.length   ? allData.find(d => (d.halfOunceListings   ||[]).some(l => l.price===bestHalfPrice   && (wholeHalf.length  ?!l.preGround:true))) : null;
+  const cheapEighthStore = eighthPool.length ? allData.find(d => (d.eighthOunceListings ||[]).some(l => l.price===bestEighthPrice && (wholeEighth.length?!l.preGround:true))) : null;
 
   const cards = [
-    {
-      label:   'Licensed Stores',
-      value:   allData.length,
-      sub:     okStores.length + ' with live prices',
-      accent:  'var(--green)',
-    },
-    {
-      label:   'Total Listings',
-      value:   total,
-      sub:     allOz.length + ' oz &middot; ' + allHalf.length + ' half &middot; ' + allQuarter.length + ' qtr &middot; ' + allEighth.length + ' eighth',
-      accent:  'var(--blue)',
-    },
-    ...(bestOzPrice < Infinity ? [{
-      label:   'Cheapest 1 oz',
-      value:   fmt(bestOzPrice),
-      sub:     esc(cheapOzStore?.name || ''),
-      accent:  'var(--green)',
-    }] : []),
-    ...(bestHalfPrice < Infinity ? [{
-      label:   'Cheapest &frac12; oz',
-      value:   fmt(bestHalfPrice),
-      sub:     esc(cheapHalfStore?.name || ''),
-      accent:  'var(--purple)',
-    }] : []),
-    ...(bestEighthPrice < Infinity ? [{
-      label:   'Cheapest &#8539; oz',
-      value:   fmt(bestEighthPrice),
-      sub:     esc(cheapEighthStore?.name || ''),
-      accent:  'var(--red)',
-    }] : []),
+    { label: 'Licensed Stores', value: allData.length, sub: okStores.length + ' with live prices' },
+    { label: 'Total Listings',  value: total, sub: allOz.length + ' oz · ' + allHalf.length + ' half · ' + allEighth.length + ' eighth' },
+    ...(bestOzPrice < Infinity     ? [{ label: 'Cheapest 1 oz',  value: fmt(bestOzPrice),     sub: esc(cheapOzStore?.name     || '') }] : []),
+    ...(bestHalfPrice < Infinity   ? [{ label: 'Cheapest ½ oz',  value: fmt(bestHalfPrice),   sub: esc(cheapHalfStore?.name   || '') }] : []),
+    ...(bestEighthPrice < Infinity ? [{ label: 'Cheapest ⅛ oz',  value: fmt(bestEighthPrice), sub: esc(cheapEighthStore?.name || '') }] : []),
   ];
-
-  document.getElementById('statsGrid').innerHTML = cards.map(c => `
-    <div class="stat-card" style="--accent-color:${c.accent}">
-      <div class="stat-label">${c.label}</div>
-      <div class="stat-value">${c.value}</div>
-      <div class="stat-sub">${c.sub}</div>
-    </div>`).join('');
+  document.getElementById('statsGrid').innerHTML = cards.map(c =>
+    `<div class="stat-card"><div class="stat-label">${c.label}</div><div class="stat-value">${c.value}</div><div class="stat-sub">${c.sub}</div></div>`
+  ).join('');
 }
 
 /* ─── Neighborhood filter ────────────────────────── */
 function buildNbhdFilter() {
-  const hoods = [...new Set(
-    allData
-      .filter(d => d.status === 'ok' && d.neighborhood)
-      .map(d => d.neighborhood)
-  )].sort();
-
+  const hoods = [...new Set(allData.filter(d => d.status === 'ok' && d.neighborhood).map(d => d.neighborhood))].sort();
   if (!hoods.length) return;
-
-  const group = document.getElementById('nbhdGroup');
-  group.style.display = 'flex';
-
+  document.getElementById('nbhdGroup').style.display = 'block';
   document.getElementById('nbhdFilter').innerHTML = [
     `<button class="pill active" data-nbhd="all" onclick="setNbhd(this)">All</button>`,
     ...hoods.map(h => `<button class="pill" data-nbhd="${esc(h)}" onclick="setNbhd(this)">${esc(h)}</button>`)
   ].join('');
 }
 
-/* ─── Best Value Picks table ─────────────────────── */
+/* ─── Deals ──────────────────────────────────────── */
 function renderDeals() {
   const wrap = document.getElementById('dealsTableWrap');
   if (!wrap) return;
-
-  const medians = computeMedians();
-
-  // Collect all value/sale whole-flower listings
+  const medians  = computeMedians();
   const allDeals = [];
   for (const d of allData) {
     if (d.status !== 'ok') continue;
@@ -1532,29 +1258,21 @@ function renderDeals() {
       if (!tag) continue;
       allDeals.push({ ...l, store: d.name, neighborhood: d.neighborhood || '', tag });
     }
-    // Structured deals from scraper (discounted_price set)
     for (const deal of (d.deals || [])) {
-      if (typeof deal === 'object' && deal.price && deal.originalPrice) {
+      if (typeof deal === 'object' && deal.price && deal.originalPrice)
         allDeals.push({ ...deal, store: d.name, neighborhood: d.neighborhood || '', tag: 'sale' });
-      }
     }
   }
-
   if (!allDeals.length) {
-    wrap.innerHTML = '<p class="deals-empty">No value picks detected right now. Check back after the next daily scrape!</p>';
+    wrap.innerHTML = '<p class="deals-empty">No value picks detected right now. Check back after the next daily scrape.</p>';
     return;
   }
-
-  // Sort: sale first, then by size (large→small), then price asc
   const sizeOrder = { '1 oz': 0, '1/2 oz': 1, '1/4 oz': 2, '1/8 oz': 3 };
   allDeals.sort((a, b) => {
     if (a.tag !== b.tag) return a.tag === 'sale' ? -1 : 1;
     return (sizeOrder[a.size] ?? 9) - (sizeOrder[b.size] ?? 9) || a.price - b.price;
   });
-
-  // Cap at 2 per store, 10 total; hide section if fewer than 5
-  const seenStores = {};
-  const picks = [];
+  const seenStores = {}; const picks = [];
   for (const item of allDeals) {
     if (picks.length >= 10) break;
     const n = seenStores[item.store] || 0;
@@ -1562,25 +1280,17 @@ function renderDeals() {
     seenStores[item.store] = n + 1;
     picks.push(item);
   }
-
   const section = document.getElementById('deals');
-  if (picks.length < 5) {
-    if (section) section.style.display = 'none';
-    return;
-  }
+  if (picks.length < 3) { if (section) section.style.display = 'none'; return; }
   if (section) section.style.display = '';
-
   const sizeTags = {
     '1 oz':   '<span class="size-tag tag-oz">1 oz</span>',
     '1/2 oz': '<span class="size-tag tag-half">&frac12; oz</span>',
     '1/4 oz': '<span class="size-tag tag-quarter">&frac14; oz</span>',
     '1/8 oz': '<span class="size-tag tag-eighth">&#8539; oz</span>'
   };
-
   const rows = picks.map(item => {
-    const tagEl = item.tag === 'sale'
-      ? '<span class="deal-tag-sale">SALE</span>'
-      : '<span class="deal-tag-value">BELOW AVG</span>';
+    const tagEl   = item.tag === 'sale' ? '<span class="deal-tag-sale">SALE</span>' : '<span class="deal-tag-value">BELOW AVG</span>';
     const sizeTag = sizeTags[item.size] || `<span class="size-tag tag-oz">${esc(item.size)}</span>`;
     const priceEl = item.originalPrice
       ? `<span class="deal-price">${fmt(item.price)}</span><span class="deal-was">${fmt(item.originalPrice)}</span>`
@@ -1594,39 +1304,39 @@ function renderDeals() {
       <td class="product-name deal-col-product">${prod}</td>
     </tr>`;
   }).join('');
-
-  wrap.innerHTML = `
-    <div class="table-wrap" role="region" aria-label="Best value picks table">
-      <div class="table-scroll">
-        <table>
-          <thead>
-            <tr>
-              <th scope="col">Store</th>
-              <th scope="col">Size</th>
-              <th scope="col">Type</th>
-              <th scope="col">Price</th>
-              <th scope="col" class="deal-col-product">Product</th>
-            </tr>
-          </thead>
-          <tbody>${rows}</tbody>
-        </table>
-      </div>
-    </div>`;
+  wrap.innerHTML = `<div class="table-wrap" role="region" aria-label="Best value picks"><div class="table-scroll"><table>
+    <thead><tr>
+      <th scope="col">Store</th><th scope="col">Size</th>
+      <th scope="col">Type</th><th scope="col">Price</th>
+      <th scope="col" class="deal-col-product">Product</th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table></div></div>`;
 }
 
-/* ─── Last updated ───────────────────────────────── */
+/* ─── Last updated + hero stat bar ──────────────────*/
 function renderLastUpdated() {
   const el = document.getElementById('lastUpdated');
-
-  // Try scrapedAt field from first entry that has it
   const ts = allData.find(d => d.scrapedAt)?.scrapedAt;
   if (ts) {
     const rel = relativeTime(ts);
     const abs = new Date(ts).toLocaleString('en-US', { month:'short', day:'numeric', hour:'numeric', minute:'2-digit' });
     el.innerHTML = `Last updated: <span>${rel}</span> &middot; ${abs}`;
+    const heroEl = document.getElementById('heroLastUpdated');
+    if (heroEl) heroEl.innerHTML = `Updated <strong>${rel}</strong>`;
   } else {
-    el.innerHTML = `Data scraped from live dispensary menus &mdash; updated daily`;
+    el.textContent = 'Updated daily from live dispensary menus';
+    const heroEl = document.getElementById('heroLastUpdated');
+    if (heroEl) heroEl.textContent = 'Updated daily';
   }
+}
+
+function renderHeroStats() {
+  const okStores = allData.filter(d => d.status === 'ok');
+  const storesEl = document.getElementById('heroStores');
+  if (storesEl) storesEl.innerHTML = `<strong>${okStores.length}</strong> stores`;
+  const cheapEl  = document.getElementById('heroCheapest');
+  if (cheapEl && bestEighthPrice < Infinity) cheapEl.innerHTML = `From <strong>${fmt(bestEighthPrice)}</strong>/8th`;
 }
 
 /* ─── Bootstrap ──────────────────────────────────── */
@@ -1636,62 +1346,40 @@ function hideLoader() {
   setTimeout(() => overlay.remove(), 400);
 }
 
-// Pre-fill search from ?q= URL param (supports schema.org SearchAction)
 const _qParam = new URLSearchParams(window.location.search).get('q');
-if (_qParam) {
-  const si = document.getElementById('searchInput');
-  if (si) si.value = _qParam;
-}
+if (_qParam) { const si = document.getElementById('searchInput'); if (si) si.value = _qParam; }
 
 const _fetchTimeout = setTimeout(() => {
   hideLoader();
   const main = document.querySelector('.main-section .section-inner');
   if (main && !main.querySelector('.error-banner')) {
-    main.insertAdjacentHTML('afterbegin', `<div class="error-banner" role="alert">Price data is taking longer than expected. <button onclick="location.reload()" style="margin-left:8px;background:var(--red);color:#fff;border:none;border-radius:4px;padding:4px 12px;cursor:pointer;font-size:13px">Retry</button></div>`);
+    main.insertAdjacentHTML('afterbegin', `<div class="error-banner" role="alert">Price data is taking longer than expected. <button onclick="location.reload()" style="margin-left:8px;background:#DC2626;color:#fff;border:none;border-radius:4px;padding:4px 12px;cursor:pointer;font-size:13px">Retry</button></div>`);
   }
 }, 8000);
 
 fetch('/api/data')
-  .then(r => {
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    return r.json();
-  })
+  .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
   .then(json => {
     if (json.error) throw new Error(json.error);
-
     clearTimeout(_fetchTimeout);
     allData = Array.isArray(json) ? json : [];
-
     renderStats();
     buildNbhdFilter();
     renderLastUpdated();
     renderTable();
     renderDeals();
-
-    // Dynamically update page title with cheapest oz price for SEO/tab visibility
+    renderHeroStats();
     if (bestOzPrice < Infinity) {
-      document.title = `NYC's Cheapest Weed: $${bestOzPrice.toFixed(0)}/oz Today | nycweedprice.org`;
+      document.title = `NYC Dispensary Prices — $${bestOzPrice.toFixed(0)}/oz Today | nycweedprice.org`;
     }
-
     hideLoader();
   })
-  .catch(err => {
+  .catch(() => {
     hideLoader();
     const main = document.querySelector('.main-section .section-inner');
-    if (main) {
-      main.insertAdjacentHTML('afterbegin', `
-        <div class="error-banner" role="alert">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <circle cx="10" cy="10" r="9"/>
-            <line x1="10" y1="6" x2="10" y2="11"/>
-            <circle cx="10" cy="14" r=".5" fill="currentColor"/>
-          </svg>
-          Price data temporarily unavailable — please try refreshing the page.
-          <button onclick="location.reload()" style="margin-left:12px;background:var(--red);color:#fff;border:none;border-radius:4px;padding:4px 12px;cursor:pointer;font-size:13px">Retry</button>
-        </div>`);
-    }
-    document.getElementById('lastUpdated').textContent = 'Data unavailable';
-    document.getElementById('statsGrid').innerHTML = '';
+    if (main) main.insertAdjacentHTML('afterbegin', `<div class="error-banner" role="alert">Price data temporarily unavailable — please try refreshing. <button onclick="location.reload()" style="margin-left:8px;background:#DC2626;color:#fff;border:none;border-radius:4px;padding:4px 12px;cursor:pointer;font-size:13px">Retry</button></div>`);
+    const lu = document.getElementById('lastUpdated');
+    if (lu) lu.textContent = 'Data unavailable';
   });
 
 /* ─── Hamburger ──────────────────────────────────── */
@@ -1700,35 +1388,29 @@ document.getElementById('hamburgerBtn').addEventListener('click', function() {
   const open = menu.classList.toggle('open');
   this.setAttribute('aria-expanded', String(open));
 });
-
 function closeMobileMenu() {
   document.getElementById('mobileMenu').classList.remove('open');
   document.getElementById('hamburgerBtn').setAttribute('aria-expanded', 'false');
 }
 
-/* ─── Email popup (exit-intent) ─────────────────── */
+/* ─── Email popup (exit-intent) ──────────────────── */
 (function() {
   if (localStorage.getItem('popup_dismissed')) return;
   let shown = false;
   function showPopup() {
-    if (shown) return;
-    shown = true;
+    if (shown) return; shown = true;
     const el = document.getElementById('emailPopup');
     if (el) el.classList.add('open');
   }
-  // Exit-intent: mouse leaves viewport toward top (browser chrome / tab bar)
-  document.addEventListener('mouseleave', function(e) {
-    if (e.clientY < 10) showPopup();
-  });
-  // Fallback: show after 45 seconds if exit-intent never fires (mobile, keyboard nav)
+  document.addEventListener('mouseleave', function(e) { if (e.clientY < 10) showPopup(); });
   setTimeout(showPopup, 45000);
 })();
 
 function closePopup() {
-  document.getElementById('emailPopup').classList.remove('open');
+  const el = document.getElementById('emailPopup');
+  if (el) el.classList.remove('open');
   localStorage.setItem('popup_dismissed', '1');
 }
-
 document.addEventListener('click', function(e) {
   const overlay = document.getElementById('emailPopup');
   if (overlay && e.target === overlay) closePopup();
@@ -1739,8 +1421,7 @@ function submitPopupAlert(e) {
   const email = document.getElementById('popupAlertEmail').value.trim();
   if (!email) return;
   fetch('/api/alert-signup', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email })
   }).finally(() => {
     document.getElementById('popupAlertForm').style.display = 'none';
@@ -1750,14 +1431,12 @@ function submitPopupAlert(e) {
   });
 }
 
-/* ─── Alert signup ──────────────────────────────── */
 function submitAlert(e) {
   e.preventDefault();
   const email = document.getElementById('alertEmail').value.trim();
   if (!email) return;
   fetch('/api/alert-signup', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email })
   }).then(() => {
     document.getElementById('alertForm').style.display = 'none';
@@ -1768,36 +1447,30 @@ function submitAlert(e) {
   });
 }
 
-/* ─── FAQ accordion ─────────────────────────────── */
+/* ─── FAQ ────────────────────────────────────────── */
 function toggleFaq(btn) {
   const item = btn.closest('.faq-item');
   const open = !item.classList.contains('open');
   item.classList.toggle('open', open);
   btn.setAttribute('aria-expanded', String(open));
 }
-
-/* ─── Back to top ────────────────────────────────── */
-window.addEventListener('scroll', function() {
-  const btn = document.getElementById('backToTop');
-  btn.classList.toggle('visible', window.scrollY > 400);
-}, { passive: true });
 </script>
 
 <!-- Email signup popup -->
 <div class="popup-overlay" id="emailPopup" role="dialog" aria-modal="true" aria-label="Get price drop alerts">
   <div class="popup-modal">
     <button class="popup-close" onclick="closePopup()" aria-label="Close">&#215;</button>
-    <h2>NYC&rsquo;s cheapest ounce, in your inbox every morning.</h2>
-    <p>We check every licensed NYC dispensary daily. Get the lowest price sent to you before you head out &mdash; free, no spam.</p>
+    <h2>NYC&rsquo;s cheapest ounce, in your inbox.</h2>
+    <p>We check every licensed NYC dispensary daily. Get the lowest price before you head out &mdash; free, no spam.</p>
     <form class="alert-form" id="popupAlertForm" onsubmit="submitPopupAlert(event)">
       <input type="email" id="popupAlertEmail" placeholder="you@email.com" required autocomplete="email" aria-label="Email address">
-      <button type="submit">Send Me Today&rsquo;s Price</button>
+      <button type="submit">Subscribe</button>
     </form>
-    <p class="alert-success" id="popupAlertSuccess">You're on the list!</p>
+    <p class="alert-success" id="popupAlertSuccess">You&rsquo;re on the list!</p>
   </div>
 </div>
 
-<!-- Cloudflare Web Analytics injected automatically via Cloudflare proxy — no JS snippet needed -->
+<!-- Cloudflare Web Analytics injected automatically via Cloudflare proxy -->
 
 </body>
 </html>
