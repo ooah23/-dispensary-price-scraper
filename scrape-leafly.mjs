@@ -2019,6 +2019,17 @@ async function main() {
   console.log(`Wrote ${METADATA_PATH}`);
   console.log(`Wrote ${PRICE_CSV_PATH}`);
   console.log(`Wrote ${DEALS_CSV_PATH}`);
+
+  // Regenerate dispensary sub-pages after every scrape
+  const { execFile } = await import("node:child_process");
+  const { promisify } = await import("node:util");
+  const execFileAsync = promisify(execFile);
+  try {
+    const { stdout } = await execFileAsync("node", ["scripts/generate-subpages.mjs"]);
+    process.stdout.write(stdout);
+  } catch (err) {
+    console.warn("Sub-page generation failed (non-fatal):", err.message);
+  }
 }
 
 main().catch((error) => {
