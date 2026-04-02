@@ -94,8 +94,8 @@ function generatePage(store, historyPoints) {
   const cheapOz     = store.cheapestOunce?.price;
   const hasData     = allListings.length > 0;
 
-  const title = `${store.name} Cannabis Prices | NYC Dispensary — nycweedprice.org`;
-  const desc  = `Current flower prices at ${store.name} in ${store.neighborhood || "NYC"}. Compare eighths, quarters, halves and ounces. Updated daily.`;
+  const title = `${store.name} Prices & Menu | NYC Weed Price Tracker`;
+  const desc  = `See today's flower prices at ${store.name} in ${store.neighborhood || "NYC"}. Updated daily. Compare eighths, quarters, halves and ounces across all NYC dispensaries.`;
 
   const spark = sparkline(historyPoints);
 
@@ -149,7 +149,7 @@ function generatePage(store, historyPoints) {
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": "CannabisDispensary",
     "name": "${esc(store.name)}",
     "description": "Licensed cannabis dispensary in ${esc(store.neighborhood || "New York City")}",
     "address": {
@@ -259,7 +259,7 @@ function generatePage(store, historyPoints) {
 <div class="hero-strip">
   <div class="hero-inner">
     <div class="store-nbhd">${esc(store.neighborhood || "New York City")}</div>
-    <h1 class="store-name">${esc(store.name)}</h1>
+    <h1 class="store-name">${esc(store.name)} Prices</h1>
     <div class="store-address">${esc(store.address || "")}</div>
     <div class="price-pills">
       ${cheapEighth     ? `<div class="price-pill"><div class="pl">⅛ oz from</div><div class="pv">${fmt(cheapEighth)}</div></div>` : ""}
