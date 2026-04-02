@@ -1,0 +1,6 @@
+[variables]
+PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = "1"
+NPM_CONFIG_OMIT = "dev"
+
+[phases.install]
+cmds = ["npm install --omit=dev"]
