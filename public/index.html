@@ -348,6 +348,30 @@
     /* ─── Deals section ──────────────────────────────────────────── */
     #deals { background: var(--page-bg); }
 
+    /* ─── Tab bar ───────────────────────────────────────────────── */
+    .tab-bar {
+      position: sticky; top: var(--nav-h); z-index: 400;
+      background: var(--hero-bg);
+      border-bottom: 1px solid var(--border-dark);
+    }
+    .tab-bar-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 24px;
+      display: flex; gap: 0;
+    }
+    .tab-btn {
+      background: none; border: none; cursor: pointer;
+      font-family: inherit; font-size: 12px; font-weight: 500;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: #555; padding: 14px 24px;
+      border-bottom: 2px solid transparent;
+      transition: color .15s, border-color .15s;
+      margin-bottom: -1px;
+    }
+    .tab-btn:hover { color: #999; }
+    .tab-btn.active { color: var(--lime); border-bottom-color: var(--lime); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
     /* ─── Stats grid ─────────────────────────────────────────────── */
     #stats-section { background: var(--hero-bg); padding: 40px 0; }
     #stats-section .section-label { color: #555; }
@@ -777,8 +801,8 @@
 <nav class="topnav" id="topnav" aria-label="Main navigation">
   <a href="/" class="topnav-brand">nycweedprice<span class="tld">.org</span></a>
   <ul class="nav-links" role="list">
-    <li><a href="#deals">Deals</a></li>
-    <li><a href="#prices">Prices</a></li>
+    <li><a href="#deals" onclick="switchTab('deals');return false;">Deals</a></li>
+    <li><a href="#prices" onclick="switchTab('prices');return false;">Prices</a></li>
     <li><a href="#faq-section">About</a></li>
     <li><a href="#alert-section" class="nav-cta">Get Alerts</a></li>
   </ul>
@@ -794,8 +818,8 @@
 <!-- Mobile nav overlay -->
 <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Mobile navigation">
   <button class="mobile-menu-close" onclick="closeMobileMenu()" aria-label="Close menu">&#215;</button>
-  <a href="#deals" onclick="closeMobileMenu()">Deals</a>
-  <a href="#prices" onclick="closeMobileMenu()">Prices</a>
+  <a href="#deals" onclick="switchTab('deals');closeMobileMenu();return false;">Deals</a>
+  <a href="#prices" onclick="switchTab('prices');closeMobileMenu();return false;">Prices</a>
   <a href="#alert-section" onclick="closeMobileMenu()">Get Alerts</a>
   <a href="#faq-section" onclick="closeMobileMenu()">About</a>
 </div>
@@ -805,7 +829,7 @@
   <p class="hero-eyebrow">NYC Licensed Dispensary Prices</p>
   <h1 class="hero-headline" id="hero-headline">Today&rsquo;s Best<br>Weed Prices<br>in New York.</h1>
   <p class="hero-sub">Updated daily. 20 licensed dispensaries. No markup.</p>
-  <a href="#deals" class="hero-cta">See Today&rsquo;s Prices ↓</a>
+  <a href="#deals" class="hero-cta" onclick="switchTab('deals');return false;">See Today&rsquo;s Prices ↓</a>
   <div class="hero-scroll-line" aria-hidden="true"><span></span></div>
 
   <!-- Stat bar — populated by JS after data loads -->
@@ -817,84 +841,97 @@
   </div>
 </section>
 
-<!-- Best Value Picks -->
-<section class="section" id="deals" aria-labelledby="deals-title">
-  <div class="section-inner">
-    <p class="section-label">Today&rsquo;s Picks</p>
-    <h2 class="section-title" id="deals-title">Best Dispensary Deals in NYC</h2>
-    <div id="dealsTableWrap"></div>
+<!-- Tab bar -->
+<div class="tab-bar" id="tabBar" role="tablist" aria-label="View switcher">
+  <div class="tab-bar-inner">
+    <button class="tab-btn active" id="tab-btn-deals" role="tab" aria-selected="true"  aria-controls="tab-deals"  onclick="switchTab('deals')">Today's Deals</button>
+    <button class="tab-btn"        id="tab-btn-prices" role="tab" aria-selected="false" aria-controls="tab-prices" onclick="switchTab('prices')">All Prices</button>
   </div>
-</section>
+</div>
 
-<!-- Stats -->
-<section id="stats-section" aria-label="Price statistics">
-  <div class="section-inner">
-    <p class="section-label" style="margin-bottom:16px">How NYC Dispensary Prices Compare Right Now</p>
-    <div id="statsGrid"></div>
-  </div>
-</section>
-
-<!-- Price Table -->
-<section class="section main-section" id="prices" aria-labelledby="prices-title">
-  <div class="section-inner">
-    <p class="section-label">All Listings</p>
-    <h2 class="section-title" id="prices-title">Compare Flower Prices Across All NYC Dispensaries</h2>
-
-    <p id="lastUpdated"></p>
-
-    <!-- Filter bar -->
-    <div class="filter-bar">
-      <div class="search-wrap">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="6" cy="6" r="5"/><line x1="10" y1="10" x2="14" y2="14"/></svg>
-        <input type="text" id="searchInput" placeholder="Search strain, brand, or store…" oninput="debounceRender()" aria-label="Search listings">
-      </div>
-
-      <div class="pill-group" id="sizeFilter" role="group" aria-label="Size filter">
-        <button class="pill active" data-size="all" onclick="setSize(this)">All sizes</button>
-        <button class="pill" data-size="1 oz" onclick="setSize(this)">1 oz</button>
-        <button class="pill" data-size="1/2 oz" onclick="setSize(this)">½ oz</button>
-        <button class="pill" data-size="1/4 oz" onclick="setSize(this)">¼ oz</button>
-        <button class="pill" data-size="1/8 oz" onclick="setSize(this)">⅛ oz</button>
-      </div>
-
-      <div class="pill-group" id="typeFilter" role="group" aria-label="Type filter">
-        <button class="pill active" data-type="all" onclick="setType(this)">All flower</button>
-        <button class="pill" data-type="whole" onclick="setType(this)">Whole bud</button>
-        <button class="pill" data-type="pre-ground" onclick="setType(this)">Pre-ground</button>
-      </div>
-
-      <button class="pill pill-deals" onclick="toggleDealsOnly(this)" aria-pressed="false">Deals only</button>
-
-      <span class="filter-meta" id="filterMeta" aria-live="polite"></span>
+<!-- Tab: Deals -->
+<div id="tab-deals" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-deals">
+  <!-- Stats -->
+  <section id="stats-section" aria-label="Price statistics">
+    <div class="section-inner">
+      <p class="section-label" style="margin-bottom:16px">How NYC Dispensary Prices Compare Right Now</p>
+      <div id="statsGrid"></div>
     </div>
+  </section>
 
-    <!-- Neighborhood filter -->
-    <div class="nbhd-group" id="nbhdGroup">
-      <button class="nbhd-toggle" id="nbhdToggle" onclick="toggleNbhdFilter()" aria-expanded="true">
-        Neighborhood
-        <svg width="10" height="8" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="2,4 5,7 8,4" id="nbhdChevron"/></svg>
-      </button>
-      <div id="nbhdFilter" role="group" aria-label="Neighborhood filter"></div>
+  <!-- Best Value Picks -->
+  <section class="section" id="deals" aria-labelledby="deals-title">
+    <div class="section-inner">
+      <p class="section-label">Today&rsquo;s Picks</p>
+      <h2 class="section-title" id="deals-title">Best Dispensary Deals in NYC</h2>
+      <div id="dealsTableWrap"></div>
     </div>
+  </section>
+</div>
 
-    <!-- Table -->
-    <div class="table-wrap" role="region" aria-label="Dispensary price comparison table">
-      <div class="table-scroll">
-        <table>
-          <thead>
-            <tr>
-              <th id="th-store" scope="col" onclick="sortCol('store')">Dispensary</th>
-              <th id="th-price" scope="col" onclick="sortCol('price')">Price</th>
-              <th id="th-size"  scope="col" onclick="sortCol('size')">Size</th>
-              <th scope="col">Product</th>
-            </tr>
-          </thead>
-          <tbody id="priceBody"></tbody>
-        </table>
+<!-- Tab: All Prices -->
+<div id="tab-prices" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-prices" hidden>
+  <section class="section main-section" id="prices" aria-labelledby="prices-title">
+    <div class="section-inner">
+      <p class="section-label">All Listings</p>
+      <h2 class="section-title" id="prices-title">Compare Flower Prices Across All NYC Dispensaries</h2>
+
+      <p id="lastUpdated"></p>
+
+      <!-- Filter bar -->
+      <div class="filter-bar">
+        <div class="search-wrap">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="6" cy="6" r="5"/><line x1="10" y1="10" x2="14" y2="14"/></svg>
+          <input type="text" id="searchInput" placeholder="Search strain, brand, or store…" oninput="debounceRender()" aria-label="Search listings">
+        </div>
+
+        <div class="pill-group" id="sizeFilter" role="group" aria-label="Size filter">
+          <button class="pill active" data-size="all" onclick="setSize(this)">All sizes</button>
+          <button class="pill" data-size="1 oz" onclick="setSize(this)">1 oz</button>
+          <button class="pill" data-size="1/2 oz" onclick="setSize(this)">½ oz</button>
+          <button class="pill" data-size="1/4 oz" onclick="setSize(this)">¼ oz</button>
+          <button class="pill" data-size="1/8 oz" onclick="setSize(this)">⅛ oz</button>
+        </div>
+
+        <div class="pill-group" id="typeFilter" role="group" aria-label="Type filter">
+          <button class="pill active" data-type="all" onclick="setType(this)">All flower</button>
+          <button class="pill" data-type="whole" onclick="setType(this)">Whole bud</button>
+          <button class="pill" data-type="pre-ground" onclick="setType(this)">Pre-ground</button>
+        </div>
+
+        <button class="pill pill-deals" onclick="toggleDealsOnly(this)" aria-pressed="false">Deals only</button>
+
+        <span class="filter-meta" id="filterMeta" aria-live="polite"></span>
+      </div>
+
+      <!-- Neighborhood filter -->
+      <div class="nbhd-group" id="nbhdGroup">
+        <button class="nbhd-toggle" id="nbhdToggle" onclick="toggleNbhdFilter()" aria-expanded="true">
+          Neighborhood
+          <svg width="10" height="8" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="2,4 5,7 8,4" id="nbhdChevron"/></svg>
+        </button>
+        <div id="nbhdFilter" role="group" aria-label="Neighborhood filter"></div>
+      </div>
+
+      <!-- Table -->
+      <div class="table-wrap" role="region" aria-label="Dispensary price comparison table">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th id="th-store" scope="col" onclick="sortCol('store')">Dispensary</th>
+                <th id="th-price" scope="col" onclick="sortCol('price')">Price</th>
+                <th id="th-size"  scope="col" onclick="sortCol('size')">Size</th>
+                <th scope="col">Product</th>
+              </tr>
+            </thead>
+            <tbody id="priceBody"></tbody>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>
 
 <!-- Email signup -->
 <section id="alert-section" aria-labelledby="alert-title">
@@ -1013,8 +1050,8 @@
     <div class="footer-brand">nycweedprice<span class="tld">.org</span></div>
     <p>Comparing flower prices across NYC licensed dispensaries so you don&rsquo;t have to.</p>
     <div class="footer-links">
-      <a href="#prices">Prices</a>
-      <a href="#deals">Deals</a>
+      <a href="#prices" onclick="switchTab('prices');return false;">Prices</a>
+      <a href="#deals" onclick="switchTab('deals');return false;">Deals</a>
       <a href="#alert-section">Alerts</a>
       <a href="#faq-section">FAQ</a>
     </div>
@@ -1462,6 +1499,27 @@ function closeMobileMenu() {
   document.getElementById('mobileMenu').classList.remove('open');
   document.getElementById('hamburgerBtn').setAttribute('aria-expanded', 'false');
 }
+
+/* ─── Tab switching ──────────────────────────────── */
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-selected', 'false');
+  });
+  const panel = document.getElementById('tab-' + name);
+  const btn   = document.getElementById('tab-btn-' + name);
+  if (panel) panel.classList.add('active');
+  if (btn)   { btn.classList.add('active'); btn.setAttribute('aria-selected', 'true'); }
+  // Scroll tab bar into view (from hero) without full page jump
+  document.getElementById('tabBar')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  history.replaceState(null, '', '#' + name);
+}
+// Initialise from hash or default to deals
+(function() {
+  const hash = location.hash.replace('#', '');
+  switchTab(['deals','prices'].includes(hash) ? hash : 'deals');
+})();
 
 /* ─── Dark mode toggle ───────────────────────────── */
 function syncDarkIcon() {
