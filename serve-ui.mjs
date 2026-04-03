@@ -5,6 +5,7 @@ import path from "node:path";
 const PORT = process.env.PORT ?? 4173;
 const OUTPUT_DIR = path.resolve("output");
 const JSON_PATH = path.join(OUTPUT_DIR, "dispensary-prices.json");
+const HISTORY_DIR = path.join(OUTPUT_DIR, "history");
 const PUBLIC_DIR = path.resolve("public");
 const LOGS_DIR = path.resolve("logs");
 const ANALYTICS_LOG = path.join(LOGS_DIR, "analytics.jsonl");
@@ -12,6 +13,42 @@ const ALERTS_FILE = path.join(LOGS_DIR, "alert-signups.jsonl");
 
 // Ensure logs directory exists on startup
 await fs.mkdir(LOGS_DIR, { recursive: true });
+
+// ─── Price history cache ───────────────────────────────────────────────────
+let _histCache = null;
+let _histCacheTs = 0;
+const HIST_TTL = 5 * 60 * 1000;
+
+function slugify(name) {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+}
+
+async function loadPriceHistory() {
+  const now = Date.now();
+  if (_histCache && now - _histCacheTs < HIST_TTL) return _histCache;
+  const map = {};
+  try {
+    const files = (await fs.readdir(HISTORY_DIR))
+      .filter(f => /^\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort().slice(-14); // last 14 days
+    for (const file of files) {
+      const date = file.replace(".json", "");
+      try {
+        const stores = JSON.parse(await fs.readFile(path.join(HISTORY_DIR, file), "utf8"));
+        for (const s of stores) {
+          if (!s.name) continue;
+          const key = slugify(s.name);
+          if (!map[key]) map[key] = [];
+          if (s.cheapestEighthOunce?.price) {
+            map[key].push({ date, price: s.cheapestEighthOunce.price });
+          }
+        }
+      } catch { /* skip bad file */ }
+    }
+  } catch { /* no history dir */ }
+  _histCache = map;
+  _histCacheTs = now;
+  return map;
+}
 
 /**
  * Log an API request to logs/analytics.jsonl.
@@ -558,9 +595,16 @@ const server = http.createServer(async (req, res) => {
     setCorsHeaders(res);
     logRequest(req); // fire-and-forget analytics log
     try {
-      const raw = await fs.readFile(JSON_PATH, "utf8");
+      const [raw, history] = await Promise.all([
+        fs.readFile(JSON_PATH, "utf8"),
+        loadPriceHistory(),
+      ]);
+      const data = JSON.parse(raw);
+      for (const store of data) {
+        store.priceHistory = history[slugify(store.name)] ?? [];
+      }
       res.writeHead(200, { "Content-Type": "application/json", "Cache-Control": "public, max-age=300" });
-      res.end(raw);
+      res.end(JSON.stringify(data));
     } catch {
       res.writeHead(404, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ error: "No data file found. Run the scraper first: node scrape-leafly.mjs" }));
@@ -599,8 +643,14 @@ const server = http.createServer(async (req, res) => {
       return;
     }
     try {
-      const data = await fs.readFile(filePath);
-      const ext = path.extname(filePath).toLowerCase();
+      let resolvedPath = filePath;
+      // Try directory index fallback
+      try {
+        const stat = await fs.stat(filePath);
+        if (stat.isDirectory()) resolvedPath = path.join(filePath, "index.html");
+      } catch { /* not a directory */ }
+      const data = await fs.readFile(resolvedPath);
+      const ext = path.extname(resolvedPath).toLowerCase();
       const contentType = MIME[ext] ?? "application/octet-stream";
       res.writeHead(200, { "Content-Type": contentType });
       res.end(data);

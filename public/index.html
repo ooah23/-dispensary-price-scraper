@@ -704,6 +704,12 @@
     .popup-modal .alert-form input[type="email"]::placeholder { color: #BBB; }
     .popup-modal .alert-success { color: var(--deal-green); }
 
+    /* ─── Sparkline ──────────────────────────────────────────────── */
+    .spark-mini { display: block; margin-top: 4px; opacity: 0.8; }
+
+    /* ─── Mobile sort bar (hidden on desktop) ───────────────────── */
+    .mobile-sort-bar { display: none; }
+
     /* ─── last-updated bar ───────────────────────────────────────── */
     #lastUpdated {
       font-size: 12px; color: var(--text-muted);
@@ -724,6 +730,7 @@
 
       /* hide table, show cards */
       .table-scroll { min-width: unset; }
+      .table-wrap { overflow-x: visible; }
       table thead { display: none; }
       table, tbody, tr, td { display: block; width: 100%; }
       tbody tr {
@@ -748,20 +755,43 @@
       tbody td:nth-child(4) { grid-area: prod; }
       .price { font-size: 18px; }
 
-      /* deals table mobile: hide product col, show inline */
+      /* deals table mobile: card layout matching prices table */
       .deal-col-product { display: none; }
       .deal-product-mobile { display: block; }
+      .spark-mini { display: none; }
 
-      /* mobile: deals table stays table but simpler */
-      #dealsTableWrap table thead { display: table-header-group; }
-      #dealsTableWrap table { display: table; width: 100%; }
-      #dealsTableWrap tbody { display: table-row-group; }
-      #dealsTableWrap tbody tr { display: table-row; padding: 0; border: none; border-radius: 0; margin: 0; background: transparent; grid-template-areas: none; }
-      #dealsTableWrap tbody td { display: table-cell; padding: 10px 12px; border-bottom: 1px solid var(--border); }
+      #dealsTableWrap table thead { display: none; }
+      #dealsTableWrap table,
+      #dealsTableWrap tbody { display: block; width: 100%; }
+      #dealsTableWrap tbody tr {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        margin-bottom: 8px;
+        padding: 14px;
+        gap: 4px 12px;
+      }
+      #dealsTableWrap tbody tr:hover td { background: transparent; }
+      #dealsTableWrap tbody td { display: block; padding: 0; border: none; }
+      #dealsTableWrap tbody td:nth-child(1) { grid-column: 1; grid-row: 1; } /* store */
+      #dealsTableWrap tbody td:nth-child(4) { grid-column: 2; grid-row: 1; text-align: right; font-size: 18px; font-weight: 700; } /* price */
+      #dealsTableWrap tbody td:nth-child(2) { grid-column: 1; grid-row: 2; } /* size */
+      #dealsTableWrap tbody td:nth-child(3) { grid-column: 2; grid-row: 2; text-align: right; } /* type badge */
+      #dealsTableWrap tbody td:nth-child(5) { display: none; } /* product col (shown inline in td1) */
+      #dealsTableWrap .table-wrap { overflow-x: visible; }
 
       .filter-bar { gap: 6px; }
       #searchInput { width: 100%; }
       .search-wrap { width: 100%; }
+      .mobile-sort-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+      .mobile-sort-bar label { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+      .mobile-sort-bar select {
+        flex: 1; background: var(--card-bg); color: var(--text-primary);
+        border: 1px solid var(--border); border-radius: 6px;
+        padding: 8px 10px; font-size: 13px;
+      }
 
       .alert-form { flex-direction: column; border-radius: var(--radius); border: none; gap: 8px; }
       .alert-form input[type="email"] {
@@ -911,6 +941,19 @@
           <svg width="10" height="8" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="2,4 5,7 8,4" id="nbhdChevron"/></svg>
         </button>
         <div id="nbhdFilter" role="group" aria-label="Neighborhood filter"></div>
+      </div>
+
+      <!-- Mobile sort (hidden on desktop, shown below 768px) -->
+      <div class="mobile-sort-bar" aria-label="Sort options">
+        <label for="mobileSortSelect">Sort by:</label>
+        <select id="mobileSortSelect" onchange="mobileSortChange(this)">
+          <option value="price-asc">Price: Low → High</option>
+          <option value="price-desc">Price: High → Low</option>
+          <option value="store-asc">Store: A → Z</option>
+          <option value="store-desc">Store: Z → A</option>
+          <option value="size-asc">Size: Small → Large</option>
+          <option value="size-desc">Size: Large → Small</option>
+        </select>
       </div>
 
       <!-- Table -->
@@ -1067,6 +1110,7 @@
 
 /* ─── State ──────────────────────────────────────── */
 let allData            = [];
+let storeHistory       = {}; // name → [{date, price}]
 let activeSizeFilter   = 'all';
 let activeTypeFilter   = 'all';
 let activeNbhd         = 'all';
@@ -1085,6 +1129,18 @@ function esc(s) {
 
 function storeSlug(name) {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+function sparkMini(points) {
+  if (!points || points.length < 2) return '';
+  const prices = points.map(p => p.price);
+  const mn = Math.min(...prices), mx = Math.max(...prices), rng = mx - mn || 1;
+  const W = 56, H = 18;
+  const xs = prices.map((_, i) => (i / (prices.length - 1)) * W);
+  const ys = prices.map(p => H - ((p - mn) / rng) * (H - 4) - 2);
+  const d = xs.map((x, i) => `${i===0?'M':'L'}${x.toFixed(1)},${ys[i].toFixed(1)}`).join(' ');
+  const trend = prices.at(-1) - prices[0];
+  const color = trend < -0.5 ? '#4ADE80' : trend > 0.5 ? '#EF4444' : '#C8FF00';
+  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" class="spark-mini" aria-hidden="true" title="${trend<0?'↓':'↑'} price trend"><path d="${d}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linejoin="round"/></svg>`;
 }
 
 function leaflyLink(product) {
@@ -1158,6 +1214,13 @@ function sortCol(key) {
     sortKey = key;
     sortDir = 'asc';
   }
+  updateSortHeaders();
+  renderTable();
+}
+function mobileSortChange(sel) {
+  const [key, dir] = sel.value.split('-');
+  sortKey = key;
+  sortDir = dir;
   updateSortHeaders();
   renderTable();
 }
@@ -1290,7 +1353,7 @@ function renderTable() {
     const dealBadge = r.dealTag === 'sale'  ? '<span class="deal-tag-sale">SALE</span>'
                     : r.dealTag === 'value' ? '<span class="deal-tag-value">BELOW AVG</span>' : '';
     return `<tr class="${rowCls}">
-      <td><div class="store-name"><a href="/dispensaries/${storeSlug(r.store)}/" class="store-link">${esc(r.store)}</a></div><div class="store-nbhd">${esc(r.neighborhood)}</div></td>
+      <td><div class="store-name"><a href="/dispensaries/${storeSlug(r.store)}/" class="store-link">${esc(r.store)}</a></div><div class="store-nbhd">${esc(r.neighborhood)}</div>${sparkMini(storeHistory[r.store])}</td>
       <td class="price">${fmt(r.price)}</td>
       <td>${sizeTag}${pgBadge}</td>
       <td class="product-name">${bestBadge}${dealBadge}${esc(r.product)}${r.product ? ' ' + leaflyLink(r.product) : ''}</td>
@@ -1470,6 +1533,10 @@ fetch('/api/data')
     if (json.error) throw new Error(json.error);
     clearTimeout(_fetchTimeout);
     allData = Array.isArray(json) ? json : [];
+    storeHistory = {};
+    for (const d of allData) {
+      if (d.name && d.priceHistory?.length) storeHistory[d.name] = d.priceHistory;
+    }
     renderStats();
     buildNbhdFilter();
     renderLastUpdated();

@@ -12,6 +12,11 @@ const PUBLIC_DIR   = path.resolve("public");
 const SITEMAP_PATH = path.join(PUBLIC_DIR, "sitemap.xml");
 const BASE_URL     = "https://nycweedprice.org";
 
+// Static extra URLs always included in sitemap
+const EXTRA_URLS = [
+  { loc: `${BASE_URL}/420-deals/`, priority: "0.9", changefreq: "daily" },
+];
+
 function slugify(name) {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 }
@@ -81,7 +86,15 @@ function renderPriceRows(listings, sizeLabel) {
     </tr>`).join("\n");
 }
 
-function generatePage(store, historyPoints) {
+function buildSameAs(store) {
+  const urls = [];
+  const menuUrl = store.menuUrl || store.menuUrlOverride || "";
+  if (menuUrl.includes("weedmaps.com")) urls.push(menuUrl);
+  if (store.leaflySlug) urls.push(`https://www.leafly.com/dispensary-info/${store.leaflySlug}`);
+  return urls;
+}
+
+function generatePage(store, historyPoints, allStores) {
   const slug = slugify(store.name);
   const url  = `${BASE_URL}/dispensaries/${slug}/`;
   const allListings = [
@@ -130,6 +143,25 @@ function generatePage(store, historyPoints) {
 
   const menuLink = store.menuUrl || store.menuUrlOverride;
 
+  // Compare nearby
+  const neighbors = (allStores || []).filter(
+    s => s.name !== store.name && s.neighborhood === store.neighborhood && s.status !== "skipped"
+  );
+  const nearbySection = neighbors.length ? `
+    <section class="nearby-section">
+      <h2>Also in ${esc(store.neighborhood)}</h2>
+      <ul class="nearby-list">
+        ${neighbors.map(n => {
+          const nSlug = slugify(n.name);
+          const nPrice = n.cheapestEighthOunce?.price;
+          return `<li><a href="/dispensaries/${nSlug}/">${esc(n.name)}</a>${nPrice ? ` <span class="nearby-price">⅛ oz from $${nPrice}</span>` : ""}</li>`;
+        }).join("\n        ")}
+      </ul>
+    </section>` : "";
+
+  const sameAs = buildSameAs(store);
+  const sameAsJson = sameAs.length ? `,\n    "sameAs": ${JSON.stringify(sameAs)}` : "";
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -160,7 +192,39 @@ function generatePage(store, historyPoints) {
       "addressCountry": "US"
     },
     "url": "${esc(url)}",
-    "priceRange": "${cheapEighth ? `⅛ oz from $${cheapEighth}` : "$$"}"${menuLink ? `,\n    "menu": "${esc(menuLink)}"` : ""}
+    "priceRange": "${cheapEighth ? `⅛ oz from $${cheapEighth}` : "$$"}"${menuLink ? `,\n    "menu": "${esc(menuLink)}"` : ""}${sameAsJson}
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What are the current flower prices at ${esc(store.name)}?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "${cheapEighth ? `The cheapest eighth ounce (3.5g) at ${esc(store.name)} is currently $${cheapEighth}. Prices are updated daily from the official menu.` : `Flower prices at ${esc(store.name)} are updated daily. Visit nycweedprice.org for the latest listings.`}"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where is ${esc(store.name)} located?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "${esc(store.name)} is a licensed cannabis dispensary located at ${esc(store.address || "New York City")}, ${esc(store.neighborhood || "NYC")}."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do ${esc(store.name)} prices compare to other NYC dispensaries?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "nycweedprice.org tracks flower prices at 20+ NYC licensed dispensaries daily. Visit the main page to compare ${esc(store.name)} prices against all other stores in real time."
+        }
+      }
+    ]
   }
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -241,6 +305,13 @@ function generatePage(store, historyPoints) {
 
     .no-data { color: var(--muted); font-size: 14px; padding: 24px 0; }
 
+    .nearby-section { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border); }
+    .nearby-list { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .nearby-list li { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 8px 14px; font-size: 13px; }
+    .nearby-list a { font-weight: 600; }
+    .nearby-list a:hover { color: var(--lime); }
+    .nearby-price { color: var(--muted); margin-left: 4px; }
+
     .back-section { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border); }
     .back-link { font-size: 13px; color: var(--muted); }
     .back-link:hover { color: var(--text); }
@@ -275,6 +346,7 @@ function generatePage(store, historyPoints) {
     <h2>Today's Prices</h2>
     ${priceTable}
   </section>
+  ${nearbySection}
   <div class="back-section">
     <a href="/" class="back-link">← Compare all NYC dispensaries</a>
   </div>
@@ -303,7 +375,7 @@ async function run() {
     const slug   = slugify(store.name);
     const outDir = path.join(PUBLIC_DIR, "dispensaries", slug);
     await fs.mkdir(outDir, { recursive: true });
-    const html = generatePage(store, history[slug] || []);
+    const html = generatePage(store, history[slug] || [], stores);
     await fs.writeFile(path.join(outDir, "index.html"), html, "utf8");
     slugs.push(slug);
     console.log(`  ✓ /dispensaries/${slug}/`);
@@ -318,6 +390,13 @@ async function run() {
     <lastmod>${today}</lastmod>
   </url>`).join("\n");
 
+  const extraUrls = EXTRA_URLS.map(e => `  <url>
+    <loc>${e.loc}</loc>
+    <changefreq>${e.changefreq}</changefreq>
+    <priority>${e.priority}</priority>
+    <lastmod>${today}</lastmod>
+  </url>`).join("\n");
+
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
@@ -326,11 +405,12 @@ async function run() {
     <priority>1.0</priority>
     <lastmod>${today}</lastmod>
   </url>
+${extraUrls}
 ${storeUrls}
 </urlset>
 `;
   await fs.writeFile(SITEMAP_PATH, sitemap, "utf8");
-  console.log(`  ✓ sitemap.xml updated (${slugs.length + 1} URLs)`);
+  console.log(`  ✓ sitemap.xml updated (${slugs.length + 1 + EXTRA_URLS.length} URLs)`);
   console.log(`Done. Generated ${slugs.length} sub-pages.`);
 }
 

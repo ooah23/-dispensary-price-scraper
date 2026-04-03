@@ -29,7 +29,40 @@
     },
     "url": "https://nycweedprice.org/dispensaries/stoops-nyc/",
     "priceRange": "⅛ oz from $23",
-    "menu": "https://www.leafly.com/dispensary-info/stoopsnyc/menu?product_category[]=Flower"
+    "menu": "https://www.leafly.com/dispensary-info/stoopsnyc/menu?product_category[]=Flower",
+    "sameAs": ["https://www.leafly.com/dispensary-info/stoopsnyc"]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What are the current flower prices at Stoops NYC?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The cheapest eighth ounce (3.5g) at Stoops NYC is currently $23. Prices are updated daily from the official menu."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where is Stoops NYC located?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Stoops NYC is a licensed cannabis dispensary located at 182 5th Ave, Flatiron."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do Stoops NYC prices compare to other NYC dispensaries?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "nycweedprice.org tracks flower prices at 20+ NYC licensed dispensaries daily. Visit the main page to compare Stoops NYC prices against all other stores in real time."
+        }
+      }
+    ]
   }
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -110,6 +143,13 @@
 
     .no-data { color: var(--muted); font-size: 14px; padding: 24px 0; }
 
+    .nearby-section { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border); }
+    .nearby-list { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .nearby-list li { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 8px 14px; font-size: 13px; }
+    .nearby-list a { font-weight: 600; }
+    .nearby-list a:hover { color: var(--lime); }
+    .nearby-price { color: var(--muted); margin-left: 4px; }
+
     .back-section { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border); }
     .back-link { font-size: 13px; color: var(--muted); }
     .back-link:hover { color: var(--text); }
@@ -144,7 +184,7 @@
       <h2>Price History <span class="hist-sub">(cheapest ⅛ oz per day)</span></h2>
       <div class="spark-row">
         <svg width="80" height="28" viewBox="0 0 80 28" class="sparkline" aria-hidden="true">
-    <path d="M0.0,26.0 L20.0,26.0 L40.0,26.0 L60.0,26.0 L80.0,26.0" fill="none" stroke="#C8FF00" stroke-width="1.5" stroke-linejoin="round"/>
+    <path d="M0.0,26.0 L16.0,26.0 L32.0,26.0 L48.0,26.0 L64.0,26.0 L80.0,26.0" fill="none" stroke="#C8FF00" stroke-width="1.5" stroke-linejoin="round"/>
     <circle cx="80.0" cy="26.0" r="2.5" fill="#C8FF00"/>
   </svg>
         <div class="spark-meta">
@@ -239,11 +279,6 @@
       <td class="price-cell">$90</td>
       <td class="product-cell">1937 | Paztelito | 14g Mixed bud | Hybrid</td>
     </tr>
-<tr>
-      <td class="size-cell">1/2 oz</td>
-      <td class="price-cell">$90</td>
-      <td class="product-cell">1937 | Mcruntz | 14g Mixed bud | Hybrid</td>
-    </tr>
           <tr>
       <td class="size-cell">1/4 oz</td>
       <td class="price-cell">$40</td>
@@ -262,17 +297,12 @@
           <tr>
       <td class="size-cell">1/8 oz</td>
       <td class="price-cell">$23</td>
-      <td class="product-cell">Packs | Retro 1Z | 3.5g Flower | Hybrid</td>
+      <td class="product-cell">Packs | Orange Cloudz | 3.5g Flower | Sativa</td>
     </tr>
 <tr>
       <td class="size-cell">1/8 oz</td>
       <td class="price-cell">$23</td>
       <td class="product-cell">Packs | Junk Food | 3.5g Flower | Hybrid</td>
-    </tr>
-<tr>
-      <td class="size-cell">1/8 oz</td>
-      <td class="price-cell">$23</td>
-      <td class="product-cell">Packs | Orange Cloudz | 3.5g Flower | Sativa</td>
     </tr>
 <tr>
       <td class="size-cell">1/8 oz</td>
@@ -283,11 +313,6 @@
       <td class="size-cell">1/8 oz</td>
       <td class="price-cell">$26</td>
       <td class="product-cell">Jekyll &amp; Mr.High | Biscotti | 3.5g Flower | Indica</td>
-    </tr>
-<tr>
-      <td class="size-cell">1/8 oz</td>
-      <td class="price-cell">$26</td>
-      <td class="product-cell">Dr.Jekyll and Mr.High | ice Cream Swirl | 3.5G Flower</td>
     </tr>
 <tr>
       <td class="size-cell">1/8 oz</td>
@@ -341,6 +366,11 @@
     </tr>
 <tr>
       <td class="size-cell">1/8 oz</td>
+      <td class="price-cell">$38</td>
+      <td class="product-cell">Ruby Farms | doobies | 7 Count | Ghost Train Haze #2 | 3.5g</td>
+    </tr>
+<tr>
+      <td class="size-cell">1/8 oz</td>
       <td class="price-cell">$40</td>
       <td class="product-cell">Dank | NYC Diesel | 7pk x 3.5g Prerolls | Sativa-Hybrid</td>
     </tr>
@@ -352,17 +382,27 @@
 <tr>
       <td class="size-cell">1/8 oz</td>
       <td class="price-cell">$50</td>
-      <td class="product-cell">Rythm | Bananaconda | 3.5g Flower | Hybrid</td>
-    </tr>
-<tr>
-      <td class="size-cell">1/8 oz</td>
-      <td class="price-cell">$50</td>
       <td class="product-cell">Rythm | Garlic Drip | 3.5g Flower | Indica Dom</td>
     </tr>
 <tr>
       <td class="size-cell">1/8 oz</td>
       <td class="price-cell">$50</td>
+      <td class="product-cell">Rythm | Bananaconda | 3.5g Flower | Hybrid</td>
+    </tr>
+<tr>
+      <td class="size-cell">1/8 oz</td>
+      <td class="price-cell">$50</td>
       <td class="product-cell">Rythm | Dulce De Uva | 3.5g Flower | Indica</td>
+    </tr>
+<tr>
+      <td class="size-cell">1/8 oz</td>
+      <td class="price-cell">$50</td>
+      <td class="product-cell">Rythm | 95 Cookies | 3.5g Flower | Hybrid</td>
+    </tr>
+<tr>
+      <td class="size-cell">1/8 oz</td>
+      <td class="price-cell">$50</td>
+      <td class="product-cell">Rythm | Donut Trip | 3.5g Flower | Hybrid</td>
     </tr>
 <tr>
       <td class="size-cell">1/8 oz</td>
@@ -377,12 +417,7 @@
 <tr>
       <td class="size-cell">1/8 oz</td>
       <td class="price-cell">$50</td>
-      <td class="product-cell">Rythm | Donut Trip | 3.5g Flower | Hybrid</td>
-    </tr>
-<tr>
-      <td class="size-cell">1/8 oz</td>
-      <td class="price-cell">$50</td>
-      <td class="product-cell">Rythm | 95 Cookies | 3.5g Flower | Hybrid</td>
+      <td class="product-cell">Rythm | Jack 's Delight | 3.5g Flower | Sativa</td>
     </tr>
 <tr>
       <td class="size-cell">1/8 oz</td>
@@ -392,22 +427,17 @@
 <tr>
       <td class="size-cell">1/8 oz</td>
       <td class="price-cell">$50</td>
-      <td class="product-cell">Rythm | Jack 's Delight | 3.5g Flower | Sativa</td>
-    </tr>
-<tr>
-      <td class="size-cell">1/8 oz</td>
-      <td class="price-cell">$50</td>
       <td class="product-cell">Dada Exotics | McLovin | 3.5g | Hybrid</td>
     </tr>
 <tr>
       <td class="size-cell">1/8 oz</td>
       <td class="price-cell">$50</td>
-      <td class="product-cell">Dada Exotics | Cheetah Piss | 3.5g | Sativa</td>
+      <td class="product-cell">Dada Exotics | Custard Cream | 3.5g | Indica</td>
     </tr>
 <tr>
       <td class="size-cell">1/8 oz</td>
       <td class="price-cell">$50</td>
-      <td class="product-cell">Dada Exotics | Custard Cream | 3.5g | Indica</td>
+      <td class="product-cell">Dada Exotics | Cheetah Piss | 3.5g | Sativa</td>
     </tr>
 <tr>
       <td class="size-cell">1/8 oz</td>
@@ -433,6 +463,13 @@
       </table>
     </div>
   </section>
+  
+    <section class="nearby-section">
+      <h2>Also in Flatiron</h2>
+      <ul class="nearby-list">
+        <li><a href="/dispensaries/the-alchemy-flatiron/">The Alchemy (Flatiron)</a> <span class="nearby-price">⅛ oz from $28</span></li>
+      </ul>
+    </section>
   <div class="back-section">
     <a href="/" class="back-link">← Compare all NYC dispensaries</a>
   </div>
@@ -441,7 +478,7 @@
 <footer>
   <div class="footer-inner">
     Prices scraped daily from official dispensary menus. Pre-tax estimates. 21+ only. Not affiliated with Stoops NYC.
-    <br>Data last updated: April 2, 2026.
+    <br>Data last updated: April 3, 2026.
   </div>
 </footer>
 

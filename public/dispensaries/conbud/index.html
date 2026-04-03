@@ -28,8 +28,40 @@
       "addressCountry": "US"
     },
     "url": "https://nycweedprice.org/dispensaries/conbud/",
-    "priceRange": "$$",
+    "priceRange": "⅛ oz from $30",
     "menu": "https://conbud.com/stores/conbud-les/products/flower"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What are the current flower prices at CONBUD?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The cheapest eighth ounce (3.5g) at CONBUD is currently $30. Prices are updated daily from the official menu."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where is CONBUD located?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "CONBUD is a licensed cannabis dispensary located at 85 Delancey St, LES."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do CONBUD prices compare to other NYC dispensaries?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "nycweedprice.org tracks flower prices at 20+ NYC licensed dispensaries daily. Visit the main page to compare CONBUD prices against all other stores in real time."
+        }
+      }
+    ]
   }
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -110,6 +142,13 @@
 
     .no-data { color: var(--muted); font-size: 14px; padding: 24px 0; }
 
+    .nearby-section { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border); }
+    .nearby-list { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .nearby-list li { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 8px 14px; font-size: 13px; }
+    .nearby-list a { font-weight: 600; }
+    .nearby-list a:hover { color: var(--lime); }
+    .nearby-price { color: var(--muted); margin-left: 4px; }
+
     .back-section { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border); }
     .back-link { font-size: 13px; color: var(--muted); }
     .back-link:hover { color: var(--text); }
@@ -131,8 +170,8 @@
     <h1 class="store-name">CONBUD Prices</h1>
     <div class="store-address">85 Delancey St</div>
     <div class="price-pills">
-      
-      
+      <div class="price-pill"><div class="pl">⅛ oz from</div><div class="pv">$30</div></div>
+      <div class="price-pill"><div class="pl">1 oz from</div><div class="pv">$160</div></div>
     </div>
     <a href="https://conbud.com/stores/conbud-les/products/flower" target="_blank" rel="noopener noreferrer" class="menu-link">View Menu ↗</a>
   </div>
@@ -144,8 +183,8 @@
       <h2>Price History <span class="hist-sub">(cheapest ⅛ oz per day)</span></h2>
       <div class="spark-row">
         <svg width="80" height="28" viewBox="0 0 80 28" class="sparkline" aria-hidden="true">
-    <path d="M0.0,26.0 L26.7,26.0 L53.3,26.0 L80.0,26.0" fill="none" stroke="#C8FF00" stroke-width="1.5" stroke-linejoin="round"/>
-    <circle cx="80.0" cy="26.0" r="2.5" fill="#C8FF00"/>
+    <path d="M0.0,26.0 L20.0,26.0 L40.0,26.0 L60.0,26.0 L80.0,2.0" fill="none" stroke="#C8FF00" stroke-width="1.5" stroke-linejoin="round"/>
+    <circle cx="80.0" cy="2.0" r="2.5" fill="#C8FF00"/>
   </svg>
         <div class="spark-meta">
           <span class="spark-label">7-day low</span>
@@ -153,14 +192,118 @@
         </div>
         <div class="spark-meta">
           <span class="spark-label">Today</span>
-          <span class="spark-val">$24</span>
+          <span class="spark-val">$30</span>
         </div>
       </div>
     </section>
   <section>
     <h2>Today's Prices</h2>
-    <p class="no-data">No price data available for this location. Check back after the next daily scrape.</p>
+    
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Size</th><th>Price</th><th>Product</th></tr></thead>
+        <tbody>
+          <tr>
+      <td class="size-cell">1 oz</td>
+      <td class="price-cell">$160</td>
+      <td class="product-cell">Gypsy Weed | 1 Ounce Flower | Amnesia</td>
+    </tr>
+          <tr>
+      <td class="size-cell">1/2 oz</td>
+      <td class="price-cell">$75</td>
+      <td class="product-cell">Revert | 14g Kief Infused Ground Flower | Maui Wowie</td>
+    </tr>
+<tr>
+      <td class="size-cell">1/2 oz</td>
+      <td class="price-cell">$75</td>
+      <td class="product-cell">Revert Cannabis | 14g Kief Infused Ground Flower | NYC Diesel</td>
+    </tr>
+<tr>
+      <td class="size-cell">1/2 oz</td>
+      <td class="price-cell">$75</td>
+      <td class="product-cell">Revert Cannabis | 14g Kief Infused Ground Flower | Hawaiian Haze</td>
+    </tr>
+<tr>
+      <td class="size-cell">1/2 oz</td>
+      <td class="price-cell">$75</td>
+      <td class="product-cell">Revert Cannabis | 14g Infused Ground Flower | Sour Blue Diesel</td>
+    </tr>
+<tr>
+      <td class="size-cell">1/2 oz</td>
+      <td class="price-cell">$75</td>
+      <td class="product-cell">Revert Cannabis | 14g Infused Ground Flower | Monster Cookies</td>
+    </tr>
+<tr>
+      <td class="size-cell">1/2 oz</td>
+      <td class="price-cell">$75</td>
+      <td class="product-cell">Revert Cannabis | 14g Infused Ground Flower | Galactic Jack</td>
+    </tr>
+<tr>
+      <td class="size-cell">1/2 oz</td>
+      <td class="price-cell">$84</td>
+      <td class="product-cell">Granddaddy Pluto - Premium Flower - 14g - Hybrid</td>
+    </tr>
+<tr>
+      <td class="size-cell">1/2 oz</td>
+      <td class="price-cell">$84</td>
+      <td class="product-cell">Granddaddy Pluto - Premium Flower - 14g - Hybrid To The Moon</td>
+    </tr>
+<tr>
+      <td class="size-cell">1/2 oz</td>
+      <td class="price-cell">$84</td>
+      <td class="product-cell">Crunch Berries - Premium Flower - 14g - Hybrid</td>
+    </tr>
+<tr>
+      <td class="size-cell">1/2 oz</td>
+      <td class="price-cell">$84</td>
+      <td class="product-cell">Crunch Berries - Premium Flower - 14g - Hybrid To The Moon</td>
+    </tr>
+<tr>
+      <td class="size-cell">1/2 oz</td>
+      <td class="price-cell">$99</td>
+      <td class="product-cell">Revert Cannabis | 14g Flower | Super Diesel</td>
+    </tr>
+<tr>
+      <td class="size-cell">1/2 oz</td>
+      <td class="price-cell">$120</td>
+      <td class="product-cell">Dank | 14g Flower | Tropical Runtz</td>
+    </tr>
+<tr>
+      <td class="size-cell">1/2 oz</td>
+      <td class="price-cell">$120</td>
+      <td class="product-cell">Dank | 14g Flower | Amnesia Haze</td>
+    </tr>
+          <tr>
+      <td class="size-cell">1/4 oz</td>
+      <td class="price-cell">$65</td>
+      <td class="product-cell">Cheevo | 7g Whole Flower | RS11</td>
+    </tr>
+<tr>
+      <td class="size-cell">1/4 oz</td>
+      <td class="price-cell">$65</td>
+      <td class="product-cell">Animal Face| 7g</td>
+    </tr>
+          <tr>
+      <td class="size-cell">1/8 oz</td>
+      <td class="price-cell">$30</td>
+      <td class="product-cell">Cheevo | 3.5g Flower | Baby Yoda</td>
+    </tr>
+<tr>
+      <td class="size-cell">1/8 oz</td>
+      <td class="price-cell">$30</td>
+      <td class="product-cell">Cheevo | 3.5g Flower | Death Star</td>
+    </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
+  
+    <section class="nearby-section">
+      <h2>Also in LES</h2>
+      <ul class="nearby-list">
+        <li><a href="/dispensaries/kushklub-nyc/">KushKlub NYC</a> <span class="nearby-price">⅛ oz from $28</span></li>
+      </ul>
+    </section>
   <div class="back-section">
     <a href="/" class="back-link">← Compare all NYC dispensaries</a>
   </div>
@@ -169,7 +312,7 @@
 <footer>
   <div class="footer-inner">
     Prices scraped daily from official dispensary menus. Pre-tax estimates. 21+ only. Not affiliated with CONBUD.
-    <br>Data last updated: April 2, 2026.
+    <br>Data last updated: April 3, 2026.
   </div>
 </footer>
 

@@ -32,6 +32,38 @@
     "menu": "https://www.thealchemy.nyc/flatiron/shop-flatiron?dtche%5Bcategory%5D=flower"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What are the current flower prices at The Alchemy (Flatiron)?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The cheapest eighth ounce (3.5g) at The Alchemy (Flatiron) is currently $28. Prices are updated daily from the official menu."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where is The Alchemy (Flatiron) located?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The Alchemy (Flatiron) is a licensed cannabis dispensary located at 12 W 18th St, Flatiron."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do The Alchemy (Flatiron) prices compare to other NYC dispensaries?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "nycweedprice.org tracks flower prices at 20+ NYC licensed dispensaries daily. Visit the main page to compare The Alchemy (Flatiron) prices against all other stores in real time."
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <script>
@@ -110,6 +142,13 @@
 
     .no-data { color: var(--muted); font-size: 14px; padding: 24px 0; }
 
+    .nearby-section { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border); }
+    .nearby-list { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .nearby-list li { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 8px 14px; font-size: 13px; }
+    .nearby-list a { font-weight: 600; }
+    .nearby-list a:hover { color: var(--lime); }
+    .nearby-price { color: var(--muted); margin-left: 4px; }
+
     .back-section { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border); }
     .back-link { font-size: 13px; color: var(--muted); }
     .back-link:hover { color: var(--text); }
@@ -144,7 +183,7 @@
       <h2>Price History <span class="hist-sub">(cheapest ⅛ oz per day)</span></h2>
       <div class="spark-row">
         <svg width="80" height="28" viewBox="0 0 80 28" class="sparkline" aria-hidden="true">
-    <path d="M0.0,26.0 L20.0,26.0 L40.0,26.0 L60.0,26.0 L80.0,26.0" fill="none" stroke="#C8FF00" stroke-width="1.5" stroke-linejoin="round"/>
+    <path d="M0.0,26.0 L16.0,26.0 L32.0,26.0 L48.0,26.0 L64.0,26.0 L80.0,26.0" fill="none" stroke="#C8FF00" stroke-width="1.5" stroke-linejoin="round"/>
     <circle cx="80.0" cy="26.0" r="2.5" fill="#C8FF00"/>
   </svg>
         <div class="spark-meta">
@@ -187,12 +226,12 @@
 <tr>
       <td class="size-cell">1 oz</td>
       <td class="price-cell">$180</td>
-      <td class="product-cell">Matter | Flower | Jelly Cake | 28g</td>
+      <td class="product-cell">Matter | Flower | Grape Gas | 28g</td>
     </tr>
 <tr>
       <td class="size-cell">1 oz</td>
       <td class="price-cell">$180</td>
-      <td class="product-cell">Matter | Flower | Grape Gas | 28g</td>
+      <td class="product-cell">Matter | Flower | Jelly Cake | 28g</td>
     </tr>
 <tr>
       <td class="size-cell">1 oz</td>
@@ -207,12 +246,12 @@
 <tr>
       <td class="size-cell">1/2 oz</td>
       <td class="price-cell">$110</td>
-      <td class="product-cell">Back Home | Flower | Jack Herer | 14g</td>
+      <td class="product-cell">Back Home | Flower | Super Lemon Haze | 14g</td>
     </tr>
 <tr>
       <td class="size-cell">1/2 oz</td>
       <td class="price-cell">$110</td>
-      <td class="product-cell">Back Home | Flower | Super Lemon Haze | 14g</td>
+      <td class="product-cell">Back Home | Flower | Jack Herer | 14g</td>
     </tr>
 <tr>
       <td class="size-cell">1/2 oz</td>
@@ -257,12 +296,12 @@
 <tr>
       <td class="size-cell">1/8 oz</td>
       <td class="price-cell">$30</td>
-      <td class="product-cell">Cheevo | Flower | Baby Yoda | 3.5g</td>
+      <td class="product-cell">Cheevo | Flower | Death Star | 3.5g</td>
     </tr>
 <tr>
       <td class="size-cell">1/8 oz</td>
       <td class="price-cell">$30</td>
-      <td class="product-cell">Cheevo | Flower | Death Star | 3.5g</td>
+      <td class="product-cell">Cheevo | Flower | Baby Yoda | 3.5g</td>
     </tr>
 <tr>
       <td class="size-cell">1/8 oz</td>
@@ -272,12 +311,17 @@
 <tr>
       <td class="size-cell">1/8 oz</td>
       <td class="price-cell">$33</td>
+      <td class="product-cell">Back Home | Flower | Gorilla Glue | 3.5g</td>
+    </tr>
+<tr>
+      <td class="size-cell">1/8 oz</td>
+      <td class="price-cell">$33</td>
       <td class="product-cell">Back Home | Flower | Northern Lights | 3.5g</td>
     </tr>
 <tr>
       <td class="size-cell">1/8 oz</td>
       <td class="price-cell">$33</td>
-      <td class="product-cell">Back Home | Flower | Gorilla Glue | 3.5g</td>
+      <td class="product-cell">Back Home | Flower | Acapulco Gold | 3.5g</td>
     </tr>
 <tr>
       <td class="size-cell">1/8 oz</td>
@@ -293,11 +337,6 @@
       <td class="size-cell">1/8 oz</td>
       <td class="price-cell">$33</td>
       <td class="product-cell">Back Home | Flower | Jack Herer | 3.5g</td>
-    </tr>
-<tr>
-      <td class="size-cell">1/8 oz</td>
-      <td class="price-cell">$33</td>
-      <td class="product-cell">Back Home | Flower | Acapulco Gold | 3.5g</td>
     </tr>
 <tr>
       <td class="size-cell">1/8 oz</td>
@@ -337,12 +376,12 @@
 <tr>
       <td class="size-cell">1/8 oz</td>
       <td class="price-cell">$44</td>
-      <td class="product-cell">Heady Tree | Flower | Yellow Mermaid | 3.5g</td>
+      <td class="product-cell">Heady Tree | Flower | Tear Gas | 3.5g</td>
     </tr>
 <tr>
       <td class="size-cell">1/8 oz</td>
       <td class="price-cell">$44</td>
-      <td class="product-cell">Heady Tree | Flower | Tear Gas | 3.5g</td>
+      <td class="product-cell">Heady Tree | Flower | Yellow Mermaid | 3.5g</td>
     </tr>
 <tr>
       <td class="size-cell">1/8 oz</td>
@@ -382,12 +421,12 @@
 <tr>
       <td class="size-cell">1/8 oz</td>
       <td class="price-cell">$55</td>
-      <td class="product-cell">Milkweed | Flower | Catskill Candy | 3.5g</td>
+      <td class="product-cell">Milkweed | Flower | Bluetopia | 3.5g</td>
     </tr>
 <tr>
       <td class="size-cell">1/8 oz</td>
       <td class="price-cell">$55</td>
-      <td class="product-cell">Milkweed | Flower | Bluetopia | 3.5g</td>
+      <td class="product-cell">Milkweed | Flower | Catskill Candy | 3.5g</td>
     </tr>
 <tr>
       <td class="size-cell">1/8 oz</td>
@@ -413,6 +452,13 @@
       </table>
     </div>
   </section>
+  
+    <section class="nearby-section">
+      <h2>Also in Flatiron</h2>
+      <ul class="nearby-list">
+        <li><a href="/dispensaries/stoops-nyc/">Stoops NYC</a> <span class="nearby-price">⅛ oz from $23</span></li>
+      </ul>
+    </section>
   <div class="back-section">
     <a href="/" class="back-link">← Compare all NYC dispensaries</a>
   </div>
@@ -421,7 +467,7 @@
 <footer>
   <div class="footer-inner">
     Prices scraped daily from official dispensary menus. Pre-tax estimates. 21+ only. Not affiliated with The Alchemy (Flatiron).
-    <br>Data last updated: April 2, 2026.
+    <br>Data last updated: April 3, 2026.
   </div>
 </footer>
 
