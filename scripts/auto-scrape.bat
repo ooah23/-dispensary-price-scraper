@@ -90,4 +90,9 @@ echo [%TIME%] Running price alert mailer: node scripts\send-price-alerts.mjs
 node scripts\send-price-alerts.mjs
 echo [%TIME%] Price alert mailer exited with code %ERRORLEVEL%
 
+:: Generate Reddit post draft
+echo [%TIME%] Generating Reddit draft: node scripts\generate-reddit-post.mjs
+node scripts\generate-reddit-post.mjs
+echo [%TIME%] Reddit draft exited with code %ERRORLEVEL%
+
 exit /b 0
