@@ -514,6 +514,31 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // /api/admin/signups — protected subscriber list (requires ?key=RESEND_API_KEY)
+  if (pathname === "/api/admin/signups") {
+    const adminKey = process.env.RESEND_API_KEY ?? "";
+    if (!adminKey || searchParams.get("key") !== adminKey) {
+      res.writeHead(401, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: "Unauthorized" }));
+      return;
+    }
+    try {
+      const raw = await fs.readFile(ALERTS_FILE, "utf8");
+      const lines = raw.split("\n").filter(Boolean);
+      const entries = lines.map(l => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean);
+      // Deduplicate: last entry per email wins
+      const map = new Map();
+      for (const e of entries) if (e.email) map.set(e.email.toLowerCase(), e);
+      const subscribers = [...map.values()].sort((a, b) => a.ts > b.ts ? -1 : 1);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ count: subscribers.length, subscribers }, null, 2));
+    } catch {
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ count: 0, subscribers: [] }));
+    }
+    return;
+  }
+
   // /api/alert-signup  (POST)
   if (pathname === "/api/alert-signup" && req.method === "POST") {
     setCorsHeaders(res);
