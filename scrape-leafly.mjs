@@ -999,6 +999,8 @@ async function extractJointEntries(page, menuUrl) {
         data?.data?.products,
         data?.items,
         data?.data?.items,
+        // Elasticsearch format: { hits: { hits: [{_source: {...}}] } }
+        data?.hits?.hits?.map(h => h._source ?? h),
         Array.isArray(data) ? data : null
       ];
       for (const list of candidates) {
@@ -1056,7 +1058,10 @@ async function extractJointEntries(page, menuUrl) {
         product.price ??
         product.base_price ??
         product.variants?.[0]?.price ??
+        product.variants?.[0]?.p ??        // Joint Elasticsearch: variant.p
+        product.variants?.[0]?.sale_price ??
         product.product_variants?.[0]?.price ??
+        product.product_variants?.[0]?.p ??
         product.product_variants?.[0]?.base_price;
       const price = rawPrice != null ? Number(rawPrice) : NaN;
       if (isNaN(price) || price <= 0) continue;

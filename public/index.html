@@ -1145,10 +1145,12 @@ function sparkMini(points) {
 
 function leaflyLink(product) {
   let strain = product;
-  if (strain.includes(' | ')) strain = strain.split(' | ').pop();
-  else if (strain.includes(' \u2013 ')) strain = strain.split(' \u2013 ').pop(); // en dash
-  else if (strain.includes(' \u2014 ')) strain = strain.split(' \u2014 ').pop(); // em dash
-  else if (strain.includes(' - ')) strain = strain.split(' - ').pop();
+  // Strain name is always the FIRST segment — take [0], not .pop()
+  if (strain.includes(' - - ')) strain = strain.split(' - - ')[0];
+  else if (strain.includes(' | ')) strain = strain.split(' | ')[0];
+  else if (strain.includes(' \u2013 ')) strain = strain.split(' \u2013 ')[0]; // en dash
+  else if (strain.includes(' \u2014 ')) strain = strain.split(' \u2014 ')[0]; // em dash
+  else if (strain.includes(' - ')) strain = strain.split(' - ')[0];
   const slug = strain.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   return `<a href="https://www.leafly.com/strains/${slug}" target="_blank" rel="noopener noreferrer" class="leafly-link" title="View on Leafly">↗</a>`;
 }
