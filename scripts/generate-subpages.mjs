@@ -176,6 +176,7 @@ function generatePage(store, historyPoints, allStores) {
   <meta property="og:title" content="${esc(store.name)} Cannabis Prices — nycweedprice.org">
   <meta property="og:description" content="${esc(desc)}">
   <meta property="og:url" content="${esc(url)}">
+  <meta property="og:image" content="https://nycweedprice.org/og-image.png">
   <meta name="geo.region" content="US-NY">
   <meta name="geo.placename" content="New York City">
   <script type="application/ld+json">

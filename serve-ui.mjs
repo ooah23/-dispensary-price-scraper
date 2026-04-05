@@ -6,6 +6,7 @@ const PORT = process.env.PORT ?? 4173;
 const OUTPUT_DIR = path.resolve("output");
 const JSON_PATH = path.join(OUTPUT_DIR, "dispensary-prices.json");
 const HISTORY_DIR = path.join(OUTPUT_DIR, "history");
+const REDDIT_DRAFT_PATH = path.join(OUTPUT_DIR, "reddit-draft.txt");
 const PUBLIC_DIR = path.resolve("public");
 const LOGS_DIR = path.resolve("logs");
 const ANALYTICS_LOG = path.join(LOGS_DIR, "analytics.jsonl");
@@ -539,6 +540,25 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // /api/reddit-draft — serve latest generated Reddit post draft (admin, same key)
+  if (pathname === "/api/reddit-draft") {
+    const adminKey = process.env.RESEND_API_KEY ?? "";
+    if (!adminKey || searchParams.get("key") !== adminKey) {
+      res.writeHead(401, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: "Unauthorized" }));
+      return;
+    }
+    try {
+      const draft = await fs.readFile(REDDIT_DRAFT_PATH, "utf8");
+      res.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
+      res.end(draft);
+    } catch {
+      res.writeHead(404, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: "No draft available yet" }));
+    }
+    return;
+  }
+
   // /api/alert-signup  (POST)
   if (pathname === "/api/alert-signup" && req.method === "POST") {
     setCorsHeaders(res);
@@ -696,4 +716,8 @@ server.listen(PORT, "0.0.0.0", () => {
   console.log(`  Dashboard:   http://localhost:${PORT}/dashboard`);
   console.log(`  API data:    http://localhost:${PORT}/api/data`);
   console.log(`  API health:  http://localhost:${PORT}/api/health`);
+});
+
+process.on("unhandledRejection", (err) => {
+  console.error("[unhandledRejection]", err);
 });

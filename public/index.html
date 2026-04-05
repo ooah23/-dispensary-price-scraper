@@ -231,8 +231,8 @@
     /* hamburger */
     .hamburger-btn {
       display: none;
-      background: none; border: none; cursor: pointer; padding: 8px;
-      flex-direction: column; gap: 5px; align-items: center;
+      background: none; border: none; cursor: pointer; padding: 12px 8px;
+      flex-direction: column; gap: 5px; align-items: center; min-height: 44px; justify-content: center;
     }
     .hamburger-btn span {
       display: block; width: 22px; height: 1px; background: var(--text-hero);
@@ -801,7 +801,7 @@
       .search-wrap { width: 100%; }
       .pill-group { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 2px; }
       .pill-group::-webkit-scrollbar { display: none; }
-      .pill { white-space: nowrap; flex-shrink: 0; }
+      .pill { white-space: nowrap; flex-shrink: 0; min-height: 44px; display: inline-flex; align-items: center; }
       .pill-deals { align-self: flex-start; }
       .filter-meta { margin-left: 0; }
       .mobile-sort-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
@@ -1151,7 +1151,7 @@ let showDealsOnly      = false;
 
 /* ─── Helpers ────────────────────────────────────── */
 function esc(s) {
-  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
 function storeSlug(name) {
@@ -1260,6 +1260,12 @@ function updateSortHeaders() {
     th.classList.remove('sorted-asc','sorted-desc');
     if (sortKey === k) th.classList.add('sorted-' + sortDir);
   });
+  // Keep mobile select in sync with desktop header clicks
+  const sel = document.getElementById('mobileSortSelect');
+  if (sel) {
+    const val = sortKey + '-' + sortDir;
+    if (sel.value !== val && [...sel.options].some(o => o.value === val)) sel.value = val;
+  }
 }
 
 /* ─── Deal detection ─────────────────────────────── */
