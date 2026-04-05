@@ -722,10 +722,23 @@
       .nav-links { display: none; }
       .hamburger-btn { display: flex; }
 
-      .hero { padding-top: calc(var(--nav-h) + 24px); }
+      /* Hero: shorter so data is reachable without excessive scroll */
+      .hero { padding-top: calc(var(--nav-h) + 24px); min-height: 75svh; }
+      .hero-sub { margin-bottom: 28px; }
+      .hero-cta { display: block; text-align: center; }
       .hero-statbar { gap: 16px; font-size: 11px; }
 
-      .section { padding: 40px 0; }
+      /* Tab bar: stretch tabs full-width */
+      .tab-bar-inner { padding: 0; }
+      .tab-btn { flex: 1; text-align: center; padding: 14px 8px; font-size: 11px; letter-spacing: .07em; }
+
+      /* Stats: tighter, forced 2-col */
+      #stats-section { padding: 24px 0; }
+      #statsGrid { grid-template-columns: repeat(2, 1fr); }
+      .stat-card { padding: 16px; }
+      .stat-value { font-size: 22px; }
+
+      .section { padding: 28px 0; }
       .section-inner { padding: 0 16px; }
 
       /* hide table, show cards */
@@ -782,9 +795,15 @@
       #dealsTableWrap tbody td:nth-child(5) { display: none; } /* product col (shown inline in td1) */
       #dealsTableWrap .table-wrap { overflow-x: visible; }
 
-      .filter-bar { gap: 6px; }
+      /* Filter bar: stack rows, pills scroll horizontally */
+      .filter-bar { flex-direction: column; align-items: stretch; gap: 6px; }
       #searchInput { width: 100%; }
       .search-wrap { width: 100%; }
+      .pill-group { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 2px; }
+      .pill-group::-webkit-scrollbar { display: none; }
+      .pill { white-space: nowrap; flex-shrink: 0; }
+      .pill-deals { align-self: flex-start; }
+      .filter-meta { margin-left: 0; }
       .mobile-sort-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
       .mobile-sort-bar label { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
       .mobile-sort-bar select {
@@ -805,7 +824,15 @@
 
     @media (max-width: 480px) {
       .hero-statbar .stat-item:nth-child(n+3) { display: none; }
-      h2.section-title { font-size: 22px; }
+      h2.section-title { font-size: 20px; }
+      .hero-headline { font-size: 38px; }
+      /* Single-column stats on very small screens */
+      #statsGrid { grid-template-columns: repeat(2, 1fr); }
+      .stat-value { font-size: 20px; }
+      .stat-label { font-size: 9px; letter-spacing: .12em; }
+      /* Tighter card padding */
+      tbody tr { padding: 12px; }
+      #dealsTableWrap tbody tr { padding: 12px; }
     }
   </style>
   <script>
