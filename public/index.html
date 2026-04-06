@@ -139,7 +139,9 @@
     html.dark .tag-half    { background: #2E1065; color: #C4B5FD; }
     html.dark .tag-quarter { background: #431407; color: #FCD34D; }
     html.dark .tag-eighth  { background: #500724; color: #F9A8D4; }
+    html.dark .tag-vape    { background: #064E3B; color: #6EE7B7; }
     html.dark .pg-badge    { background: #2A2A2A; color: #9CA3AF; border-color: #3A3A3A; }
+    html.dark .vape-badge  { background: #064E3B; color: #6EE7B7; border-color: #065F46; }
     html.dark tr.best-oz td, html.dark tr.best-half td,
     html.dark tr.best-quarter td, html.dark tr.best-eighth td { background: #0A1A0A; }
     html.dark tr.row-sale td  { background: #1A0D00; }
@@ -501,6 +503,8 @@
     .tag-half    { background: #EDE9FE; color: #6D28D9; }
     .tag-quarter { background: #FEF3C7; color: #92400E; }
     .tag-eighth  { background: #FCE7F3; color: #9D174D; }
+    .tag-vape    { background: #ECFDF5; color: #065F46; }
+    .vape-badge  { background: #D1FAE5; color: #065F46; border-color: #6EE7B7; }
 
     /* deal badges */
     .deal-tag-sale {
@@ -541,6 +545,8 @@
     tr.row-sale td  { background: #FFFBEB; }
     tr.row-value td { background: #F0FFF4; }
     tr.pre-ground td { opacity: .75; }
+    tr.row-vape td { background: #F0FDF9; }
+    html.dark tr.row-vape td { background: #022C22; }
 
     /* product col */
     .product-name { font-size: 13px; color: var(--text-muted); max-width: 320px; line-height: 1.4; }
@@ -903,7 +909,6 @@
   <div class="tab-bar-inner">
     <button class="tab-btn active" id="tab-btn-deals" role="tab" aria-selected="true"  aria-controls="tab-deals"  onclick="switchTab('deals')">Today's Deals</button>
     <button class="tab-btn"        id="tab-btn-prices" role="tab" aria-selected="false" aria-controls="tab-prices" onclick="switchTab('prices')">All Prices</button>
-    <button class="tab-btn" id="tab-btn-vapes" role="tab" aria-selected="false" aria-controls="tab-vapes" onclick="switchTab('vapes')">Vapes</button>
   </div>
 </div>
 
@@ -955,6 +960,14 @@
           <button class="pill active" data-type="all" onclick="setType(this)">All flower</button>
           <button class="pill" data-type="whole" onclick="setType(this)">Whole bud</button>
           <button class="pill" data-type="pre-ground" onclick="setType(this)">Pre-ground</button>
+          <button class="pill" data-type="vapes" onclick="setType(this)">Vapes</button>
+        </div>
+
+        <div class="pill-group" id="vapeSizeInline" role="group" aria-label="Cart size filter" style="display:none">
+          <button class="pill active" data-vsize="all" onclick="setVapeSize(this)">All sizes</button>
+          <button class="pill" data-vsize="0.5g" onclick="setVapeSize(this)">0.5g</button>
+          <button class="pill" data-vsize="1g" onclick="setVapeSize(this)">1g</button>
+          <button class="pill" data-vsize="2g" onclick="setVapeSize(this)">2g</button>
         </div>
 
         <button class="pill pill-deals" onclick="toggleDealsOnly(this)" aria-pressed="false">Deals only</button>
@@ -997,58 +1010,6 @@
               </tr>
             </thead>
             <tbody id="priceBody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- Tab: Vapes -->
-<div id="tab-vapes" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-vapes" hidden>
-  <section class="section main-section" id="vapes" aria-labelledby="vapes-title">
-    <div class="section-inner">
-      <p class="section-label">Cartridges &amp; Vapes</p>
-      <h2 class="section-title" id="vapes-title">Vape Cart Prices Across NYC Dispensaries</h2>
-
-      <!-- Filter bar -->
-      <div class="filter-bar" id="vapeFilterBar">
-        <div class="search-wrap">
-          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="6" cy="6" r="5"/><line x1="10" y1="10" x2="14" y2="14"/></svg>
-          <input type="text" id="vapeSearch" placeholder="Search strain, brand, or store…" oninput="renderVapes()" aria-label="Search vape listings">
-        </div>
-        <div class="pill-group" id="vapeSizeFilter" role="group" aria-label="Cart size filter">
-          <button class="pill active" data-vsize="all" onclick="setVapeSize(this)">All sizes</button>
-          <button class="pill" data-vsize="0.5g" onclick="setVapeSize(this)">0.5g</button>
-          <button class="pill" data-vsize="1g" onclick="setVapeSize(this)">1g</button>
-          <button class="pill" data-vsize="2g" onclick="setVapeSize(this)">2g</button>
-        </div>
-        <span class="filter-meta" id="vapeFilterMeta"></span>
-      </div>
-
-      <!-- Mobile sort -->
-      <div class="mobile-sort-bar" aria-label="Vape sort options">
-        <label for="vapeMobileSort">Sort by:</label>
-        <select id="vapeMobileSort" onchange="vapeSort=this.value.split('-')[0];vapeSortDir=this.value.split('-')[1];renderVapes()">
-          <option value="price-asc">Price: Low → High</option>
-          <option value="price-desc">Price: High → Low</option>
-          <option value="store-asc">Store: A → Z</option>
-          <option value="size-asc">Size: Small → Large</option>
-        </select>
-      </div>
-
-      <div class="table-wrap" role="region" aria-label="Vape cart price table">
-        <div class="table-scroll">
-          <table>
-            <thead>
-              <tr>
-                <th scope="col" onclick="vapeSortBy('store')" id="vth-store">Dispensary</th>
-                <th scope="col" onclick="vapeSortBy('price')" id="vth-price" style="text-align:right">Price</th>
-                <th scope="col" onclick="vapeSortBy('size')"  id="vth-size">Size</th>
-                <th scope="col">Product</th>
-              </tr>
-            </thead>
-            <tbody id="vapeBody"></tbody>
           </table>
         </div>
       </div>
@@ -1295,6 +1256,9 @@ function setType(el) {
   document.querySelectorAll('#typeFilter .pill').forEach(p => p.classList.remove('active'));
   el.classList.add('active');
   activeTypeFilter = el.dataset.type;
+  const isVapes = activeTypeFilter === 'vapes';
+  document.getElementById('sizeFilter').style.display    = isVapes ? 'none' : '';
+  document.getElementById('vapeSizeInline').style.display = isVapes ? '' : 'none';
   renderTable();
 }
 function setNbhd(el) {
@@ -1396,26 +1360,33 @@ function buildRows() {
   const q = document.getElementById('searchInput').value.toLowerCase().trim();
   const medians = computeMedians();
   const rows = [];
+  const isVapes = activeTypeFilter === 'vapes';
   for (const d of allData) {
-    const listings = [
-      ...(d.ounceListings||[]), ...(d.halfOunceListings||[]),
-      ...(d.quarterOunceListings||[]), ...(d.eighthOunceListings||[])
-    ];
+    const listings = isVapes
+      ? (d.cartListings||[]).map(c => ({...c, vape: true}))
+      : [
+          ...(d.ounceListings||[]), ...(d.halfOunceListings||[]),
+          ...(d.quarterOunceListings||[]), ...(d.eighthOunceListings||[])
+        ];
     for (const l of listings) {
-      if (activeSizeFilter !== 'all' && l.size !== activeSizeFilter) continue;
-      if (activeNbhd       !== 'all' && d.neighborhood !== activeNbhd) continue;
-      if (activeTypeFilter === 'whole'      &&  l.preGround) continue;
-      if (activeTypeFilter === 'pre-ground' && !l.preGround) continue;
+      if (activeNbhd !== 'all' && d.neighborhood !== activeNbhd) continue;
+      if (isVapes) {
+        if (activeVapeSizeFilter !== 'all' && l.size !== activeVapeSizeFilter) continue;
+      } else {
+        if (activeSizeFilter !== 'all' && l.size !== activeSizeFilter) continue;
+        if (activeTypeFilter === 'whole'      &&  l.preGround) continue;
+        if (activeTypeFilter === 'pre-ground' && !l.preGround) continue;
+      }
       if (q) {
         const haystack = [d.name, d.neighborhood, l.product, d.address].join(' ').toLowerCase();
         if (!haystack.includes(q)) continue;
       }
-      const tag = dealTag(l, medians);
+      const tag = isVapes ? null : dealTag(l, medians);
       if (showDealsOnly && !tag) continue;
       rows.push({
         store: d.name, neighborhood: d.neighborhood || '',
-        address: d.address || '', size: l.size, price: l.price,
-        product: l.product || '', preGround: !!l.preGround, dealTag: tag
+        address: d.address || '', size: l.size || '', price: l.price,
+        product: l.product || '', preGround: !!l.preGround, dealTag: tag, vape: !!l.vape
       });
     }
   }
@@ -1424,7 +1395,9 @@ function buildRows() {
     let cmp = 0;
     if      (sortKey === 'price') cmp = a.price - b.price;
     else if (sortKey === 'store') cmp = a.store.localeCompare(b.store);
-    else if (sortKey === 'size')  cmp = (sizeOrder[a.size] ?? 9) - (sizeOrder[b.size] ?? 9) || a.price - b.price;
+    else if (sortKey === 'size')  cmp = a.vape
+      ? (VAPE_SIZE_ORDER[a.size]??9) - (VAPE_SIZE_ORDER[b.size]??9)
+      : ((sizeOrder[a.size] ?? 9) - (sizeOrder[b.size] ?? 9) || a.price - b.price);
     return sortDir === 'asc' ? cmp : -cmp;
   });
   return rows;
@@ -1436,10 +1409,10 @@ let vapeSort = 'price';
 let vapeSortDir = 'asc';
 
 function setVapeSize(btn) {
-  document.querySelectorAll('#vapeSizeFilter .pill').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('#vapeSizeInline .pill').forEach(p => p.classList.remove('active'));
   btn.classList.add('active');
   activeVapeSizeFilter = btn.dataset.vsize;
-  renderVapes();
+  renderTable();
 }
 
 function vapeSortBy(key) {
@@ -1519,28 +1492,33 @@ function renderTable() {
     '1 oz':   '<span class="size-tag tag-oz">1 oz</span>',
     '1/2 oz': '<span class="size-tag tag-half">&frac12; oz</span>',
     '1/4 oz': '<span class="size-tag tag-quarter">&frac14; oz</span>',
-    '1/8 oz': '<span class="size-tag tag-eighth">&#8539; oz</span>'
+    '1/8 oz': '<span class="size-tag tag-eighth">&#8539; oz</span>',
+    '0.5g':   '<span class="size-tag tag-vape">0.5g</span>',
+    '1g':     '<span class="size-tag tag-vape">1g</span>',
+    '2g':     '<span class="size-tag tag-vape">2g</span>',
   };
   tbody.innerHTML = rows.map((r, i) => {
-    const isBestOz      = r.size === '1 oz'   && r.price === bestOzPrice;
-    const isBestHalf    = r.size === '1/2 oz' && r.price === bestHalfPrice;
-    const isBestQuarter = r.size === '1/4 oz' && r.price === bestQuarterPrice;
-    const isBestEighth  = r.size === '1/8 oz' && r.price === bestEighthPrice;
+    const isBestOz      = !r.vape && r.size === '1 oz'   && r.price === bestOzPrice;
+    const isBestHalf    = !r.vape && r.size === '1/2 oz' && r.price === bestHalfPrice;
+    const isBestQuarter = !r.vape && r.size === '1/4 oz' && r.price === bestQuarterPrice;
+    const isBestEighth  = !r.vape && r.size === '1/8 oz' && r.price === bestEighthPrice;
     const rowCls = [
       isBestOz||isBestHalf||isBestQuarter||isBestEighth ? (isBestOz?'best-oz':isBestHalf?'best-half':isBestQuarter?'best-quarter':'best-eighth') : '',
       r.preGround   ? 'pre-ground' : '',
+      r.vape        ? 'row-vape'   : '',
       r.dealTag === 'sale'  ? 'row-sale'  : '',
       r.dealTag === 'value' ? 'row-value' : ''
     ].filter(Boolean).join(' ');
-    const sizeTag  = sizeTags[r.size] || `<span class="size-tag tag-oz">${esc(r.size)}</span>`;
+    const sizeTag  = sizeTags[r.size] || `<span class="size-tag tag-vape">${esc(r.size)}</span>`;
     const pgBadge  = r.preGround ? '<span class="pg-badge">PG</span>' : '';
+    const vapeBadge = r.vape ? '<span class="pg-badge vape-badge">VAPE</span>' : '';
     const bestBadge = (isBestOz||isBestHalf||isBestQuarter||isBestEighth) ? '<span class="best-badge">Best deal</span>' : '';
     const dealBadge = r.dealTag === 'sale'  ? '<span class="deal-tag-sale">SALE</span>'
                     : r.dealTag === 'value' ? '<span class="deal-tag-value">BELOW AVG</span>' : '';
     return `<tr class="${rowCls}">
-      <td><div class="store-name"><a href="/dispensaries/${storeSlug(r.store)}/" class="store-link">${esc(r.store)}</a></div><div class="store-nbhd">${esc(r.neighborhood)}</div>${sparkMini(storeHistory[r.store])}</td>
+      <td><div class="store-name"><a href="/dispensaries/${storeSlug(r.store)}/" class="store-link">${esc(r.store)}</a></div><div class="store-nbhd">${esc(r.neighborhood)}</div>${r.vape ? '' : sparkMini(storeHistory[r.store])}</td>
       <td class="price">${fmt(r.price)}</td>
-      <td>${sizeTag}${pgBadge}</td>
+      <td>${sizeTag}${r.vape ? vapeBadge : pgBadge}</td>
       <td class="product-name">${bestBadge}${dealBadge}${esc(displayName(r.product))}${r.product ? ' ' + leaflyLink(r.product) : ''}</td>
     </tr>${(i + 1) % 12 === 0 ? adRow : ''}`;
   }).join('');
@@ -1726,7 +1704,6 @@ fetch('/api/data')
     buildNbhdFilter();
     renderLastUpdated();
     renderTable();
-    renderVapes();
     renderDeals();
     renderHeroStats();
     if (bestOzPrice < Infinity) {
