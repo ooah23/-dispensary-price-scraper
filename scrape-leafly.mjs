@@ -30,6 +30,23 @@ function detectSize(text) {
   return null;
 }
 
+const CART_SIZE_PATTERNS = [
+  { label: "0.5g", regex: /\b(?:0\.5\s*g(?!ram)|half[-\s]?gram|500\s*mg|\.5\s*g(?!ram))\b/i },
+  { label: "1g",   regex: /\b(?:1\.0?\s*g(?!ram\b)|(?<!\d)1\s*g(?!ram\b)|1000\s*mg)\b/i },
+  { label: "2g",   regex: /\b(?:2\.0?\s*g(?!ram\b)|(?<!\d)2\s*g(?!ram\b)|2000\s*mg)\b/i },
+];
+
+function detectCartSize(text) {
+  for (const p of CART_SIZE_PATTERNS) {
+    if (p.regex.test(text)) return p.label;
+  }
+  return null;
+}
+
+function isCartProduct(name) {
+  return /\bcart(?:ridge)?s?\b|\bvape\b|\bpen\b|\bpod\b|\bdisposable\b|\blive\s+resin\s+cart|\boil\b/i.test(name ?? "");
+}
+
 function isPreGround(name) {
   return /pre[- ]?ground|infused\s+ground|kief[- ]infused|infused\s+pre[- ]?ground/i.test(name ?? "");
 }
@@ -399,6 +416,61 @@ function extractPriceEntries(text) {
   }
 
   return entries;
+}
+
+function extractCartEntriesFromText(text) {
+  const lines = text
+    .split("\n")
+    .map((line) => normalizeWhitespace(line))
+    .filter(Boolean);
+
+  const entries = [];
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (/add\s+(?:[\d.]+\s*g\s+)?to\s+cart/i.test(line)) continue;
+
+    const size = detectCartSize(line);
+    if (!size) continue;
+
+    let price = null;
+    for (let offset = 0; offset <= 8; offset++) {
+      const candidate = lines[i + offset];
+      if (!candidate) continue;
+      price = parseMoney(candidate);
+      if (price !== null) break;
+      if (/add to cart/i.test(candidate)) break;
+    }
+    if (price === null) {
+      for (let offset = -1; offset >= -4; offset--) {
+        const candidate = lines[i + offset];
+        if (!candidate) continue;
+        price = parseMoney(candidate);
+        if (price !== null) break;
+      }
+    }
+    if (price === null || price < 10 || price > 300) continue;
+
+    // Find product name
+    const isSizeOnlyLine = CART_SIZE_PATTERNS.some(p => {
+      const m = line.trim().match(p.regex);
+      return m && m[0].length === line.trim().length;
+    });
+    const lineHasPrice = parseMoney(line) !== null;
+    const product = (isSizeOnlyLine || lineHasPrice)
+      ? findPreviousLabel(lines, i)
+      : normalizeWhitespace(line);
+
+    entries.push({ size, price, line, product: cleanProductName(product) });
+  }
+
+  return Array.from(
+    new Map(
+      entries
+        .filter(e => e.price > 0)
+        .map(e => [`${e.size}|${e.price}|${(e.product||'').slice(0,60)}`, e])
+    ).values()
+  );
 }
 
 function parseWeedmapsCardText(rawText) {
@@ -1712,12 +1784,14 @@ async function scrapeStore(page, dispensary) {
     ...dispensary,
     menuUrl: resolvedMenuUrl,
     dealsUrl: resolvedDealsUrl,
+    cartMenuUrl: dispensary.cartMenuUrlOverride ?? null,
     status: "skipped",
     ounceListings: [],
     halfOunceListings: [],
     quarterOunceListings: [],
     eighthOunceListings: [],
     deals: [],
+    cartListings: [],
     error: null,
     totalProducts: 0,
     flowerProducts: 0,
@@ -1842,6 +1916,25 @@ async function scrapeStore(page, dispensary) {
     .filter(Boolean)
     .filter((deal, i, arr) => typeof deal !== "string" || arr.indexOf(deal) === i);
 
+  // ── Cart / vape scrape ─────────────────────────────────────────────────────
+  if (result.cartMenuUrl) {
+    try {
+      await gotoWithRetries(page, result.cartMenuUrl, { attempts: 2, timeout: 60000, waitUntil: "domcontentloaded" });
+      await page.waitForTimeout(2500);
+      // Scroll to trigger lazy-load
+      for (let i = 0; i < 4; i++) {
+        await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+        await page.waitForTimeout(600);
+      }
+      const cartText = await page.locator("body").innerText();
+      result.cartListings = extractCartEntriesFromText(cartText);
+    } catch {
+      result.cartListings = [];
+    }
+  } else {
+    result.cartListings = [];
+  }
+
   return result;
 }
 
@@ -1867,12 +1960,14 @@ async function main() {
           ...dispensary,
           menuUrl: dispensary.menuUrlOverride ?? null,
           dealsUrl: dispensary.dealsUrlOverride ?? null,
+          cartMenuUrl: dispensary.cartMenuUrlOverride ?? null,
           status: "timeout",
           ounceListings: [],
           halfOunceListings: [],
           quarterOunceListings: [],
           eighthOunceListings: [],
           deals: [],
+          cartListings: [],
           error: `Scrape timed out after ${storeTimeoutMs / 1000}s`,
           totalProducts: 0,
           flowerProducts: 0,

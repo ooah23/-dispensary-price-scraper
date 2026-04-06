@@ -6,6 +6,7 @@ export const dispensaries = [
     neighborhood: "NoHo",
     menuUrlOverride: "https://hwcannabis.co/menu/broadway/categories/flower/",
     dealsUrlOverride: "https://hwcannabis.co/menu/broadway/specials/",
+    cartMenuUrlOverride: "https://hwcannabis.co/menu/broadway/categories/vaporizers/",
     sourceNote: "Official Blaze storefront"
   },
   {
@@ -14,6 +15,7 @@ export const dispensaries = [
     neighborhood: "Greenwich Village",
     menuUrlOverride: "https://getsmacked.online/categories/flower/",
     dealsUrlOverride: null,
+    cartMenuUrlOverride: "https://getsmacked.online/categories/vaporizers/",
     sourceNote: "Joint/Surfside storefront"
   },
   {
@@ -22,6 +24,7 @@ export const dispensaries = [
     neighborhood: "Union Square",
     menuUrlOverride: "https://www.thetravelagency.co/flower/",
     dealsUrlOverride: "https://www.thetravelagency.co/specials/",
+    cartMenuUrlOverride: "https://www.thetravelagency.co/vaporizers/",
     sourceNote: "Official Blaze storefront – chain-wide menu"
   },
   {
@@ -30,6 +33,7 @@ export const dispensaries = [
     neighborhood: "Union Square",
     menuUrlOverride: "https://dazed.fun/menu/union-square-nyc-ny/categories/flower/",
     dealsUrlOverride: "https://dazed.fun/menu/union-square-nyc-ny/specials/",
+    cartMenuUrlOverride: "https://dazed.fun/menu/union-square-nyc-ny/categories/vaporizers/",
     sourceNote: "Joint eCommerce storefront (client-side route – base menu: /menu/union-square-nyc-ny/)"
   },
   {
@@ -38,6 +42,7 @@ export const dispensaries = [
     neighborhood: "Flatiron",
     menuUrlOverride: "https://www.thealchemy.nyc/flatiron/shop-flatiron?dtche%5Bcategory%5D=flower",
     dealsUrlOverride: null,
+    cartMenuUrlOverride: "https://www.thealchemy.nyc/flatiron/shop-flatiron?dtche%5Bcategory%5D=vaporizers",
     sourceNote: "Dutchie embed on official site (slug: the-alchemy-flatiron)"
   },
   {
@@ -46,13 +51,15 @@ export const dispensaries = [
     neighborhood: "Chelsea",
     menuUrlOverride: "https://www.thealchemy.nyc/shop?dtche%5Bcategory%5D=flower",
     dealsUrlOverride: null,
+    cartMenuUrlOverride: "https://www.thealchemy.nyc/shop?dtche%5Bcategory%5D=vaporizers",
     sourceNote: "Dutchie embed on official site (slug: blazinup)"
   },
   {
     name: "Stoops NYC",
     address: "182 5th Ave",
     neighborhood: "Flatiron",
-    leaflySlug: "stoopsnyc"
+    leaflySlug: "stoopsnyc",
+    cartMenuUrlOverride: null
   },
   {
     name: "Blue Forest Farms",
@@ -60,6 +67,7 @@ export const dispensaries = [
     neighborhood: "Gramercy",
     menuUrlOverride: "https://shop.blueforestfarmsdispensary.com/shop-cannabis-flower/",
     dealsUrlOverride: null,
+    cartMenuUrlOverride: "https://shop.blueforestfarmsdispensary.com/shop-cannabis-vaporizers/",
     sourceNote: "Custom WordPress/WooCommerce shop – flower category page"
   },
   {
@@ -68,6 +76,7 @@ export const dispensaries = [
     neighborhood: "Bowery",
     menuUrlOverride: "https://weedmaps.com/dispensaries/mighty-lucky/menu",
     dealsUrlOverride: null,
+    cartMenuUrlOverride: null,
     sourceNote: "Weedmaps menu (259 Bowery) – updated from legacy moonlight sub-path"
   },
 
@@ -78,6 +87,7 @@ export const dispensaries = [
     neighborhood: "Bowery",
     menuUrlOverride: "https://gotham.nyc/menu/?category=flower&retailer=bowery",
     dealsUrlOverride: null,
+    cartMenuUrlOverride: "https://gotham.nyc/menu/?category=vaporizers&retailer=bowery",
     sourceNote: "Official location-specific flower menu"
   },
   {
@@ -86,6 +96,7 @@ export const dispensaries = [
     neighborhood: "Chelsea",
     menuUrlOverride: "https://gotham.nyc/menu/?category=flower&retailer=chelsea",
     dealsUrlOverride: null,
+    cartMenuUrlOverride: "https://gotham.nyc/menu/?category=vaporizers&retailer=chelsea",
     sourceNote: "Official location-specific flower menu"
   },
 
@@ -96,6 +107,7 @@ export const dispensaries = [
     neighborhood: "Chelsea",
     menuUrlOverride: "https://newamsterdam.nyc/store/categories/flower",
     dealsUrlOverride: "https://newamsterdam.nyc/store/categories/flower",
+    cartMenuUrlOverride: "https://newamsterdam.nyc/store/categories/vaporizer",
     sourceNote: "Dispense platform (newamsterdam.nyc) — 170+ flower products"
   },
 
@@ -106,6 +118,7 @@ export const dispensaries = [
     neighborhood: "LES",
     menuUrlOverride: "https://conbud.com/stores/conbud-les/products/flower",
     dealsUrlOverride: "https://conbud.com/stores/conbud-les/specials",
+    cartMenuUrlOverride: "https://conbud.com/stores/conbud-les/products/vaporizer",
     sourceNote: "Official CONBUD storefront – weight filters scraped"
   },
 
@@ -116,6 +129,7 @@ export const dispensaries = [
     neighborhood: "Gramercy",
     menuUrlOverride: "https://greengeniusnyc.com/stores/green-genius-nyc/products/flower",
     dealsUrlOverride: null,
+    cartMenuUrlOverride: "https://greengeniusnyc.com/stores/green-genius-nyc/products/vaporizer",
     sourceNote: "Joint/Dutchie Plus SPA — joint extractor with body-text fallback"
   },
   {
@@ -124,6 +138,7 @@ export const dispensaries = [
     neighborhood: "Chelsea",
     menuUrlOverride: "https://verdicannabis.com/stores/verdi/products/flower",
     dealsUrlOverride: "https://verdicannabis.com/stores/verdi/specials",
+    cartMenuUrlOverride: "https://verdicannabis.com/stores/verdi/products/vaporizer",
     sourceNote: "Joint eCommerce storefront (verdicannabis.com – blocks automated fetches with 403, but URL is Google-indexed as 'Cannabis Flower | Verdi - Chelsea')"
   },
   {
@@ -132,6 +147,7 @@ export const dispensaries = [
     neighborhood: "LES",
     menuUrlOverride: "https://menu.kushklub.com/nyc",
     dealsUrlOverride: null,
+    cartMenuUrlOverride: null,
     sourceNote: "Official menu URL"
   },
   {
@@ -140,6 +156,7 @@ export const dispensaries = [
     neighborhood: "Kips Bay",
     menuUrlOverride: "https://dutchie.com/embedded-menu/smiley-exotics",
     dealsUrlOverride: null,
+    cartMenuUrlOverride: "https://dutchie.com/embedded-menu/smiley-exotics",
     sourceNote: "Dutchie storefront (slug: smiley-exotics) – /categories/flower suffix returns 404; root embed URL works"
   },
 
@@ -150,6 +167,7 @@ export const dispensaries = [
     neighborhood: "NoMad",
     menuUrlOverride: null,
     dealsUrlOverride: null,
+    cartMenuUrlOverride: null,
     sourceNote: "No online menu — Leafly listing empty, Weedmaps unclaimed, Blaze only covers Broadway + Delivery locations. Skip until a storefront URL is found."
   },
   {
@@ -158,6 +176,7 @@ export const dispensaries = [
     neighborhood: "Upper West Side",
     menuUrlOverride: "https://dutchie.com/embedded-menu/afny",
     dealsUrlOverride: null,
+    cartMenuUrlOverride: "https://dutchie.com/embedded-menu/afny",
     sourceNote: "Dutchie storefront (slug: afny) – root embed URL, no /categories/flower suffix"
   },
   {
@@ -166,6 +185,7 @@ export const dispensaries = [
     neighborhood: "Washington Heights",
     menuUrlOverride: "https://midnightmoon.nyc/stores/midnight-moon/products/flower",
     dealsUrlOverride: "https://midnightmoon.nyc/stores/midnight-moon/specials",
+    cartMenuUrlOverride: "https://midnightmoon.nyc/stores/midnight-moon/products/vaporizer",
     sourceNote: "Dutchie standalone storefront (midnightmoon.nyc) — was incorrectly using Leafly slug which returned 0 flower products"
   },
   {
@@ -174,6 +194,7 @@ export const dispensaries = [
     neighborhood: "Astoria, Queens",
     menuUrlOverride: "https://dutchie.com/embedded-menu/terp-bros-astoria",
     dealsUrlOverride: null,
+    cartMenuUrlOverride: "https://dutchie.com/embedded-menu/terp-bros-astoria",
     sourceNote: "Dutchie storefront (slug: terp-bros-astoria) – root embed URL, first Queens location"
   }
 ];
