@@ -797,7 +797,7 @@
 
       /* Filter bar: stack rows, pills scroll horizontally */
       .filter-bar { flex-direction: column; align-items: stretch; gap: 6px; }
-      #searchInput { width: 100%; }
+      #searchInput, #vapeSearch { width: 100%; }
       .search-wrap { width: 100%; }
       .pill-group { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 2px; }
       .pill-group::-webkit-scrollbar { display: none; }
@@ -1011,8 +1011,12 @@
       <p class="section-label">Cartridges &amp; Vapes</p>
       <h2 class="section-title" id="vapes-title">Vape Cart Prices Across NYC Dispensaries</h2>
 
-      <!-- Size filter -->
+      <!-- Filter bar -->
       <div class="filter-bar" id="vapeFilterBar">
+        <div class="search-wrap">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="6" cy="6" r="5"/><line x1="10" y1="10" x2="14" y2="14"/></svg>
+          <input type="text" id="vapeSearch" placeholder="Search strain, brand, or store…" oninput="renderVapes()" aria-label="Search vape listings">
+        </div>
         <div class="pill-group" id="vapeSizeFilter" role="group" aria-label="Cart size filter">
           <button class="pill active" data-vsize="all" onclick="setVapeSize(this)">All sizes</button>
           <button class="pill" data-vsize="0.5g" onclick="setVapeSize(this)">0.5g</button>
@@ -1022,14 +1026,25 @@
         <span class="filter-meta" id="vapeFilterMeta"></span>
       </div>
 
+      <!-- Mobile sort -->
+      <div class="mobile-sort-bar" aria-label="Vape sort options">
+        <label for="vapeMobileSort">Sort by:</label>
+        <select id="vapeMobileSort" onchange="vapeSort=this.value.split('-')[0];vapeSortDir=this.value.split('-')[1];renderVapes()">
+          <option value="price-asc">Price: Low → High</option>
+          <option value="price-desc">Price: High → Low</option>
+          <option value="store-asc">Store: A → Z</option>
+          <option value="size-asc">Size: Small → Large</option>
+        </select>
+      </div>
+
       <div class="table-wrap" role="region" aria-label="Vape cart price table">
         <div class="table-scroll">
           <table>
             <thead>
               <tr>
-                <th scope="col">Dispensary</th>
-                <th scope="col" style="text-align:right">Price</th>
-                <th scope="col">Size</th>
+                <th scope="col" onclick="vapeSortBy('store')" id="vth-store">Dispensary</th>
+                <th scope="col" onclick="vapeSortBy('price')" id="vth-price" style="text-align:right">Price</th>
+                <th scope="col" onclick="vapeSortBy('size')"  id="vth-size">Size</th>
                 <th scope="col">Product</th>
               </tr>
             </thead>
@@ -1417,6 +1432,8 @@ function buildRows() {
 
 /* ─── Vapes ──────────────────────────────────────── */
 let activeVapeSizeFilter = 'all';
+let vapeSort = 'price';
+let vapeSortDir = 'asc';
 
 function setVapeSize(btn) {
   document.querySelectorAll('#vapeSizeFilter .pill').forEach(p => p.classList.remove('active'));
@@ -1425,21 +1442,45 @@ function setVapeSize(btn) {
   renderVapes();
 }
 
+function vapeSortBy(key) {
+  if (vapeSort === key) vapeSortDir = vapeSortDir === 'asc' ? 'desc' : 'asc';
+  else { vapeSort = key; vapeSortDir = 'asc'; }
+  ['store','price','size'].forEach(k => {
+    const th = document.getElementById('vth-' + k);
+    if (th) { th.classList.remove('sorted-asc','sorted-desc'); if (vapeSort === k) th.classList.add('sorted-' + vapeSortDir); }
+  });
+  const sel = document.getElementById('vapeMobileSort');
+  if (sel) { const v = vapeSort+'-'+vapeSortDir; if ([...sel.options].some(o=>o.value===v)) sel.value=v; }
+  renderVapes();
+}
+
+const VAPE_SIZE_ORDER = {'0.5g':0,'1g':1,'2g':2};
+
 function renderVapes() {
   const tbody = document.getElementById('vapeBody');
   if (!tbody) return;
-  const meta = document.getElementById('vapeFilterMeta');
+  const meta   = document.getElementById('vapeFilterMeta');
+  const q      = (document.getElementById('vapeSearch')?.value || '').toLowerCase().trim();
 
-  const cartRows = allData
+  let rows = allData
     .filter(d => d.status === 'ok' && Array.isArray(d.cartListings) && d.cartListings.length > 0)
-    .flatMap(d => d.cartListings.map(c => ({ ...c, store: d.name, neighborhood: d.neighborhood })))
-    .filter(c => activeVapeSizeFilter === 'all' || c.size === activeVapeSizeFilter)
-    .sort((a, b) => a.price - b.price);
+    .flatMap(d => d.cartListings.map(c => ({ ...c, store: d.name, neighborhood: d.neighborhood })));
 
-  if (meta) meta.innerHTML = `<strong>${cartRows.length}</strong> listings`;
+  if (activeVapeSizeFilter !== 'all') rows = rows.filter(c => c.size === activeVapeSizeFilter);
+  if (q) rows = rows.filter(c => [c.store, c.neighborhood, c.product, c.size].join(' ').toLowerCase().includes(q));
 
-  if (cartRows.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;padding:32px;color:var(--text-muted)">No vape cart data yet — will populate after next scrape.</td></tr>`;
+  rows.sort((a, b) => {
+    let v = 0;
+    if (vapeSort === 'price') v = a.price - b.price;
+    else if (vapeSort === 'store') v = a.store.localeCompare(b.store);
+    else if (vapeSort === 'size')  v = (VAPE_SIZE_ORDER[a.size]??9) - (VAPE_SIZE_ORDER[b.size]??9);
+    return vapeSortDir === 'asc' ? v : -v;
+  });
+
+  if (meta) meta.innerHTML = `<strong>${rows.length}</strong> listing${rows.length !== 1 ? 's' : ''}`;
+
+  if (rows.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;padding:32px;color:var(--text-muted)">${q || activeVapeSizeFilter !== 'all' ? 'No results. Try clearing filters.' : 'No vape cart data yet — will populate after next scrape.'}</td></tr>`;
     return;
   }
 
@@ -1449,11 +1490,11 @@ function renderVapes() {
     '2g':   '<span class="size-tag tag-half">2g</span>',
   };
 
-  tbody.innerHTML = cartRows.map(c => `<tr>
+  tbody.innerHTML = rows.map(c => `<tr>
     <td><div class="store-name"><a href="/dispensaries/${storeSlug(c.store)}/" class="store-link">${esc(c.store)}</a></div><div class="store-nbhd">${esc(c.neighborhood)}</div></td>
     <td class="price">${fmt(c.price)}</td>
-    <td>${sizeTags[c.size] || esc(c.size)}</td>
-    <td class="product-name">${esc(c.product || '')}</td>
+    <td>${sizeTags[c.size] || `<span class="size-tag">${esc(c.size)}</span>`}</td>
+    <td class="product-name">${esc(displayName(c.product || ''))}${c.product ? ' ' + leaflyLink(c.product) : ''}</td>
   </tr>`).join('');
 }
 
