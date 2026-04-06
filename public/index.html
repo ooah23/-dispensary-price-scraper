@@ -1208,16 +1208,45 @@ function sparkMini(points) {
   return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" class="spark-mini" aria-hidden="true" title="${trend<0?'↓':'↑'} price trend"><path d="${d}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linejoin="round"/></svg>`;
 }
 
+// Returns the strain segment from a product name, skipping brand prefixes
+function extractStrain(segs) {
+  if (!segs.length) return '';
+  const first = segs[0].trim();
+  // If 3+ segments and last looks like a size/category (starts with digit), middle segment is strain
+  if (segs.length >= 3) {
+    const last = segs[segs.length - 1].trim();
+    if (/^\d/.test(last) || /^(?:flower|cannabis|indoor|outdoor)\b/i.test(last)) {
+      return segs[1].trim();
+    }
+  }
+  // If first segment is all-caps (brand code like "LEAL", "RYTHM", "ITHACA CULTIVATED"), use second
+  if (segs.length > 1 && first === first.toUpperCase() && /[A-Z]/.test(first) && first.length <= 30) {
+    return segs[1].trim();
+  }
+  return first;
+}
 function leaflyLink(product) {
   let strain = product;
-  // Strain name is always the FIRST segment — take [0], not .pop()
-  if (strain.includes(' - - ')) strain = strain.split(' - - ')[0];
-  else if (strain.includes(' | ')) strain = strain.split(' | ')[0];
-  else if (strain.includes(' \u2013 ')) strain = strain.split(' \u2013 ')[0]; // en dash
-  else if (strain.includes(' \u2014 ')) strain = strain.split(' \u2014 ')[0]; // em dash
-  else if (strain.includes(' - ')) strain = strain.split(' - ')[0];
-  const slug = strain.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  if (strain.includes(' - - ')) strain = strain.split(' - - ')[0]; // Joint: strain first
+  else if (strain.includes(' \u2013 ')) strain = extractStrain(strain.split(' \u2013 ')); // en dash
+  else if (strain.includes(' \u2014 ')) strain = extractStrain(strain.split(' \u2014 ')); // em dash
+  else if (strain.includes(' | '))       strain = extractStrain(strain.split(' | '));
+  else if (strain.includes(' - '))       strain = strain.split(' - ')[0];
+  // Strip any trailing size/category noise from the extracted strain
+  strain = strain.replace(/\s*\d+\.?\d*g\b.*$/i, '').replace(/\s+(flower|cannabis|indoor|outdoor)\s*$/i, '').trim();
+  const slug = strain.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   return `<a href="https://www.leafly.com/strains/${slug}" target="_blank" rel="noopener noreferrer" class="leafly-link" title="View on Leafly">↗</a>`;
+}
+// Strip verbose size/category/% noise from product names for display
+function displayName(product) {
+  if (!product) return '';
+  return product
+    .replace(/\s*\(\s*\d+\.?\d*%\s*\)\s*$/, '')           // "(25.78%)" at end
+    .replace(/\s*[–\-]\s*\d+\.?\d*g\s+(?:flower|cannabis|indoor|outdoor)?.*$/i, '') // "– 28g Flower..."
+    .replace(/\s*\|\s*\d+\.?\d*g\s+(?:flower|cannabis|indoor|outdoor)?.*$/i, '')    // "| 28g Flower..."
+    .replace(/\s+(?:flower|cannabis)\s*$/i, '')             // trailing "Flower"
+    .replace(/\s*,?\s*\d+\.?\d*g\s*$/, '')                 // trailing "28g"
+    .trim();
 }
 function fmt(price) {
   return '$' + price.toFixed(2).replace(/\.00$/, '');
@@ -1471,7 +1500,7 @@ function renderTable() {
       <td><div class="store-name"><a href="/dispensaries/${storeSlug(r.store)}/" class="store-link">${esc(r.store)}</a></div><div class="store-nbhd">${esc(r.neighborhood)}</div>${sparkMini(storeHistory[r.store])}</td>
       <td class="price">${fmt(r.price)}</td>
       <td>${sizeTag}${pgBadge}</td>
-      <td class="product-name">${bestBadge}${dealBadge}${esc(r.product)}${r.product ? ' ' + leaflyLink(r.product) : ''}</td>
+      <td class="product-name">${bestBadge}${dealBadge}${esc(displayName(r.product))}${r.product ? ' ' + leaflyLink(r.product) : ''}</td>
     </tr>${(i + 1) % 12 === 0 ? adRow : ''}`;
   }).join('');
 }
@@ -1579,7 +1608,7 @@ function renderDeals() {
     const priceEl = item.originalPrice
       ? `<span class="deal-price">${fmt(item.price)}</span><span class="deal-was">${fmt(item.originalPrice)}</span>`
       : `<span class="deal-price">${fmt(item.price)}</span>`;
-    const prod = esc(item.product || '');
+    const prod = esc(displayName(item.product || ''));
     const prodLink = item.product ? prod + ' ' + leaflyLink(item.product) : prod;
     return `<tr>
       <td><div class="store-name"><a href="/dispensaries/${storeSlug(item.store)}/" class="store-link">${esc(item.store)}</a></div><div class="store-nbhd">${esc(item.neighborhood)}</div><div class="deal-product-mobile">${prodLink}</div></td>

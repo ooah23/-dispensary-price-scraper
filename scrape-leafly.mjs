@@ -556,9 +556,18 @@ function cleanProductName(raw) {
     .replace(/^only\s+a\s+few\s+left\s+in\s+stock[!.]?\s*/i, "")
     .replace(/^low\s+stock[!.]?\s*/i, "")
     .replace(/^last\s+\d+\s+in\s+stock[!.]?\s*/i, "")
-    // Strip THC/CBD percentages
+    // Strip THC/CBD percentages with keyword
     .replace(/\s*(?:THC|CBD|TAC):?\s*[\d.]+%.*$/i, "")
     .replace(/\s*\d+(?:\.\d+)?%\s*(?:THC|CBD|TAC).*$/i, "")
+    // Strip parenthesized % like "(25.78%)"
+    .replace(/\s*\(\s*\d+(?:\.\d+)?%\s*\)\s*$/i, "")
+    // Strip size+category suffixes: "– 28g Flower", "| 3.5g Cannabis", "- 14g Indoor"
+    .replace(/\s*[–\-]\s*\d+(?:\.\d+)?g\s+(?:flower|cannabis|indoor|outdoor|sativa|indica|hybrid)?.*$/i, "")
+    .replace(/\s*\|\s*\d+(?:\.\d+)?g\s+(?:flower|cannabis|indoor|outdoor)?.*$/i, "")
+    // Strip trailing size alone "28g", "3.5g"
+    .replace(/\s*,?\s*\d+(?:\.\d+)?g\s*$/i, "")
+    // Strip trailing category words
+    .replace(/\s+(?:flower|cannabis)\s*$/i, "")
     // Strip leading price artifacts
     .replace(/^\$[\d.]+\s*\|?\s*/, "")
     .replace(/\$[\d.]+\s*\|\s*\d+\/?\d*\s*oz/i, "")
