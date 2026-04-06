@@ -1126,9 +1126,20 @@ async function extractJointEntries(page, menuUrl) {
   // If we captured products via API interception, parse them
   if (allProducts.length > 0) {
     const entries = [];
+    // When scraping a flower category URL, filter out non-flower products that
+    // the API may bundle in (Dazed returns FLOWER + PRE_ROLLS + EDIBLES + VAPORIZERS).
+    const flowerCategoryUrl = menuUrl.toLowerCase().includes("flower");
+    const FLOWER_CATS = /^(?:flower|cannabis_flower|bud|herb)$/i;
+    const NON_FLOWER_CATS = /^(?:pre_?roll|edible|vaporizer|concentrate|tincture|topical|accessory)/i;
+
     for (const product of allProducts) {
       const name = product.name ?? product.title ?? product.product_name ?? "";
       if (!name) continue;
+      // Skip non-flower categories when on a flower menu URL
+      if (flowerCategoryUrl) {
+        const cat = product.category ?? product.productType ?? "";
+        if (cat && NON_FLOWER_CATS.test(cat)) continue;
+      }
 
       const productName = cleanProductName(normalizeWhitespace(name));
 
@@ -1159,7 +1170,7 @@ async function extractJointEntries(page, menuUrl) {
         const vWeight = v.weight ?? v.size ?? v.option_name ?? v.name ?? v.option ?? "";
         const vSize = detectSize(`${name} ${vWeight}`.trim());
         if (!vSize) continue;
-        const vRawPrice = v.sale_price ?? v.price_sale ?? v.p ?? v.price ?? v.base_price;
+        const vRawPrice = v.specialPrice ?? v.sale_price ?? v.price_sale ?? v.p ?? v.price ?? v.base_price;
         const vPrice = vRawPrice != null ? Number(vRawPrice) : NaN;
         if (isNaN(vPrice) || vPrice <= 0) continue;
         entries.push({ size: vSize, price: vPrice, line: `${name} ${vWeight}`.trim(), product: productName, preGround: isPreGround(productName) });
