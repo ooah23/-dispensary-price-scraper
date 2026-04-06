@@ -1412,11 +1412,7 @@ function resolveDutchieEmbedUrl(rawUrl) {
       if (parts[0] === "dispensary" && parts[1]) {
         return `https://dutchie.com/embedded-menu/${parts[1]}/categories/flower`;
       }
-      // /embedded-menu/SLUG (bare, no category) → add /categories/flower
-      if (parts[0] === "embedded-menu" && parts[1] && !parts[2]) {
-        return `https://dutchie.com/embedded-menu/${parts[1]}/categories/flower`;
-      }
-      // Already has category path — return as-is
+      // /embedded-menu/SLUG — return as-is (some stores' /categories/flower returns 404)
       return rawUrl;
     }
   } catch {
