@@ -1170,7 +1170,12 @@ async function extractJointEntries(page, menuUrl) {
 async function extractBlazeEntries(page, menuUrl) {
   await gotoWithRetries(page, menuUrl, { attempts: 3, timeout: 90000 });
   await acceptBlazeAgeGate(page);
-  await page.waitForTimeout(2500);
+  await page.waitForTimeout(3000);
+  // Scroll to trigger lazy-loaded product cards
+  for (let i = 0; i < 8; i++) {
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await page.waitForTimeout(800);
+  }
   const bodyText = await page.locator("body").innerText();
   return filterListingEntries(extractPriceEntries(bodyText));
 }
@@ -1402,12 +1407,16 @@ function resolveDutchieEmbedUrl(rawUrl) {
 
     // Already a dutchie.com URL
     if (parsed.hostname === "dutchie.com") {
-      // Convert /dispensary/SLUG/... → /embedded-menu/SLUG/categories/flower
       const parts = parsed.pathname.split("/").filter(Boolean);
+      // /dispensary/SLUG/... → /embedded-menu/SLUG/categories/flower
       if (parts[0] === "dispensary" && parts[1]) {
         return `https://dutchie.com/embedded-menu/${parts[1]}/categories/flower`;
       }
-      // Already embedded-menu or similar — return as-is
+      // /embedded-menu/SLUG (bare, no category) → add /categories/flower
+      if (parts[0] === "embedded-menu" && parts[1] && !parts[2]) {
+        return `https://dutchie.com/embedded-menu/${parts[1]}/categories/flower`;
+      }
+      // Already has category path — return as-is
       return rawUrl;
     }
   } catch {

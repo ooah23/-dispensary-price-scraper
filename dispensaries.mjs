@@ -157,7 +157,7 @@ export const dispensaries = [
     menuUrlOverride: "https://dutchie.com/embedded-menu/smiley-exotics",
     dealsUrlOverride: null,
     cartMenuUrlOverride: "https://dutchie.com/embedded-menu/smiley-exotics",
-    sourceNote: "Dutchie storefront (slug: smiley-exotics) – /categories/flower suffix returns 404; root embed URL works"
+    sourceNote: "Dutchie storefront (slug: smiley-exotics) – resolveDutchieEmbedUrl appends /categories/flower automatically"
   },
 
   // ── Expansion stores ─────────────────────────────────────────────────────────
