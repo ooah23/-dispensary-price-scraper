@@ -1983,7 +1983,7 @@ async function main() {
 
   const DEFAULT_STORE_TIMEOUT_MS = 30000;
   const SLOW_STORE_TIMEOUT_MS = 60000;
-  const SLOW_STORES = new Set(["New Amsterdam", "Mighty Lucky", "Green Genius", "Blue Forest Farms", "KushKlub NYC"]);
+  const SLOW_STORES = new Set(["New Amsterdam", "Mighty Lucky", "Green Genius", "Blue Forest Farms", "KushKlub NYC", "Dazed", "Smacked Village", "The Travel Agency", "VERDI"]);
 
   const results = [];
   for (const dispensary of dispensaries) {

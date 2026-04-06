@@ -1,6 +1,7 @@
 import http from "node:http";
 import fs from "node:fs/promises";
 import path from "node:path";
+import { spawn } from "node:child_process";
 
 const PORT = process.env.PORT ?? 4173;
 const OUTPUT_DIR = path.resolve("output");
@@ -18,6 +19,7 @@ await fs.mkdir(LOGS_DIR, { recursive: true });
 // ─── Price history cache ───────────────────────────────────────────────────
 let _histCache = null;
 let _histCacheTs = 0;
+let scrapeRunning = false;
 const HIST_TTL = 5 * 60 * 1000;
 
 function slugify(name) {
@@ -537,6 +539,33 @@ const server = http.createServer(async (req, res) => {
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ count: 0, subscribers: [] }));
     }
+    return;
+  }
+
+  // /api/admin/scrape — trigger a fresh scrape in the background (admin key required)
+  if (pathname === "/api/admin/scrape") {
+    const adminKey = process.env.RESEND_API_KEY ?? "";
+    if (!adminKey || searchParams.get("key") !== adminKey) {
+      res.writeHead(401, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: "Unauthorized" }));
+      return;
+    }
+    if (scrapeRunning) {
+      res.writeHead(409, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ status: "already_running" }));
+      return;
+    }
+    scrapeRunning = true;
+    const child = spawn(process.execPath, ["scrape-leafly.mjs"], {
+      cwd: path.resolve("."),
+      detached: false,
+      stdio: ["ignore", "pipe", "pipe"],
+    });
+    child.stdout.on("data", d => process.stdout.write(d));
+    child.stderr.on("data", d => process.stderr.write(d));
+    child.on("close", () => { scrapeRunning = false; });
+    res.writeHead(202, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ status: "started", pid: child.pid }));
     return;
   }
 
