@@ -1127,34 +1127,43 @@ async function extractJointEntries(page, menuUrl) {
   if (allProducts.length > 0) {
     const entries = [];
     for (const product of allProducts) {
-      // Joint products typically have `name` (may include "3.5g" / "28g") and price fields.
       const name = product.name ?? product.title ?? product.product_name ?? "";
       if (!name) continue;
 
-      // Prefer sale/discount price; price fields vary by Joint API version
-      const rawPrice =
-        product.sale_price ??
-        product.price_sale ??
-        product.discounted_price ??
-        product.price ??
-        product.base_price ??
-        product.variants?.[0]?.price ??
-        product.variants?.[0]?.p ??        // Joint Elasticsearch: variant.p
-        product.variants?.[0]?.sale_price ??
-        product.product_variants?.[0]?.price ??
-        product.product_variants?.[0]?.p ??
-        product.product_variants?.[0]?.base_price;
-      const price = rawPrice != null ? Number(rawPrice) : NaN;
-      if (isNaN(price) || price <= 0) continue;
-
-      // Size may be in product name or a dedicated weight field
-      const weightText = product.weight ?? product.size ?? product.unit ?? "";
-      const searchText = `${name} ${weightText}`.trim();
-      const size = detectSize(searchText);
-      if (!size) continue;
-
       const productName = cleanProductName(normalizeWhitespace(name));
-      entries.push({ size, price, line: searchText, product: productName, preGround: isPreGround(productName) || isPreGround(searchText) });
+
+      // Try top-level weight first (classic Joint API format)
+      const topWeight = product.weight ?? product.size ?? product.unit ?? "";
+      const topSize = detectSize(`${name} ${topWeight}`.trim());
+      if (topSize) {
+        const rawPrice =
+          product.sale_price ?? product.price_sale ?? product.discounted_price ??
+          product.price ?? product.base_price ??
+          product.variants?.[0]?.price ?? product.variants?.[0]?.p ??
+          product.variants?.[0]?.sale_price ??
+          product.product_variants?.[0]?.price ?? product.product_variants?.[0]?.p ??
+          product.product_variants?.[0]?.base_price;
+        const price = rawPrice != null ? Number(rawPrice) : NaN;
+        if (!isNaN(price) && price > 0) {
+          entries.push({ size: topSize, price, line: `${name} ${topWeight}`.trim(), product: productName, preGround: isPreGround(productName) });
+        }
+        continue;
+      }
+
+      // Elasticsearch/multi-variant format: each variant has its own weight + price
+      const variantSources = [
+        ...(Array.isArray(product.variants) ? product.variants : []),
+        ...(Array.isArray(product.product_variants) ? product.product_variants : []),
+      ];
+      for (const v of variantSources) {
+        const vWeight = v.weight ?? v.size ?? v.option_name ?? v.name ?? v.option ?? "";
+        const vSize = detectSize(`${name} ${vWeight}`.trim());
+        if (!vSize) continue;
+        const vRawPrice = v.sale_price ?? v.price_sale ?? v.p ?? v.price ?? v.base_price;
+        const vPrice = vRawPrice != null ? Number(vRawPrice) : NaN;
+        if (isNaN(vPrice) || vPrice <= 0) continue;
+        entries.push({ size: vSize, price: vPrice, line: `${name} ${vWeight}`.trim(), product: productName, preGround: isPreGround(productName) });
+      }
     }
     if (entries.length > 0) {
       return filterListingEntries(entries);
