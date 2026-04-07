@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>NYC Dispensary Prices, Updated Daily | nycweedprice.org</title>
-  <meta name="description" content="Compare cannabis flower prices at 20 NYC licensed dispensaries. Updated daily. Find cheapest eighths, quarters & ounces near you.">
+  <meta name="description" content="Find the cheapest weed prices in NYC. Compare flower & vape cart prices at 20+ licensed dispensaries — updated daily. Cheapest eighth, quarter, half oz & 1g carts right now.">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#0D0D0D">
   <link rel="canonical" href="https://nycweedprice.org/">
@@ -551,6 +551,11 @@
     .page-info { font-size:13px; color:var(--text-muted); }
     tr.pre-ground td { opacity: .75; }
     tr.row-vape td { background: #F0FDF9; }
+    .pretax-note { font-size: 11px; color: var(--text-muted); white-space: nowrap; align-self: center; }
+    .badge-legend { display: flex; flex-wrap: wrap; gap: 10px 20px; font-size: 11px; color: var(--text-muted); padding: 6px 0 2px; }
+    .legend-item { display: inline-flex; align-items: center; gap: 5px; }
+    html.dark .pretax-note { color: #666; }
+    html.dark tr.row-vape td { background: #022C22; }
     html.dark tr.row-vape td { background: #022C22; }
 
     /* product col */
@@ -954,11 +959,11 @@
         </div>
 
         <div class="pill-group" id="sizeFilter" role="group" aria-label="Size filter">
-          <button class="pill active" data-size="all" onclick="setSize(this)">All sizes</button>
+          <button class="pill" data-size="all" onclick="setSize(this)">All sizes</button>
           <button class="pill" data-size="1 oz" onclick="setSize(this)">1 oz</button>
           <button class="pill" data-size="1/2 oz" onclick="setSize(this)">½ oz</button>
           <button class="pill" data-size="1/4 oz" onclick="setSize(this)">¼ oz</button>
-          <button class="pill" data-size="1/8 oz" onclick="setSize(this)">⅛ oz</button>
+          <button class="pill active" data-size="1/8 oz" onclick="setSize(this)">⅛ oz</button>
         </div>
 
         <div class="pill-group" id="typeFilter" role="group" aria-label="Type filter">
@@ -978,6 +983,16 @@
         <button class="pill pill-deals" onclick="toggleDealsOnly(this)" aria-pressed="false">Deals only</button>
 
         <span class="filter-meta" id="filterMeta" aria-live="polite"></span>
+        <span class="pretax-note">Prices pre-tax · 13–20% added at register</span>
+      </div>
+
+      <!-- Badge legend -->
+      <div class="badge-legend">
+        <span class="legend-item"><span class="best-badge" style="margin:0">Best deal</span> lowest price for that size</span>
+        <span class="legend-item"><span class="deal-tag-value" style="margin:0">BELOW AVG</span> under city median</span>
+        <span class="legend-item"><span class="deal-tag-sale" style="margin:0">SALE</span> marked down</span>
+        <span class="legend-item"><span class="pg-badge" style="margin:0">PG</span> pre-ground flower</span>
+        <span class="legend-item"><span class="pg-badge vape-badge" style="margin:0">VAPE</span> vape cart</span>
       </div>
 
       <!-- Neighborhood filter -->
@@ -1157,7 +1172,7 @@
 /* ─── State ──────────────────────────────────────── */
 let allData            = [];
 let storeHistory       = {}; // name → [{date, price}]
-let activeSizeFilter   = 'all';
+let activeSizeFilter   = '1/8 oz';
 let activeTypeFilter   = 'all';
 let activeNbhd         = 'all';
 let sortKey            = 'price';
@@ -1522,10 +1537,7 @@ function renderTable() {
     </div></td></tr>`;
     return;
   }
-  const adRow = `<tr class="ad-row"><td colspan="4"><div class="ad-row-inner">
-    <span class="ad-unit-label">Advertisement</span>
-    <!-- MANTIS AD TAG — paste here once approved -->
-  </div></td></tr>`;
+  const adRow = '';
   const sizeTags = {
     '1 oz':   '<span class="size-tag tag-oz">1 oz</span>',
     '1/2 oz': '<span class="size-tag tag-half">&frac12; oz</span>',

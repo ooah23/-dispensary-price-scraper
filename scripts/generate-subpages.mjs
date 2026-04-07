@@ -107,8 +107,10 @@ function generatePage(store, historyPoints, allStores) {
   const cheapOz     = store.cheapestOunce?.price;
   const hasData     = allListings.length > 0;
 
-  const title = `${store.name} Prices & Menu | NYC Weed Price Tracker`;
-  const desc  = `See today's flower prices at ${store.name} in ${store.neighborhood || "NYC"}. Updated daily. Compare eighths, quarters, halves and ounces across all NYC dispensaries.`;
+  const title = `${store.name} Weed Prices Today | NYC Dispensary Price Tracker`;
+  const cheapEighthStr = cheapEighth ? `Cheapest ⅛ oz: $${cheapEighth}. ` : '';
+  const cheapOzStr     = cheapOz     ? `1 oz from $${cheapOz}. `           : '';
+  const desc  = `${cheapEighthStr}${cheapOzStr}Today's cannabis flower prices at ${store.name} in ${store.neighborhood || "NYC"} — updated daily. Compare to every other NYC licensed dispensary.`;
 
   const spark = sparkline(historyPoints);
 
@@ -344,7 +346,7 @@ function generatePage(store, historyPoints, allStores) {
 <div class="content">
   ${historySection}
   <section>
-    <h2>Today's Prices</h2>
+    <h2>Today's Prices <span style="font-size:12px;font-weight:400;color:#888;margin-left:8px">pre-tax · 13–20% added at register</span></h2>
     ${priceTable}
   </section>
   ${nearbySection}
