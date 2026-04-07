@@ -1,15 +1,23 @@
 name,address,neighborhood,status,deal,price,original_price,savings_pct,deals_url
-Housing Works Cannabis Co,750 Broadway,NoHo,timeout,,,,,https://hwcannabis.co/menu/broadway/specials/
+Housing Works Cannabis Co,750 Broadway,NoHo,ok,,,,,https://hwcannabis.co/menu/broadway/specials/
 Smacked Village,144 Bleecker St,Greenwich Village,ok,,,,,
 The Travel Agency,835 Broadway,Union Square,ok,,,,,https://www.thetravelagency.co/specials/
 Dazed,33 Union Square W,Union Square,ok,,,,,https://dazed.fun/menu/union-square-nyc-ny/specials/
-The Alchemy (Flatiron),12 W 18th St,Flatiron,ok,,,,,
-The Alchemy (Chelsea),302 8th Ave,Chelsea,ok,,,,,
-Stoops NYC,182 5th Ave,Flatiron,ok,,,,,https://www.leafly.com/dispensary-info/stoopsnyc/deals
+The Alchemy (Flatiron),12 W 18th St,Flatiron,timeout,,,,,
+The Alchemy (Chelsea),302 8th Ave,Chelsea,no_target_sizes,,,,,
+Stoops NYC,182 5th Ave,Flatiron,ok,20% off,,,,https://www.leafly.com/dispensary-info/stoopsnyc/deals
+Stoops NYC,182 5th Ave,Flatiron,ok,20% Off STIIIZY Vapes,,,,https://www.leafly.com/dispensary-info/stoopsnyc/deals
+Stoops NYC,182 5th Ave,Flatiron,ok,Available daily until 4/13,,,,https://www.leafly.com/dispensary-info/stoopsnyc/deals
 Blue Forest Farms,122 E 25th St,Gramercy,ok,,,,,
 Mighty Lucky,259 Bowery,Bowery,ok,,,,,
 Gotham (Bowery),3 E 3rd St,Bowery,ok,,,,,
 Gotham (Chelsea),146 10th Ave,Chelsea,ok,,,,,
+New Amsterdam,245 W 14th St,Chelsea,ok,Dank | Animal Cookies | 28g,225,250,10%,https://newamsterdam.nyc/store/categories/flower
+New Amsterdam,245 W 14th St,Chelsea,ok,Dank | Dirty Sprite | 28g,225,250,10%,https://newamsterdam.nyc/store/categories/flower
+New Amsterdam,245 W 14th St,Chelsea,ok,Good Green | Bubba Fett | 28g,162,180,10%,https://newamsterdam.nyc/store/categories/flower
+New Amsterdam,245 W 14th St,Chelsea,ok,LivWell | White Wedding | 28g,135,150,10%,https://newamsterdam.nyc/store/categories/flower
+New Amsterdam,245 W 14th St,Chelsea,ok,PC Nursery | Larry Burger | 28g,135,150,10%,https://newamsterdam.nyc/store/categories/flower
+New Amsterdam,245 W 14th St,Chelsea,ok,Rolling Green | El Chivo | 28g,180,200,10%,https://newamsterdam.nyc/store/categories/flower
 New Amsterdam,245 W 14th St,Chelsea,ok,Smoakland | Girl Scout Cookies | 28g (Sungrown),99,125,21%,https://newamsterdam.nyc/store/categories/flower
 New Amsterdam,245 W 14th St,Chelsea,ok,Smoakland | Lemon Cherry Gelato | 28g (Sungrown),99,125,21%,https://newamsterdam.nyc/store/categories/flower
 CONBUD,85 Delancey St,LES,ok,,,,,https://conbud.com/stores/conbud-les/specials
@@ -19,5 +27,5 @@ KushKlub NYC,186 Orchard St,LES,ok,,,,,
 Smiley Exotics,201 E 30th St,Kips Bay,ok,,,,,
 Housing Works Cannabis Co (NoMad),846 6th Ave,NoMad,skipped,,,,,
 Superfly,57 W 86th St,Upper West Side,ok,,,,,
-Midnight Moon,1536 Amsterdam Ave,Washington Heights,timeout,,,,,https://midnightmoon.nyc/stores/midnight-moon/specials
+Midnight Moon,1536 Amsterdam Ave,Washington Heights,ok,,,,,https://midnightmoon.nyc/stores/midnight-moon/specials
 Terp Bros (Astoria),36-10 Ditmars Blvd,"Astoria, Queens",ok,,,,,

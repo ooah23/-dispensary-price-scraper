@@ -31,7 +31,7 @@ function detectSize(text) {
 }
 
 const CART_SIZE_PATTERNS = [
-  { label: "0.5g", regex: /\b(?:0\.5\s*g(?!ram)|half[-\s]?gram|500\s*mg|\.5\s*g(?!ram))\b/i },
+  { label: "0.5g", regex: /\b(?:0\.5\s*g(?!ram)|half[-\s]?gram|500\s*mg|(?<!\d)\.5\s*g(?!ram))\b/i },
   { label: "1g",   regex: /\b(?:1\.0?\s*g(?!ram\b)|(?<!\d)1\s*g(?!ram\b)|1000\s*mg)\b/i },
   { label: "2g",   regex: /\b(?:2\.0?\s*g(?!ram\b)|(?<!\d)2\s*g(?!ram\b)|2000\s*mg)\b/i },
 ];
@@ -44,7 +44,7 @@ function detectCartSize(text) {
 }
 
 function isCartProduct(name) {
-  return /\bcart(?:ridge)?s?\b|\bvape\b|\bpen\b|\bpod\b|\bdisposable\b|\blive\s+resin\s+cart|\boil\b/i.test(name ?? "");
+  return /\bcart(?:ridge)?s?\b|\bvape\b|\bpen\b|\bpod\b|\bdisposable\b|\baio\b|\ball[- ]in[- ]one\b|\b510\b|\blive[- ]?resin\b|\blive[- ]?rosin\b|\boil\b|\bdab\b|\bconcentrate\b|\breload\b|\bstarter\s+kit\b|\bdosed\b/i.test(name ?? "");
 }
 
 function isPreGround(name) {
@@ -461,6 +461,12 @@ function extractCartEntriesFromText(text) {
       ? findPreviousLabel(lines, i)
       : normalizeWhitespace(line);
 
+    const contextText = (product || '') + ' ' + line;
+    // Skip pre-rolls, joints, flower, topicals — common false positives
+    const NOT_CART = /\bpre[- ]?roll\b|\bpreroll\b|\bjoint\b|\bflower\b|\bbud\b|\b\d+\s*pk\b|\bbalm\b|\btopical\b|\binfused.*roll\b/i;
+    if (NOT_CART.test(contextText)) continue;
+    // For ambiguous 1g size, require at least one vape keyword since pre-rolls are also 1g
+    if (size === '1g' && !isCartProduct(contextText)) continue;
     entries.push({ size, price, line, product: cleanProductName(product) });
   }
 

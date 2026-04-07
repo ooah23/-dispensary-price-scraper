@@ -26,12 +26,19 @@ const DRAFT_FILE  = path.join(OUTPUT_DIR, "reddit-draft.txt");
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
-function dateStamp(d = new Date()) {
+// Allow --date YYYY-MM-DD override for testing
+const dateArg = (() => {
+  const i = process.argv.indexOf("--date");
+  return i !== -1 ? process.argv[i + 1] : null;
+})();
+const NOW = dateArg ? new Date(dateArg) : new Date();
+
+function dateStamp(d = NOW) {
   return d.toISOString().slice(0, 10);
 }
 
 function yesterdayStamp() {
-  const d = new Date();
+  const d = new Date(NOW);
   d.setDate(d.getDate() - 1);
   return dateStamp(d);
 }
@@ -42,10 +49,9 @@ async function readJson(p) {
 
 // Days until 4/20 from today
 function daysUntil420() {
-  const today = new Date();
-  const target = new Date(today.getFullYear(), 3, 20); // April 20
-  if (today > target) target.setFullYear(target.getFullYear() + 1);
-  return Math.ceil((target - today) / 86400000);
+  const target = new Date(NOW.getFullYear(), 3, 20);
+  if (NOW > target) target.setFullYear(target.getFullYear() + 1);
+  return Math.ceil((target - NOW) / 86400000);
 }
 
 // ─── Stats ───────────────────────────────────────────────────────────────────

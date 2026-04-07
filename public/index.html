@@ -544,6 +544,11 @@
     }
     tr.row-sale td  { background: #FFFBEB; }
     tr.row-value td { background: #F0FFF4; }
+    .pagination-bar { display:flex; align-items:center; gap:12px; padding:12px 0; justify-content:center; }
+    .page-btn { background:var(--card-bg); border:1px solid var(--border); border-radius:6px; padding:6px 14px; cursor:pointer; font-size:13px; color:var(--text); }
+    .page-btn:disabled { opacity:.4; cursor:default; }
+    .page-btn:not(:disabled):hover { background:var(--lime); color:var(--hero-bg); }
+    .page-info { font-size:13px; color:var(--text-muted); }
     tr.pre-ground td { opacity: .75; }
     tr.row-vape td { background: #F0FDF9; }
     html.dark tr.row-vape td { background: #022C22; }
@@ -1202,16 +1207,39 @@ function extractStrain(segs) {
   return first;
 }
 function leaflyLink(product) {
-  let strain = product;
-  if (strain.includes(' - - ')) strain = strain.split(' - - ')[0]; // Joint: strain first
-  else if (strain.includes(' \u2013 ')) strain = extractStrain(strain.split(' \u2013 ')); // en dash
-  else if (strain.includes(' \u2014 ')) strain = extractStrain(strain.split(' \u2014 ')); // em dash
-  else if (strain.includes(' | '))       strain = extractStrain(strain.split(' | '));
-  else if (strain.includes(' - '))       strain = strain.split(' - ')[0];
-  // Strip any trailing size/category noise from the extracted strain
-  strain = strain.replace(/\s*\d+\.?\d*g\b.*$/i, '').replace(/\s+(flower|cannabis|indoor|outdoor)\s*$/i, '').trim();
+  if (!product) return '';
+  const clean = displayName(product);
+  if (!clean) return '';
+
+  let strain;
+  if (clean.includes(' - - ')) {
+    strain = clean.split(' - - ')[0].trim();
+  } else {
+    const sep = clean.includes(' \u2013 ') ? ' \u2013 '
+               : clean.includes(' \u2014 ') ? ' \u2014 '
+               : clean.includes(' | ')  ? null  // pipe: always seg[0]
+               : clean.includes(' - ')  ? ' - '
+               : null;
+    const segs = sep ? clean.split(sep).map(s => s.trim()).filter(Boolean)
+                     : clean.includes(' | ') ? clean.split(' | ').map(s => s.trim()).filter(Boolean)
+                     : [clean];
+    if (clean.includes(' | ')) {
+      // pipe format: strain is always first segment
+      strain = segs[0];
+    } else if (segs.length >= 3) {
+      // Brand – Strain – Descriptor: take segment[1]
+      strain = segs[1];
+    } else if (segs.length === 2) {
+      // Two-segment: if first is ALL-CAPS brand, take second
+      strain = /^[A-Z]{2,}(\s+[A-Z]{2,})*$/.test(segs[0]) ? segs[1] : segs[0];
+    } else {
+      strain = clean;
+    }
+  }
+  strain = strain.replace(/\s*\([^)]*\)/g, '').trim();
   const slug = strain.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-  return `<a href="https://www.leafly.com/strains/${slug}" target="_blank" rel="noopener noreferrer" class="leafly-link" title="View on Leafly">↗</a>`;
+  if (!slug || slug.length < 3) return '';
+  return `<a href="https://www.leafly.com/strains/${slug}" target="_blank" rel="noopener noreferrer" class="leafly-link" title="View on Leafly">\u2197</a>`;
 }
 // Strip verbose size/category/% noise from product names for display
 function displayName(product) {
@@ -1250,6 +1278,7 @@ function setSize(el) {
   document.querySelectorAll('#sizeFilter .pill').forEach(p => p.classList.remove('active'));
   el.classList.add('active');
   activeSizeFilter = el.dataset.size;
+  currentPage = 0;
   renderTable();
 }
 function setType(el) {
@@ -1259,18 +1288,21 @@ function setType(el) {
   const isVapes = activeTypeFilter === 'vapes';
   document.getElementById('sizeFilter').style.display    = isVapes ? 'none' : '';
   document.getElementById('vapeSizeInline').style.display = isVapes ? '' : 'none';
+  currentPage = 0;
   renderTable();
 }
 function setNbhd(el) {
   document.querySelectorAll('#nbhdFilter .pill').forEach(p => p.classList.remove('active'));
   el.classList.add('active');
   activeNbhd = el.dataset.nbhd;
+  currentPage = 0;
   renderTable();
 }
 function toggleDealsOnly(el) {
   showDealsOnly = !showDealsOnly;
   el.classList.toggle('active', showDealsOnly);
   el.setAttribute('aria-pressed', String(showDealsOnly));
+  currentPage = 0;
   renderTable();
 }
 function toggleNbhdFilter() {
@@ -1342,6 +1374,7 @@ function computeMedians() {
 
 let _debounceTimer;
 function debounceRender() {
+  currentPage = 0;
   clearTimeout(_debounceTimer);
   _debounceTimer = setTimeout(renderTable, 150);
 }
@@ -1404,6 +1437,7 @@ function buildRows() {
 }
 
 /* ─── Vapes ──────────────────────────────────────── */
+let currentPage = 0; const PAGE_SIZE = 75;
 let activeVapeSizeFilter = 'all';
 let vapeSort = 'price';
 let vapeSortDir = 'asc';
@@ -1412,6 +1446,7 @@ function setVapeSize(btn) {
   document.querySelectorAll('#vapeSizeInline .pill').forEach(p => p.classList.remove('active'));
   btn.classList.add('active');
   activeVapeSizeFilter = btn.dataset.vsize;
+  currentPage = 0;
   renderTable();
 }
 
@@ -1473,10 +1508,13 @@ function renderVapes() {
 
 /* ─── Render table ───────────────────────────────── */
 function renderTable() {
-  const rows  = buildRows();
+  const allRows = buildRows();
+  const totalPages = Math.max(1, Math.ceil(allRows.length / PAGE_SIZE));
+  if (currentPage >= totalPages) currentPage = totalPages - 1;
+  const rows = allRows.slice(currentPage * PAGE_SIZE, (currentPage + 1) * PAGE_SIZE);
   const tbody = document.getElementById('priceBody');
   const meta  = document.getElementById('filterMeta');
-  meta.innerHTML = '<strong>' + rows.length + '</strong> listing' + (rows.length !== 1 ? 's' : '');
+  meta.innerHTML = '<strong>' + allRows.length + '</strong> listing' + (allRows.length !== 1 ? 's' : '');
   if (!rows.length) {
     tbody.innerHTML = `<tr><td colspan="4"><div class="empty-state">
       <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="20" cy="20" r="17"/><path d="M13 27c1.8-3 4.5-5 7-5s5.2 2 7 5"/><circle cx="15" cy="16" r="2" fill="currentColor"/><circle cx="25" cy="16" r="2" fill="currentColor"/></svg>
@@ -1522,6 +1560,31 @@ function renderTable() {
       <td class="product-name">${bestBadge}${dealBadge}${esc(displayName(r.product))}${r.product ? ' ' + leaflyLink(r.product) : ''}</td>
     </tr>${(i + 1) % 12 === 0 ? adRow : ''}`;
   }).join('');
+  renderPagination(allRows.length, totalPages);
+}
+
+/* ─── Pagination ─────────────────────────────────────────────────────── */
+function renderPagination(total, totalPages) {
+  let el = document.getElementById('paginationBar');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'paginationBar';
+    el.className = 'pagination-bar';
+    const tw = document.querySelector('#tab-prices .table-wrap');
+    if (tw) tw.after(el);
+  }
+  if (totalPages <= 1) { el.innerHTML = ''; return; }
+  const start = currentPage * PAGE_SIZE + 1;
+  const end   = Math.min((currentPage + 1) * PAGE_SIZE, total);
+  el.innerHTML = `
+    <button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===0?'disabled':''}>&#8592; Prev</button>
+    <span class="page-info">${start}–${end} of ${total}</span>
+    <button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage>=totalPages-1?'disabled':''}>Next &#8594;</button>`;
+}
+function goPage(n) {
+  currentPage = n;
+  renderTable();
+  document.querySelector('#tab-prices .section-inner')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 /* ─── Stats ──────────────────────────────────────── */
@@ -1549,9 +1612,20 @@ function renderStats() {
   const cheapHalfStore   = halfPool.length   ? allData.find(d => (d.halfOunceListings   ||[]).some(l => l.price===bestHalfPrice   && (wholeHalf.length  ?!l.preGround:true))) : null;
   const cheapEighthStore = eighthPool.length ? allData.find(d => (d.eighthOunceListings ||[]).some(l => l.price===bestEighthPrice && (wholeEighth.length?!l.preGround:true))) : null;
 
+  // Vape stats
+  const allCarts = allData.flatMap(d => (d.cartListings||[]).map(c => ({...c, store: d.name})));
+  const carts05 = allCarts.filter(c => c.size === '0.5g');
+  const carts1g = allCarts.filter(c => c.size === '1g');
+  const best05Price = carts05.length ? Math.min(...carts05.map(c => c.price)) : Infinity;
+  const best1gPrice = carts1g.length ? Math.min(...carts1g.map(c => c.price)) : Infinity;
+  const best05Store = carts05.find(c => c.price === best05Price);
+  const best1gStore = carts1g.find(c => c.price === best1gPrice);
+
   const cards = [
     { label: 'Licensed Stores', value: allData.length, sub: okStores.length + ' with live prices' },
     { label: 'Total Listings',  value: total, sub: allOz.length + ' oz · ' + allHalf.length + ' half · ' + allEighth.length + ' eighth' },
+    ...(best05Price < Infinity ? [{ label: 'Cheapest .5g Cart', value: fmt(best05Price), sub: esc(best05Store?.store || '') }] : []),
+    ...(best1gPrice < Infinity ? [{ label: 'Cheapest 1g Cart',  value: fmt(best1gPrice), sub: esc(best1gStore?.store || '') }] : []),
     ...(bestOzPrice < Infinity     ? [{ label: 'Cheapest 1 oz',  value: fmt(bestOzPrice),     sub: esc(cheapOzStore?.name     || '') }] : []),
     ...(bestHalfPrice < Infinity   ? [{ label: 'Cheapest ½ oz',  value: fmt(bestHalfPrice),   sub: esc(cheapHalfStore?.name   || '') }] : []),
     ...(bestEighthPrice < Infinity ? [{ label: 'Cheapest ⅛ oz',  value: fmt(bestEighthPrice), sub: esc(cheapEighthStore?.name || '') }] : []),
