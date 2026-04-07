@@ -552,6 +552,7 @@
     tr.pre-ground td { opacity: .75; }
     tr.row-vape td { background: #F0FDF9; }
     .pretax-note { font-size: 11px; color: var(--text-muted); white-space: nowrap; align-self: center; }
+    .ppg { display: block; font-size: 9px; font-weight: 400; opacity: .65; margin-top: 1px; }
     .badge-legend { display: flex; flex-wrap: wrap; gap: 10px 20px; font-size: 11px; color: var(--text-muted); padding: 6px 0 2px; }
     .legend-item { display: inline-flex; align-items: center; gap: 5px; }
     html.dark .pretax-note { color: #666; }
@@ -1144,6 +1145,38 @@
         <div class="faq-a">nycweedprice.org is a free community resource. We have no affiliation with any dispensary and accept no payments for listings. Revenue comes from display advertising shown alongside listings.</div>
       </div>
 
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          What is an eighth of weed?
+          <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="2,5 8,11 14,5"/></svg>
+        </button>
+        <div class="faq-a">An eighth is 3.5 grams — one-eighth of an ounce. It's the most popular purchase size in NYC dispensaries and a good starting point for most buyers. Expect 6–10 small bowls or joints from a typical eighth. A quarter (7g) and half-ounce (14g) offer better per-gram value but require a bigger upfront spend.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          Flower vs. vape cart: what's the difference?
+          <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="2,5 8,11 14,5"/></svg>
+        </button>
+        <div class="faq-a"><strong>Flower</strong> is the dried cannabis bud you smoke in a bowl, joint, or blunt. It's the most natural form and the cheapest per session at licensed dispensaries. <strong>Vape carts</strong> (cartridges) are pre-filled oil cartridges used with a 510-thread battery. They're discrete, odor-reduced, and easy to dose — but typically more expensive per gram than flower. If you're new, starting with a small pre-roll or a 0.5g cart is a low-commitment way to try both.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          What should I buy my first time at an NYC dispensary?
+          <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="2,5 8,11 14,5"/></svg>
+        </button>
+        <div class="faq-a">Start small. A single pre-roll (0.5–1g joint) costs $8–15 and lets you try a strain before committing to a larger quantity. If you prefer vaping, a 0.5g cart is similarly low-risk. Avoid buying a full ounce on your first visit — you may not enjoy that strain after the novelty wears off. Most NYC dispensaries have helpful budtenders; tell them your experience level and they'll point you toward something approachable.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          What should I expect at a licensed NYC dispensary?
+          <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="2,5 8,11 14,5"/></svg>
+        </button>
+        <div class="faq-a">Bring a valid government-issued ID proving you're 21+. Most stores have a small retail floor where you browse and speak with a budtender who fulfills your order from a back stockroom — similar to a pharmacy. Purchases are typically bagged in child-resistant packaging with lab test labels. You'll pay at a register; most stores accept cash and debit. Consumption on-site is not permitted — New York allows smoking only in designated consumption lounges and private residences.</div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1538,15 +1571,23 @@ function renderTable() {
     return;
   }
   const adRow = '';
-  const sizeTags = {
-    '1 oz':   '<span class="size-tag tag-oz">1 oz</span>',
-    '1/2 oz': '<span class="size-tag tag-half">&frac12; oz</span>',
-    '1/4 oz': '<span class="size-tag tag-quarter">&frac14; oz</span>',
-    '1/8 oz': '<span class="size-tag tag-eighth">&#8539; oz</span>',
-    '0.5g':   '<span class="size-tag tag-vape">0.5g</span>',
-    '1g':     '<span class="size-tag tag-vape">1g</span>',
-    '2g':     '<span class="size-tag tag-vape">2g</span>',
+  const GRAMS_PER = {'1 oz':28,'1/2 oz':14,'1/4 oz':7,'1/8 oz':3.5,'0.5g':0.5,'1g':1,'2g':2};
+  const SIZE_LABELS = {
+    '1 oz':   {cls:'tag-oz',    label:'1 oz'},
+    '1/2 oz': {cls:'tag-half',  label:'&frac12;&nbsp;oz'},
+    '1/4 oz': {cls:'tag-quarter',label:'&frac14;&nbsp;oz'},
+    '1/8 oz': {cls:'tag-eighth',label:'&#8539;&nbsp;oz'},
+    '0.5g':   {cls:'tag-vape',  label:'0.5g'},
+    '1g':     {cls:'tag-vape',  label:'1g'},
+    '2g':     {cls:'tag-vape',  label:'2g'},
   };
+  function sizeTagHtml(size, price) {
+    const info = SIZE_LABELS[size];
+    const g = GRAMS_PER[size];
+    if (!info) return `<span class="size-tag tag-vape">${esc(size)}</span>`;
+    const ppg = (g && price) ? `<span class="ppg">$${(price/g).toFixed(2)}/g</span>` : '';
+    return `<span class="size-tag ${info.cls}">${info.label}${ppg}</span>`;
+  }
   tbody.innerHTML = rows.map((r, i) => {
     const isBestOz      = !r.vape && r.size === '1 oz'   && r.price === bestOzPrice;
     const isBestHalf    = !r.vape && r.size === '1/2 oz' && r.price === bestHalfPrice;
@@ -1559,7 +1600,7 @@ function renderTable() {
       r.dealTag === 'sale'  ? 'row-sale'  : '',
       r.dealTag === 'value' ? 'row-value' : ''
     ].filter(Boolean).join(' ');
-    const sizeTag  = sizeTags[r.size] || `<span class="size-tag tag-vape">${esc(r.size)}</span>`;
+    const sizeTag  = sizeTagHtml(r.size, r.price);
     const pgBadge  = r.preGround ? '<span class="pg-badge">PG</span>' : '';
     const vapeBadge = r.vape ? '<span class="pg-badge vape-badge">VAPE</span>' : '';
     const bestBadge = (isBestOz||isBestHalf||isBestQuarter||isBestEighth) ? '<span class="best-badge">Best deal</span>' : '';

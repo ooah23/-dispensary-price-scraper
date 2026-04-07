@@ -366,12 +366,195 @@ function generatePage(store, historyPoints, allStores) {
 </html>`;
 }
 
+function generateNeighborhoodPage(neighborhood, nbhdStores, today) {
+  const nbhdSlug = slugify(neighborhood);
+  const url = `${BASE_URL}/neighborhoods/${nbhdSlug}/`;
+
+  // Cheapest ⅛ oz across all stores in neighborhood
+  const cheapEighths = nbhdStores
+    .map(s => s.cheapestEighthOunce?.price)
+    .filter(Boolean);
+  const lowestEighth = cheapEighths.length ? Math.min(...cheapEighths) : null;
+
+  const storeCount = nbhdStores.filter(s => s.status !== "skipped").length;
+  const title = `${neighborhood} Weed Prices — NYC Dispensaries | nycweedprice.org`;
+  const desc = [
+    lowestEighth ? `Cheapest ⅛ oz in ${neighborhood}: $${lowestEighth}.` : "",
+    `Compare flower prices at ${storeCount} licensed dispensar${storeCount === 1 ? "y" : "ies"} in ${neighborhood}, NYC — updated daily.`,
+  ].filter(Boolean).join(" ");
+
+  const storeRows = nbhdStores
+    .filter(s => s.status !== "skipped")
+    .sort((a, b) => (a.cheapestEighthOunce?.price || 999) - (b.cheapestEighthOunce?.price || 999))
+    .map(s => {
+      const ePrice = s.cheapestEighthOunce?.price;
+      const oPrice = s.cheapestOunce?.price;
+      const sSlug  = slugify(s.name);
+      return `<tr>
+        <td class="store-cell"><a href="/dispensaries/${sSlug}/" class="store-link">${esc(s.name)}</a><div class="store-addr">${esc(s.address || "")}</div></td>
+        <td class="price-cell">${ePrice ? `$${ePrice}` : "—"}</td>
+        <td class="price-cell">${oPrice ? `$${oPrice}` : "—"}</td>
+        <td class="menu-cell">${s.menuUrl || s.menuUrlOverride ? `<a href="${esc(s.menuUrl || s.menuUrlOverride)}" target="_blank" rel="noopener noreferrer" class="menu-btn">Menu ↗</a>` : ""}</td>
+      </tr>`;
+    }).join("\n");
+
+  const schemaStores = nbhdStores
+    .filter(s => s.status !== "skipped")
+    .map((s, i) => `      {
+        "@type": "ListItem",
+        "position": ${i + 1},
+        "name": "${esc(s.name)}",
+        "url": "${BASE_URL}/dispensaries/${slugify(s.name)}/"
+      }`).join(",\n");
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>${esc(title)}</title>
+  <meta name="description" content="${esc(desc)}">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="${esc(url)}">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="${esc(title)}">
+  <meta property="og:description" content="${esc(desc)}">
+  <meta property="og:url" content="${esc(url)}">
+  <meta property="og:image" content="https://nycweedprice.org/og-image.png">
+  <meta name="geo.region" content="US-NY">
+  <meta name="geo.placename" content="${esc(neighborhood)}, New York City">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Cannabis Dispensaries in ${esc(neighborhood)}, NYC",
+    "description": "${esc(desc)}",
+    "url": "${esc(url)}",
+    "numberOfItems": ${storeCount},
+    "itemListElement": [
+${schemaStores}
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    (function() {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (stored === 'dark' || (!stored && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <style>
+    :root {
+      --bg: #F7F5F0; --card: #FFFFFF; --text: #1A1A1A;
+      --muted: #6B6B6B; --border: #E8E4DC; --hero-bg: #0D0D0D;
+      --lime: #C8FF00; --lime-dk: #A3CC00; --radius: 4px;
+    }
+    html.dark { --bg: #111; --card: #1A1A1A; --text: #E8E4DC; --muted: #888; --border: #2A2A2A; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; font-size: 15px; background: var(--bg); color: var(--text); line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+    .topbar { background: var(--hero-bg); padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; }
+    .topbar-brand { font-size: 14px; font-weight: 500; color: #E8E4DC; }
+    .topbar-brand .tld { color: var(--lime); }
+    .topbar-back { font-size: 12px; color: #666; letter-spacing: .06em; }
+    .topbar-back:hover { color: #999; }
+    .hero-strip { background: var(--hero-bg); border-bottom: 1px solid #1A1A1A; padding: 32px 24px 28px; }
+    .hero-inner { max-width: 900px; margin: 0 auto; }
+    .hero-label { font-size: 11px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--lime); margin-bottom: 8px; }
+    h1 { font-size: clamp(24px, 4vw, 38px); font-weight: 600; color: #F0EDE6; line-height: 1.15; margin-bottom: 8px; }
+    .hero-sub { font-size: 14px; color: #666; }
+    .stat-pill { display: inline-block; background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: var(--radius); padding: 8px 16px; margin-top: 16px; }
+    .stat-pill .pl { font-size: 10px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: #555; margin-bottom: 2px; }
+    .stat-pill .pv { font-size: 18px; font-weight: 600; color: var(--lime); font-variant-numeric: tabular-nums; }
+    .content { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+    h2 { font-size: 18px; font-weight: 600; margin-bottom: 16px; color: var(--text); }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 40px; }
+    table { width: 100%; border-collapse: collapse; background: var(--card); }
+    thead th { font-size: 10px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+    tbody tr { border-bottom: 1px solid var(--border); }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover td { background: var(--bg); }
+    tbody td { padding: 12px 14px; vertical-align: middle; }
+    .store-cell { min-width: 180px; }
+    .store-link { font-weight: 600; }
+    .store-link:hover { color: var(--lime); }
+    html.dark .store-link:hover { color: var(--lime); }
+    .store-addr { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .price-cell { font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; width: 90px; }
+    .menu-cell { width: 90px; }
+    .menu-btn { display: inline-block; background: var(--lime); color: #0D0D0D; font-size: 11px; font-weight: 600; padding: 5px 10px; border-radius: var(--radius); }
+    .menu-btn:hover { background: var(--lime-dk); }
+    .pretax-note { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+    .back-section { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border); }
+    .back-link { font-size: 13px; color: var(--muted); }
+    .back-link:hover { color: var(--text); }
+    footer { background: var(--hero-bg); border-top: 1px solid #1A1A1A; padding: 28px 24px; margin-top: 40px; }
+    .footer-inner { max-width: 900px; margin: 0 auto; font-size: 12px; color: #555; }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/" class="topbar-brand">nycweedprice<span class="tld">.org</span></a>
+  <a href="/" class="topbar-back">← All Dispensaries</a>
+</div>
+
+<div class="hero-strip">
+  <div class="hero-inner">
+    <div class="hero-label">NYC · ${esc(neighborhood)}</div>
+    <h1>${esc(neighborhood)} Dispensary Prices</h1>
+    <div class="hero-sub">${storeCount} licensed dispensar${storeCount === 1 ? "y" : "ies"} · prices updated daily</div>
+    ${lowestEighth ? `<div class="stat-pill"><div class="pl">Cheapest ⅛ oz</div><div class="pv">$${lowestEighth}</div></div>` : ""}
+  </div>
+</div>
+
+<div class="content">
+  <section>
+    <h2>Today's Prices</h2>
+    <p class="pretax-note">Prices pre-tax · 13–20% added at register</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Dispensary</th>
+            <th>⅛ oz from</th>
+            <th>1 oz from</th>
+            <th>Menu</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${storeRows}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="back-section">
+    <a href="/" class="back-link">← Compare all NYC dispensaries</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    Prices scraped daily from official dispensary menus. Pre-tax estimates. 21+ only.
+    <br>Data last updated: ${new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}.
+  </div>
+</footer>
+
+</body>
+</html>`;
+}
+
 async function run() {
   const raw    = await fs.readFile(PRICES_PATH, "utf8");
   const stores = JSON.parse(raw);
   const history = await loadHistory();
+  const today = new Date().toISOString().split("T")[0];
 
-  const slugs = [];
+  const storeSlugs = [];
 
   for (const store of stores) {
     if (store.status === "skipped") continue;
@@ -380,16 +563,42 @@ async function run() {
     await fs.mkdir(outDir, { recursive: true });
     const html = generatePage(store, history[slug] || [], stores);
     await fs.writeFile(path.join(outDir, "index.html"), html, "utf8");
-    slugs.push(slug);
+    storeSlugs.push(slug);
     console.log(`  ✓ /dispensaries/${slug}/`);
   }
 
+  // Group stores by neighborhood and generate neighborhood pages
+  const nbhdMap = {};
+  for (const store of stores) {
+    if (!store.neighborhood || store.status === "skipped") continue;
+    if (!nbhdMap[store.neighborhood]) nbhdMap[store.neighborhood] = [];
+    nbhdMap[store.neighborhood].push(store);
+  }
+
+  const nbhdSlugs = [];
+  for (const [neighborhood, nbhdStores] of Object.entries(nbhdMap)) {
+    if (nbhdStores.length === 0) continue;
+    const nbhdSlug = slugify(neighborhood);
+    const outDir = path.join(PUBLIC_DIR, "neighborhoods", nbhdSlug);
+    await fs.mkdir(outDir, { recursive: true });
+    const html = generateNeighborhoodPage(neighborhood, nbhdStores, today);
+    await fs.writeFile(path.join(outDir, "index.html"), html, "utf8");
+    nbhdSlugs.push(nbhdSlug);
+    console.log(`  ✓ /neighborhoods/${nbhdSlug}/`);
+  }
+
   // Update sitemap.xml
-  const today = new Date().toISOString().split("T")[0];
-  const storeUrls = slugs.map(slug => `  <url>
+  const storeUrls = storeSlugs.map(slug => `  <url>
     <loc>${BASE_URL}/dispensaries/${slug}/</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
+    <lastmod>${today}</lastmod>
+  </url>`).join("\n");
+
+  const nbhdUrls = nbhdSlugs.map(slug => `  <url>
+    <loc>${BASE_URL}/neighborhoods/${slug}/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
     <lastmod>${today}</lastmod>
   </url>`).join("\n");
 
@@ -400,6 +609,7 @@ async function run() {
     <lastmod>${today}</lastmod>
   </url>`).join("\n");
 
+  const totalPages = 1 + EXTRA_URLS.length + storeSlugs.length + nbhdSlugs.length;
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
@@ -410,11 +620,12 @@ async function run() {
   </url>
 ${extraUrls}
 ${storeUrls}
+${nbhdUrls}
 </urlset>
 `;
   await fs.writeFile(SITEMAP_PATH, sitemap, "utf8");
-  console.log(`  ✓ sitemap.xml updated (${slugs.length + 1 + EXTRA_URLS.length} URLs)`);
-  console.log(`Done. Generated ${slugs.length} sub-pages.`);
+  console.log(`  ✓ sitemap.xml updated (${totalPages} URLs)`);
+  console.log(`Done. Generated ${storeSlugs.length} store pages + ${nbhdSlugs.length} neighborhood pages.`);
 }
 
 run().catch(err => { console.error(err); process.exit(1); });
