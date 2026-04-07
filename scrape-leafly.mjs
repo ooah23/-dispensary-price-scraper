@@ -1111,18 +1111,20 @@ async function extractJointEntries(page, menuUrl) {
   // Wait for JS framework to initialise
   await page.waitForTimeout(3000);
 
-  // If base URL differs from the full URL, now navigate to the flower category
-  if (baseMenuUrl !== menuUrl) {
+  // If base URL differs from the full URL, and API hasn't returned products yet,
+  // navigate to the flower category URL. Skip if API already delivered products.
+  if (baseMenuUrl !== menuUrl && allProducts.length === 0) {
     try {
       await page.goto(menuUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
     } catch {
       // Navigation error on SPA route — stay on base page, products may already be loaded
     }
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(2500);
   }
 
-  // Scroll to trigger lazy-loading
-  for (let i = 0; i < 8; i++) {
+  // Scroll to trigger lazy-loading; stop early if API has already returned products
+  for (let i = 0; i < 6; i++) {
+    if (allProducts.length > 0 && i >= 2) break; // API delivered — minimal scrolling only
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await page.waitForTimeout(800);
   }
@@ -1191,6 +1193,86 @@ async function extractJointEntries(page, menuUrl) {
   // but with longer wait and scroll already done above)
   const bodyText = await page.locator("body").innerText();
   return filterListingEntries(extractPriceEntries(bodyText));
+}
+
+// Joint eCommerce — vape/cart variant of the main extractor.
+// Uses the same API interception but detects cart sizes (0.5g / 1g / 2g) instead of oz.
+async function extractJointCartEntries(page, cartUrl) {
+  const allProducts = [];
+
+  const responseHandler = async (response) => {
+    const url = response.url();
+    if (!url.includes("admin-ajax.php") && !url.includes("joint-ecommerce/v1")) return;
+    try {
+      const data = await response.json();
+      const candidates = [
+        data?.products, data?.data?.products,
+        data?.items, data?.data?.items,
+        data?.hits?.hits?.map(h => h._source ?? h),
+        Array.isArray(data) ? data : null,
+      ];
+      for (const list of candidates) {
+        if (Array.isArray(list) && list.length > 0) { allProducts.push(...list); break; }
+      }
+    } catch { /* non-JSON */ }
+  };
+
+  page.on("response", responseHandler);
+  await gotoWithRetries(page, cartUrl, { attempts: 3, timeout: 90000, waitUntil: "domcontentloaded" });
+  await page.waitForTimeout(3000);
+  for (let i = 0; i < 8; i++) {
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await page.waitForTimeout(800);
+  }
+  page.off("response", responseHandler);
+
+  if (allProducts.length > 0) {
+    const entries = [];
+    for (const product of allProducts) {
+      const name = product.name ?? product.title ?? product.product_name ?? "";
+      if (!name) continue;
+      // Skip anything that looks like flower
+      if (/\bflower\b|\bbud\b|\bpre[- ]?roll\b|\bjoint\b/i.test(name)) continue;
+
+      const variantSources = [
+        ...(Array.isArray(product.variants) ? product.variants : []),
+        ...(Array.isArray(product.product_variants) ? product.product_variants : []),
+      ];
+
+      if (variantSources.length === 0) {
+        // Single-variant: top-level weight
+        const topWeight = product.weight ?? product.size ?? product.unit ?? "";
+        const cartSize = detectCartSize(`${name} ${topWeight}`);
+        if (!cartSize) continue;
+        if (!isCartProduct(name) && cartSize === "1g") continue;
+        const rawPrice = product.sale_price ?? product.price_sale ?? product.price ?? product.base_price;
+        const price = rawPrice != null ? Number(rawPrice) : NaN;
+        if (isNaN(price) || price <= 0) continue;
+        entries.push({ size: cartSize, price, line: name, product: cleanProductName(normalizeWhitespace(name)) });
+        continue;
+      }
+
+      for (const v of variantSources) {
+        const vWeight = v.weight ?? v.size ?? v.option_name ?? v.name ?? v.option ?? "";
+        const cartSize = detectCartSize(`${name} ${vWeight}`);
+        if (!cartSize) continue;
+        if (!isCartProduct(`${name} ${vWeight}`) && cartSize === "1g") continue;
+        const vRawPrice = v.specialPrice ?? v.sale_price ?? v.price_sale ?? v.p ?? v.price ?? v.base_price;
+        const vPrice = vRawPrice != null ? Number(vRawPrice) : NaN;
+        if (isNaN(vPrice) || vPrice <= 0) continue;
+        entries.push({ size: cartSize, price: vPrice, line: name, product: cleanProductName(normalizeWhitespace(name)) });
+      }
+    }
+    if (entries.length > 0) {
+      return Array.from(
+        new Map(entries.filter(e => e.price > 0).map(e => [`${e.size}|${e.price}|${(e.product||'').slice(0,60)}`, e])).values()
+      );
+    }
+  }
+
+  // Fallback: body text
+  const bodyText = await page.locator("body").innerText();
+  return extractCartEntriesFromText(bodyText);
 }
 
 async function extractBlazeEntries(page, menuUrl) {
@@ -1491,7 +1573,9 @@ async function extractGreenGeniusEntries(page, menuUrl) {
   // Scroll to load all paginated products
   let prevCount = 0;
   for (let i = 0; i < 20; i++) {
-    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    try {
+      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    } catch { /* page navigated mid-evaluate, stop scrolling */ break; }
     await page.waitForTimeout(1500);
     if (i >= 5 && allProducts.length === prevCount) break;
     prevCount = allProducts.length;
@@ -1540,7 +1624,7 @@ async function extractGreenGeniusEntries(page, menuUrl) {
   return filterListingEntries(entries);
 }
 
-async function extractDutchieEntries(page, menuUrl) {
+async function extractDutchieEntries(page, menuUrl, { wantCarts = false } = {}) {
   const preresolved = resolveDutchieEmbedUrl(menuUrl);
 
   let embedUrl = preresolved;
@@ -1553,27 +1637,29 @@ async function extractDutchieEntries(page, menuUrl) {
     const iframeSrc = await page.locator('iframe[src*="dutchie.com"]').first().getAttribute("src").catch(() => null);
     if (iframeSrc) {
       embedUrl = iframeSrc.startsWith("http") ? iframeSrc : `https:${iframeSrc}`;
-      // Normalise to categories/flower if not already
-      if (!embedUrl.includes("categories/flower") && !embedUrl.includes("category=flower")) {
+      // For host-page iframes: normalize to the native /categories/CATEGORY path.
+      // The dtche[] query params are host-page JS state and won't work on direct embed nav.
+      try {
         const embedParsed = new URL(embedUrl);
         const slugParts = embedParsed.pathname.split("/").filter(Boolean);
-        // /embedded-menu/SLUG → /embedded-menu/SLUG/categories/flower
-        if (slugParts[0] === "embedded-menu" && slugParts[1] && slugParts.length < 3) {
-          embedUrl = `https://dutchie.com/embedded-menu/${slugParts[1]}/categories/flower`;
+        if (embedParsed.hostname === "dutchie.com" && slugParts[0] === "embedded-menu" && slugParts[1] && slugParts.length <= 2) {
+          const targetCat = wantCarts ? "vaporizers" : "flower";
+          embedUrl = `https://dutchie.com/embedded-menu/${slugParts[1]}/categories/${targetCat}`;
         }
-      }
+      } catch { /* keep as-is */ }
     }
   }
 
   if (!embedUrl) {
     // Dutchie Plus: no iframe, full SPA — page already loaded above.
-    // Scroll and wait for products to render, then parse body text.
     for (let i = 0; i < 8; i++) {
       await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
       await page.waitForTimeout(1200);
     }
     const bodyText = await page.locator("body").innerText();
-    return filterListingEntries(extractPriceEntries(bodyText));
+    return wantCarts
+      ? extractCartEntriesFromText(bodyText)
+      : filterListingEntries(extractPriceEntries(bodyText));
   }
 
   // Scrape the resolved embed URL directly
@@ -1588,13 +1674,47 @@ async function extractDutchieEntries(page, menuUrl) {
         await page.waitForTimeout(1000);
         break;
       }
-    } catch {
-      // No matching button.
-    }
+    } catch { /* no gate */ }
   }
 
-  // Wait for product cards to render and scroll to load all
+  // Wait for initial render
   await page.waitForTimeout(4000);
+
+  // If this is a root embed URL (no category filter), click the target category.
+  // Root embed = dutchie.com/embedded-menu/SLUG with no /categories/ path and no dtche[] params.
+  const isRootEmbed = (() => {
+    try {
+      const u = new URL(embedUrl);
+      if (u.pathname.includes("/categories/")) return false;
+      const qs = u.search;
+      // dtche[category]=flower comes through as dtche%5Bcategory%5D=flower or raw dtche[category]=
+      if (qs.includes("category") || qs.includes("dtche")) return false;
+      return true;
+    } catch { return false; }
+  })();
+  if (isRootEmbed) {
+    const targetCategory = wantCarts ? /^vaporizers?$/i : /^(?:cannabis\s+)?flower$/i;
+    const targetHref = wantCarts ? "categories/vaporizer" : "categories/flower";
+    try {
+      // Try href-based link first (most reliable)
+      const catLink = page.locator(`a[href*="${targetHref}"]`).first();
+      if (await catLink.isVisible({ timeout: 2500 })) {
+        await catLink.click();
+        await page.waitForTimeout(3000);
+      } else {
+        // Fall back to text-based button
+        const catBtn = page.getByRole("button", { name: targetCategory }).or(
+          page.getByText(targetCategory, { exact: true })
+        ).first();
+        if (await catBtn.isVisible({ timeout: 1500 })) {
+          await catBtn.click();
+          await page.waitForTimeout(3000);
+        }
+      }
+    } catch { /* category button not found, continue with full menu */ }
+  }
+
+  // Scroll to load all products
   for (let i = 0; i < 6; i++) {
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await page.waitForTimeout(1000);
@@ -1619,18 +1739,24 @@ async function extractDutchieEntries(page, menuUrl) {
       );
       if (cardTexts.length === 0) continue;
       for (const text of cardTexts) {
-        entries.push(...extractPriceEntries(text));
+        if (wantCarts) entries.push(...extractCartEntriesFromText(text));
+        else entries.push(...extractPriceEntries(text));
       }
       if (entries.length > 0) break;
-    } catch {
-      // selector not found
-    }
+    } catch { /* selector not found */ }
   }
 
   // Always also grab full body text
   const bodyText = await page.locator("body").innerText();
-  entries.push(...extractPriceEntries(bodyText));
+  if (wantCarts) entries.push(...extractCartEntriesFromText(bodyText));
+  else entries.push(...extractPriceEntries(bodyText));
 
+  if (wantCarts) {
+    // Deduplicate cart entries
+    return Array.from(
+      new Map(entries.filter(e => e.price > 0).map(e => [`${e.size}|${e.price}|${(e.product||'').slice(0,60)}`, e])).values()
+    );
+  }
   return filterListingEntries(entries);
 }
 
@@ -1959,15 +2085,25 @@ async function scrapeStore(page, dispensary) {
   // ── Cart / vape scrape ─────────────────────────────────────────────────────
   if (result.cartMenuUrl) {
     try {
-      await gotoWithRetries(page, result.cartMenuUrl, { attempts: 2, timeout: 60000, waitUntil: "domcontentloaded" });
-      await page.waitForTimeout(2500);
-      // Scroll to trigger lazy-load
-      for (let i = 0; i < 4; i++) {
-        await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-        await page.waitForTimeout(600);
+      const cartProvider = urlProvider(result.cartMenuUrl);
+      if (cartProvider === "joint") {
+        // Joint platform: use API interception for accurate cart sizes
+        result.cartListings = await extractJointCartEntries(page, result.cartMenuUrl);
+      } else if (cartProvider === "dutchie") {
+        // Dutchie embedded menus: click Vaporizers category
+        result.cartListings = await extractDutchieEntries(page, result.cartMenuUrl, { wantCarts: true });
+      } else {
+        // Blaze, CONBUD, Gotham, WooCommerce, generic: navigate + age gate + scroll + body text
+        await gotoWithRetries(page, result.cartMenuUrl, { attempts: 2, timeout: 60000, waitUntil: "domcontentloaded" });
+        await page.waitForTimeout(2500);
+        if (cartProvider === "blaze") await acceptBlazeAgeGate(page);
+        for (let i = 0; i < 8; i++) {
+          await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+          await page.waitForTimeout(700);
+        }
+        const cartText = await page.locator("body").innerText();
+        result.cartListings = extractCartEntriesFromText(cartText);
       }
-      const cartText = await page.locator("body").innerText();
-      result.cartListings = extractCartEntriesFromText(cartText);
     } catch {
       result.cartListings = [];
     }
@@ -1989,7 +2125,7 @@ async function main() {
 
   const DEFAULT_STORE_TIMEOUT_MS = 30000;
   const SLOW_STORE_TIMEOUT_MS = 60000;
-  const SLOW_STORES = new Set(["New Amsterdam", "Mighty Lucky", "Green Genius", "Blue Forest Farms", "KushKlub NYC", "Dazed", "Smacked Village", "The Travel Agency", "VERDI"]);
+  const SLOW_STORES = new Set(["New Amsterdam", "Mighty Lucky", "Green Genius", "Blue Forest Farms", "KushKlub NYC", "Dazed", "Smacked Village", "The Travel Agency", "VERDI", "CONBUD", "The Alchemy (Flatiron)", "The Alchemy (Chelsea)", "Midnight Moon", "Stoops NYC"]);
 
   const results = [];
   for (const dispensary of dispensaries) {
