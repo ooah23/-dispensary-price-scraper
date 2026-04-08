@@ -21,9 +21,23 @@
       },
       {
         "size": "1 oz",
+        "price": 112,
+        "line": "28.0 grams",
+        "product": "SMOAKLAND | JACK THE RIPPER",
+        "preGround": false
+      },
+      {
+        "size": "1 oz",
+        "price": 112,
+        "line": "28.0 grams",
+        "product": "SMOAKLAND | SUPERMAN GLUE",
+        "preGround": false
+      },
+      {
+        "size": "1 oz",
         "price": 220,
-        "line": "RYTHM | GRANNY CANDY - 28G - FLOWER",
-        "product": "RYTHM | GRANNY CANDY",
+        "line": "DANK - NUCLEAR COOKIES - 28G - FLOWER",
+        "product": "DANK - NUCLEAR COOKIES",
         "preGround": false
       }
     ],
@@ -48,17 +62,30 @@
         "line": "14.0 grams",
         "product": "BACK HOME CANNABIS COMPANY | SUPER LEMON HAZE",
         "preGround": false
-      }
-    ],
-    "quarterOunceListings": [
+      },
       {
-        "size": "1/4 oz",
-        "price": 55,
-        "line": "7.0 grams",
-        "product": "BOUKET | CAP JUNKY (SMALLS)",
+        "size": "1/2 oz",
+        "price": 110,
+        "line": "14.0 grams",
+        "product": "FIND | WHITE HOT GUAVA",
+        "preGround": false
+      },
+      {
+        "size": "1/2 oz",
+        "price": 125,
+        "line": "14.0 grams",
+        "product": "DANK | FABULOSO",
+        "preGround": false
+      },
+      {
+        "size": "1/2 oz",
+        "price": 110,
+        "line": "14.0 grams",
+        "product": "FIND | AGENT Z",
         "preGround": false
       }
     ],
+    "quarterOunceListings": [],
     "eighthOunceListings": [
       {
         "size": "1/8 oz",
@@ -69,80 +96,91 @@
       },
       {
         "size": "1/8 oz",
+        "price": 50,
+        "line": "1/8 oz",
+        "product": "RYTHM | JACKS DELIGHT",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 40,
+        "line": "3.5 grams",
+        "product": "FLORIST FARMS | APPLE FRITTER",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
         "price": 35,
+        "line": "3.5 grams",
+        "product": "KINGS & QUEENS | GARY PAYTON",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 45,
+        "line": "3.5 grams",
+        "product": "EDIE PARKER | SUGAR BREATH 3.5G -",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 45,
+        "line": "3.5 grams",
+        "product": "EDIE PARKER | OG KUSH 3.5G -",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 36,
         "line": "1/8 oz",
-        "product": "FIND - GUSH MINTS",
+        "product": "DANK | PURPLE PANTY DROPPER",
         "preGround": false
       },
       {
         "size": "1/8 oz",
         "price": 44,
         "line": "1/8 oz",
-        "product": "ROLLING GREEN CANNABIS | DANTE'S RAINBOW",
+        "product": "CHUNKY BLACK | BLUE RUNTZ",
         "preGround": false
       },
       {
         "size": "1/8 oz",
-        "price": 44,
+        "price": 48,
         "line": "1/8 oz",
-        "product": "ELECTRALEAF - BISCOTTI",
+        "product": "REC ROOTS - SHERB CREAM PIE",
         "preGround": false
       },
       {
         "size": "1/8 oz",
-        "price": 39,
+        "price": 45,
         "line": "1/8 oz",
-        "product": "NANTICOKE | LEMON CHERRY GELATO",
+        "product": "GRASSROOTS | MOONBEAM GELATO",
         "preGround": false
       },
       {
         "size": "1/8 oz",
         "price": 40,
         "line": "1/8 oz",
-        "product": "FLORIST FARMS | PRIVATE PARTY",
+        "product": "AETERNA CANNABIS | RS-11",
         "preGround": false
       },
       {
         "size": "1/8 oz",
-        "price": 50,
+        "price": 50.14,
         "line": "1/8 oz",
-        "product": "ZIZZLE - BUBBLE BATH",
+        "product": "TO THE MOON - STAR BOYS",
         "preGround": false
       },
       {
         "size": "1/8 oz",
-        "price": 50,
+        "price": 50.14,
         "line": "1/8 oz",
-        "product": "RYTHM | TAFFY TWIST",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 50,
-        "line": "1/8 oz",
-        "product": "MILKWEED | GALACTIC WARHEADS",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 50,
-        "line": "1/8 oz",
-        "product": "MILKWEED | CATSKILL CANDY",
+        "product": "TO THE MOON - GUAVATRON",
         "preGround": false
       }
     ],
     "deals": [],
     "cartListings": [
-      {
-        "product": "Ayrloom | Lime Haze All-in-One",
-        "size": "1g",
-        "price": 45
-      },
-      {
-        "product": "Ayrloom | Lychee Dream AIO",
-        "size": "2g",
-        "price": 75
-      },
       {
         "product": "Florist Farms | Blue Dream All-In-One",
         "size": "1g",
@@ -165,6 +203,11 @@
       },
       {
         "product": "PAX ERA | Jack Herer (Live Rosin with Diamonds) Pod",
+        "size": "1g",
+        "price": 88
+      },
+      {
+        "product": "PAX ERA | Blue Dream (Live Rosin with Diamonds) Pod",
         "size": "1g",
         "price": 88
       },
@@ -219,11 +262,6 @@
         "price": 50
       },
       {
-        "product": "Fernway | Red Headed Stranger Cartridge",
-        "size": "1g",
-        "price": 50
-      },
-      {
         "product": "Fernway | Berry Haze Traveler Pro",
         "size": "2g",
         "price": 83
@@ -254,12 +292,17 @@
         "price": 45
       },
       {
-        "product": "PAX | Blueberry Haze (High Purity) Pod",
+        "product": "PAX ERA | Blueberry Haze (High Purity) Pod",
         "size": "1g",
         "price": 55
       },
       {
         "product": "PAX ERA | Purple Afghani (Live Rosin with Diamonds) Pod",
+        "size": "1g",
+        "price": 88
+      },
+      {
+        "product": "PAX TRIP | Purple Afghani (Live Rosin with Diamonds) All-in-One",
         "size": "1g",
         "price": 88
       },
@@ -274,16 +317,6 @@
         "price": 65
       },
       {
-        "product": "Fernway | Mochi (LIVE) Traveler Pro",
-        "size": "1g",
-        "price": 61
-      },
-      {
-        "product": "Fernway | Glass Slipper (LIVE) Traveler Pro",
-        "size": "1g",
-        "price": 61
-      },
-      {
         "product": "Fernway | Purple Sunset (LIVE) Traveler Pro",
         "size": "1g",
         "price": 61
@@ -294,14 +327,24 @@
         "price": 56
       },
       {
-        "product": "Boutiq | Black - Z X Z Limeade Dual Chamber Liquid Diamonds",
-        "size": "2g",
-        "price": 80
+        "product": "Fernway | Mochi (LIVE) Traveler Pro",
+        "size": "1g",
+        "price": 61
+      },
+      {
+        "product": "Fernway | Glass Slipper (LIVE) Traveler Pro",
+        "size": "1g",
+        "price": 61
       },
       {
         "product": "Boutiq | Lava Mintz x 41 Dual Chamber Liquid Diamonds",
         "size": "2g",
         "price": 110
+      },
+      {
+        "product": "Boutiq | Black - Z X Z Limeade Dual Chamber Liquid Diamonds",
+        "size": "2g",
+        "price": 80
       },
       {
         "product": "Canna Cure | Sour Diesel Cart",
@@ -324,7 +367,7 @@
         "price": 40
       },
       {
-        "product": "Boutiq | Grape Ape Cartridge",
+        "product": "Boutiq | Blinker Berry Cartridge",
         "size": "1g",
         "price": 40
       },
@@ -334,17 +377,12 @@
         "price": 40
       },
       {
+        "product": "Boutiq | Grape Ape Cartridge",
+        "size": "1g",
+        "price": 40
+      },
+      {
         "product": "Boutiq | Pink Haze Cartridge",
-        "size": "1g",
-        "price": 40
-      },
-      {
-        "product": "Boutiq | Blinker Berry Cartridge",
-        "size": "1g",
-        "price": 40
-      },
-      {
-        "product": "Boutiq | Lime Haze Cartridge",
         "size": "1g",
         "price": 40
       },
@@ -374,12 +412,7 @@
         "price": 50
       },
       {
-        "product": "Select | Legacy Series Briq 2 | Pink Lemonade - AIO",
-        "size": "1g",
-        "price": 55
-      },
-      {
-        "product": "Select | Legacy Series Briq 2 | Ruby Red Diesel - AIO",
+        "product": "Select | Legacy Series Briq 2 | Acapulco Gold - AIO",
         "size": "2g",
         "price": 83
       },
@@ -389,17 +422,12 @@
         "price": 55
       },
       {
-        "product": "Select | Legacy Series Briq 2 | Northern Lights - AIO",
-        "size": "1g",
-        "price": 55
+        "product": "Select | Legacy Series Briq 2 | Ruby Red Diesel - AIO",
+        "size": "2g",
+        "price": 83
       },
       {
         "product": "Select | Legacy Series Briq 2 | Huckleberry Jam - AIO",
-        "size": "1g",
-        "price": 55
-      },
-      {
-        "product": "Select | Legacy Series Briq 2 | Sweet Strawberry - AIO",
         "size": "1g",
         "price": 55
       },
@@ -414,7 +442,12 @@
         "price": 55
       },
       {
-        "product": "Select | Flavor Series Briq 2 | Grape Ape - AIO",
+        "product": "Select | Legacy Series Briq 2 | Pink Lemonade - AIO",
+        "size": "1g",
+        "price": 55
+      },
+      {
+        "product": "Select | Flavor Series Briq 2 | Raspberry Parfait - AIO",
         "size": "2g",
         "price": 83
       },
@@ -424,7 +457,7 @@
         "price": 83
       },
       {
-        "product": "Select | Flavor Series Briq 2 | Raspberry Parfait - AIO",
+        "product": "Select | Flavor Series Briq 2 | Grape Ape - AIO",
         "size": "2g",
         "price": 83
       },
@@ -459,12 +492,12 @@
         "price": 55
       },
       {
-        "product": "PAX ERA | White Widow (High Purity) Pod",
+        "product": "PAX ERA | Blueberry Haze (High Purity) Pod",
         "size": "2g",
         "price": 80
       },
       {
-        "product": "PAX ERA | Blueberry Haze (High Purity) Pod",
+        "product": "PAX ERA | White Widow (High Purity) Pod",
         "size": "2g",
         "price": 80
       },
@@ -514,7 +547,12 @@
         "price": 70
       },
       {
-        "product": "PAX TRIP | Durban Poison (Diamonds) AIO",
+        "product": "PAX TRIP | Superboof (Diamonds) AIO",
+        "size": "1g",
+        "price": 75
+      },
+      {
+        "product": "PAX TRIP | Blue Gelato (Diamonds) AIO",
         "size": "1g",
         "price": 75
       },
@@ -524,24 +562,19 @@
         "price": 63
       },
       {
-        "product": "PAX TRIP | Blue Gelato (Diamonds) AIO",
+        "product": "PAX TRIP | Durban Poison (Diamonds) AIO",
         "size": "1g",
         "price": 75
-      },
-      {
-        "product": "PAX Trip | Superboof (Diamonds) AIO",
-        "size": "1g",
-        "price": 75
-      },
-      {
-        "product": "Jaunty | Gelato 33 (Live Resin) Cartridge",
-        "size": "1g",
-        "price": 60
       },
       {
         "product": "Jaunty | Rainbow Belts Cartridge",
         "size": "1g",
         "price": 45
+      },
+      {
+        "product": "Jaunty | Gelato 33 (Live Resin) Cartridge",
+        "size": "1g",
+        "price": 60
       },
       {
         "product": "Jaunty | Fire OG Cartridge",
@@ -559,16 +592,6 @@
         "price": 78
       },
       {
-        "product": "Boutiq | Sour Tangie Cartridge",
-        "size": "1g",
-        "price": 40
-      },
-      {
-        "product": "Boutiq | Starfruit Cartridge",
-        "size": "1g",
-        "price": 40
-      },
-      {
         "product": "Boutiq | Purple Papaya x Blue Berriez x RZ-11 (IxIxI) Triple Chamber AIO",
         "size": "2g",
         "price": 80
@@ -579,12 +602,12 @@
         "price": 40
       },
       {
-        "product": "Boutiq | Mojito Cartridge",
+        "product": "Boutiq | Sour Tangie Cartridge",
         "size": "1g",
         "price": 40
       },
       {
-        "product": "Boutiq | Pink-Z Cartridge",
+        "product": "Boutiq | Starfruit Cartridge",
         "size": "1g",
         "price": 40
       },
@@ -594,12 +617,22 @@
         "price": 40
       },
       {
-        "product": "Boutiq | Blue Mango Cartridge",
+        "product": "Boutiq | Pink-Z Cartridge",
         "size": "1g",
         "price": 40
       },
       {
-        "product": "Boutiq | Blue Matcha Cartridge",
+        "product": "Boutiq | Mojito Cartridge",
+        "size": "1g",
+        "price": 40
+      },
+      {
+        "product": "Boutiq | Blue Haze Cartridge",
+        "size": "1g",
+        "price": 40
+      },
+      {
+        "product": "Boutiq | Blue Mango Cartridge",
         "size": "1g",
         "price": 40
       },
@@ -609,7 +642,7 @@
         "price": 40
       },
       {
-        "product": "Boutiq | Blue Haze Cartridge",
+        "product": "Boutiq | Blue Matcha Cartridge",
         "size": "1g",
         "price": 40
       },
@@ -649,17 +682,17 @@
         "price": 60
       },
       {
-        "product": "Woodstock | Blue Mimosa Live Resin Cartridge",
-        "size": "1g",
-        "price": 54
-      },
-      {
         "product": "Woodstock | Gelato Mintz Live Resin Cartridge",
         "size": "1g",
         "price": 54
       },
       {
-        "product": "Rythm | Watermelon Z (Liquid Diamonds) AIO",
+        "product": "Woodstock | Blue Mimosa Live Resin Cartridge",
+        "size": "1g",
+        "price": 54
+      },
+      {
+        "product": "Rythm | Blue Dream (Liquid Diamonds) AIO",
         "size": "1g",
         "price": 65
       },
@@ -669,7 +702,7 @@
         "price": 65
       },
       {
-        "product": "Rythm | Blue Dream (Liquid Diamonds) AIO",
+        "product": "Rythm | Watermelon Z (Liquid Diamonds) AIO",
         "size": "1g",
         "price": 65
       },
@@ -679,22 +712,12 @@
         "price": 78
       },
       {
-        "product": "Nanti Nitro - Cosmic Clusterz - AIO",
+        "product": "Nanti Nitro - Pineapple Whip - AIO",
         "size": "2g",
-        "price": 78
-      },
-      {
-        "product": "Nanti Nitro | Orange Punch All-In-One",
-        "size": "2g",
-        "price": 78
+        "price": 75
       },
       {
         "product": "Nanti Nitro - Red Twist - AIO",
-        "size": "2g",
-        "price": 78
-      },
-      {
-        "product": "Nanti Nitro - Bubble Melon - AIO",
         "size": "2g",
         "price": 78
       },
@@ -704,9 +727,9 @@
         "price": 78
       },
       {
-        "product": "Nanticoke | Permafrost All-in-One",
-        "size": "1g",
-        "price": 50
+        "product": "Nanti Nitro - Bubble Melon - AIO",
+        "size": "2g",
+        "price": 78
       },
       {
         "product": "Nanticoke | X-Series Shot Caller x Block Monster All-in-One",
@@ -714,7 +737,7 @@
         "price": 50
       },
       {
-        "product": "Nanticoke | Amnesia Haze All-in-One",
+        "product": "Nanticoke | Permafrost All-in-One",
         "size": "1g",
         "price": 50
       },
@@ -729,12 +752,22 @@
         "price": 50
       },
       {
-        "product": "Ayrloom | Pink Rozay AIO",
+        "product": "Nanticoke | Amnesia Haze All-in-One",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Ayrloom | Cereal Milk All-In-One",
         "size": "2g",
         "price": 75
       },
       {
-        "product": "Ayrloom | Cereal Milk All-In-One",
+        "product": "Ayrloom | Lychee Dream AIO",
+        "size": "2g",
+        "price": 75
+      },
+      {
+        "product": "Ayrloom | Pink Rozay AIO",
         "size": "2g",
         "price": 75
       },
@@ -779,17 +812,12 @@
         "price": 40
       },
       {
-        "product": "New York Honey | Key Lime Pie All-in-One",
-        "size": "2g",
-        "price": 68
-      },
-      {
         "product": "New York Honey | Golden Ticket Cartridge",
         "size": "1g",
         "price": 30
       },
       {
-        "product": "New York Honey | Apple Berry All-in-One",
+        "product": "New York Honey | Key Lime Pie All-in-One",
         "size": "2g",
         "price": 68
       },
@@ -799,17 +827,22 @@
         "price": 68
       },
       {
+        "product": "New York Honey | Apple Berry All-in-One",
+        "size": "2g",
+        "price": 68
+      },
+      {
         "product": "Bloom | King Louis Classic All-In-One",
         "size": "1g",
         "price": 50
       },
       {
-        "product": "Edie Parker | For a Good Night Lavender Vanilla Cartridge",
+        "product": "Edie Parker | For a Good Morning Maui Mango Cartridge",
         "size": "1g",
         "price": 42
       },
       {
-        "product": "Edie Parker | For a Good Morning Maui Mango Cartridge",
+        "product": "Edie Parker | For a Good Night Lavender Vanilla Cartridge",
         "size": "1g",
         "price": 42
       },
@@ -837,17 +870,247 @@
         "product": "Fernway | Granddaddy Purple Traveler AIO",
         "size": "1g",
         "price": 50
+      },
+      {
+        "product": "Jaunty | Nimbus Snacks (Live Resin) Cartridge",
+        "size": "1g",
+        "price": 60
+      },
+      {
+        "product": "Jaunty | Heir Heads (Live Resin) Cartridge",
+        "size": "1g",
+        "price": 60
+      },
+      {
+        "product": "Holiday | Float - All-in-One",
+        "size": "0.5g",
+        "price": 32
+      },
+      {
+        "product": "Holiday | Float - All-in-One",
+        "size": "1g",
+        "price": 52
+      },
+      {
+        "product": "Rythm | Durban Z Live Sauce - AIO",
+        "size": "0.5g",
+        "price": 40
+      },
+      {
+        "product": "PAX TRIP | Sour Diesel All-in-One",
+        "size": "2g",
+        "price": 85
+      },
+      {
+        "product": "PAX TRIP | White Widow (High Purity) AIO",
+        "size": "2g",
+        "price": 85
+      },
+      {
+        "product": "PAX TRIP | London Pound Cake (High Purity) AIO",
+        "size": "2g",
+        "price": 85
+      },
+      {
+        "product": "Jaunty | Durban Poison Cartridge",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "GHOST | RS-11 All-In-One",
+        "size": "2g",
+        "price": 80
+      },
+      {
+        "product": "Ayrloom | Cran Haze All-in-One",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Heavy Hitters | Power Plant - Sativa - Live Rosin AIO",
+        "size": "1g",
+        "price": 100
+      },
+      {
+        "product": "Heavy Hitters | Garlic Spuds - Hybrid - Live Rosin AIO",
+        "size": "1g",
+        "price": 100
+      },
+      {
+        "product": "Fernway | Cranberry Jam Cartridge",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Fernway | White Widow Traveler AIO",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Fernway | Stonefruit Traveler Pro",
+        "size": "2g",
+        "price": 83
+      },
+      {
+        "product": "Fernway | King Louie Traveler AIO",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Smoothie Bar | Papaya X Lemonade (Indica/Sativa) - Dual Chamber",
+        "size": "2g",
+        "price": 80
+      },
+      {
+        "product": "Smoothie Bar | Truffle Butter X Blue Dream (Indica/Sativa) - Dual Chamber",
+        "size": "2g",
+        "price": 80
+      },
+      {
+        "product": "Smoothie Bar | Black Cherry Punch X F1 (Indica/Sativa) - Dual Chamber",
+        "size": "2g",
+        "price": 80
+      },
+      {
+        "product": "Woodstock | Nimbus Snacks Live Resin AIO",
+        "size": "0.5g",
+        "price": 36
+      },
+      {
+        "product": "PAX TRIP | Permanent Marker (Live Rosin with Diamonds) AIO",
+        "size": "1g",
+        "price": 88
+      },
+      {
+        "product": "PAX | Pineapple Express (Live Rosin with Diamonds) AIO",
+        "size": "1g",
+        "price": 88
+      },
+      {
+        "product": "PAX Trip | Northern Lights (Live Rosin with Diamonds) AIO",
+        "size": "1g",
+        "price": 88
+      },
+      {
+        "product": "MFNY | Turbo Blueberry Live Resin All-In-One",
+        "size": "0.5g",
+        "price": 48
+      },
+      {
+        "product": "MFNY | White Fire OG Live Resin All-In-One",
+        "size": "0.5g",
+        "price": 45
+      },
+      {
+        "product": "Nanticoke | X-Series Rasp Punch X Chem Dog All-in-One",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "PAX Trip | Sour Diesel (High Purity) AIO",
+        "size": "1g",
+        "price": 55
+      },
+      {
+        "product": "Fernway | Space Queen Traveler Pro",
+        "size": "2g",
+        "price": 83
+      },
+      {
+        "product": "Fernway | GG4 Cartridge",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "B Noble Briq | NY Sour Diesel All-in-One",
+        "size": "2g",
+        "price": 80
+      },
+      {
+        "product": "Rythm | Black Maple Live Sauce All-in-One",
+        "size": "2g",
+        "price": 85
+      },
+      {
+        "product": "Florist Farms | Gorilla Glue Cartridge",
+        "size": "1g",
+        "price": 40
+      },
+      {
+        "product": "Bloom | Skywalker Classic Surf AIO",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "MFNY | Candy Rain Live Resin Cartridges - 2pk x 0.5g - Vape",
+        "size": "0.5g",
+        "price": 78
+      },
+      {
+        "product": "Fernway | Sour Diesel Traveler AIO",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Fernway | White Widow Traveler Pro",
+        "size": "2g",
+        "price": 83
+      },
+      {
+        "product": "Fernway | Alpine Strawberry Traveler Pro",
+        "size": "2g",
+        "price": 83
+      },
+      {
+        "product": "Fernway | Pineapple Express Traveler AIO",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Fernway - Cuban Black Haze Traveler AIO",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Rythm | Brownie Scout Live Resin All-in-One",
+        "size": "2g",
+        "price": 85
+      },
+      {
+        "product": "PAX ERA | Strawberry Cough (High Purity) Pod",
+        "size": "1g",
+        "price": 55
+      },
+      {
+        "product": "PAX ERA | Blue Zushi (High Purity) Pod",
+        "size": "1g",
+        "price": 55
+      },
+      {
+        "product": "PAX ERA | Forbidden Fruit (High Purity) Pod",
+        "size": "1g",
+        "price": 55
+      },
+      {
+        "product": "PAX TRIP | Super Lemon Haze (High Purity) AIO",
+        "size": "1g",
+        "price": 55
+      },
+      {
+        "product": "PAX TRIP | White Widow (High Purity) AIO",
+        "size": "1g",
+        "price": 55
       }
     ],
     "error": null,
-    "totalProducts": 16,
-    "flowerProducts": 16,
+    "totalProducts": 23,
+    "flowerProducts": 23,
     "provider": "blaze",
     "cheapestOunce": {
       "size": "1 oz",
-      "price": 220,
-      "line": "RYTHM | 95 COOKIES - 28G FLOWER",
-      "product": "RYTHM | 95 COOKIES",
+      "price": 112,
+      "line": "28.0 grams",
+      "product": "SMOAKLAND | JACK THE RIPPER",
       "preGround": false
     },
     "cheapestHalfOunce": {
@@ -857,25 +1120,19 @@
       "product": "ITHACA CULTIVATED | SOUR DIESEL",
       "preGround": false
     },
-    "cheapestQuarterOunce": {
-      "size": "1/4 oz",
-      "price": 55,
-      "line": "7.0 grams",
-      "product": "BOUKET | CAP JUNKY (SMALLS)",
-      "preGround": false
-    },
+    "cheapestQuarterOunce": null,
     "cheapestEighthOunce": {
       "size": "1/8 oz",
       "price": 35,
-      "line": "1/8 oz",
-      "product": "FIND - GUSH MINTS",
+      "line": "3.5 grams",
+      "product": "KINGS & QUEENS | GARY PAYTON",
       "preGround": false
     },
     "cheapestOunceFlower": {
       "size": "1 oz",
-      "price": 220,
-      "line": "RYTHM | 95 COOKIES - 28G FLOWER",
-      "product": "RYTHM | 95 COOKIES",
+      "price": 112,
+      "line": "28.0 grams",
+      "product": "SMOAKLAND | JACK THE RIPPER",
       "preGround": false
     },
     "cheapestHalfOunceFlower": {
@@ -885,18 +1142,12 @@
       "product": "ITHACA CULTIVATED | SOUR DIESEL",
       "preGround": false
     },
-    "cheapestQuarterOunceFlower": {
-      "size": "1/4 oz",
-      "price": 55,
-      "line": "7.0 grams",
-      "product": "BOUKET | CAP JUNKY (SMALLS)",
-      "preGround": false
-    },
+    "cheapestQuarterOunceFlower": null,
     "cheapestEighthOunceFlower": {
       "size": "1/8 oz",
       "price": 35,
-      "line": "1/8 oz",
-      "product": "FIND - GUSH MINTS",
+      "line": "3.5 grams",
+      "product": "KINGS & QUEENS | GARY PAYTON",
       "preGround": false
     }
   },
@@ -992,29 +1243,15 @@
       {
         "size": "1/8 oz",
         "price": 50,
-        "line": "Hi - The Wrap Up - Premium Flower 1/8oz",
-        "product": "Hi - The Wrap Up - Premium",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 50,
         "line": "Hi - Caviar Chop Cheese - Premium Flower 1/8oz",
         "product": "Hi - Caviar Chop Cheese - Premium",
         "preGround": false
       },
       {
         "size": "1/8 oz",
-        "price": 35,
-        "line": "Loud Buzz - Apple Fritter - Flower 1/8oz",
-        "product": "Loud Buzz - Apple Fritter -",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 35,
-        "line": "Loud Buzz - Gelato 41 - Flower 1/8oz",
-        "product": "Loud Buzz - Gelato 41 -",
+        "price": 51,
+        "line": "Left Coast - Blue Dream - Premium Indoor Flower 1/8oz",
+        "product": "Left Coast - Blue Dream - Premium Indoor",
         "preGround": false
       },
       {
@@ -1043,6 +1280,13 @@
         "price": 51,
         "line": "Left Coast - Sour Diesel - Premium Indoor Flower 1/8oz",
         "product": "Left Coast - Sour Diesel - Premium Indoor",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 50,
+        "line": "Hi - The Wrap Up - Premium Flower 1/8oz",
+        "product": "Hi - The Wrap Up - Premium",
         "preGround": false
       }
     ],
@@ -1170,8 +1414,8 @@
       }
     ],
     "error": null,
-    "totalProducts": 18,
-    "flowerProducts": 18,
+    "totalProducts": 17,
+    "flowerProducts": 17,
     "provider": "joint",
     "cheapestOunce": {
       "size": "1 oz",
@@ -1255,13 +1499,6 @@
       {
         "size": "1/2 oz",
         "price": 132,
-        "line": "$132.00 | 14g",
-        "product": "Dark Heart Genetics | Foreign Kush Mints",
-        "preGround": false
-      },
-      {
-        "size": "1/2 oz",
-        "price": 132,
         "line": "Dark Heart Genetics X Delphi Diesel 14g",
         "product": "Dark Heart Genetics X Delphi Diesel",
         "preGround": false
@@ -1275,9 +1512,9 @@
       },
       {
         "size": "1/2 oz",
-        "price": 110,
-        "line": "$110.00 | 14g",
-        "product": "FIND. Pomme Jelly",
+        "price": 132,
+        "line": "$132.00 | 14g",
+        "product": "Dark Heart Genetics | Foreign Kush Mints",
         "preGround": false
       },
       {
@@ -1285,6 +1522,13 @@
         "price": 110,
         "line": "$110.00 | 14g",
         "product": "FIND. Muffin Bomb",
+        "preGround": false
+      },
+      {
+        "size": "1/2 oz",
+        "price": 110,
+        "line": "$110.00 | 14g",
+        "product": "FIND. Pomme Jelly",
         "preGround": false
       },
       {
@@ -1300,21 +1544,14 @@
         "size": "1/4 oz",
         "price": 70,
         "line": "$70.00 | 7g",
-        "product": "Dark Heart Genetics | Foreign Kush Mints 7g | Smalls",
+        "product": "Dark Heart Genetics | Titan Express | Smalls",
         "preGround": false
       },
       {
         "size": "1/4 oz",
         "price": 70,
         "line": "$70.00 | 7g",
-        "product": "Dark Heart Genetics | Titan Express | Smalls",
-        "preGround": false
-      },
-      {
-        "size": "1/4 oz",
-        "price": 60,
-        "line": "$60.00 | 7g",
-        "product": "FIND. Chemgurl",
+        "product": "Dark Heart Genetics | Foreign Kush Mints 7g | Smalls",
         "preGround": false
       },
       {
@@ -1330,23 +1567,16 @@
         "line": "$65.00 | 7g",
         "product": "FIND. True Og",
         "preGround": false
+      },
+      {
+        "size": "1/4 oz",
+        "price": 60,
+        "line": "$60.00 | 7g",
+        "product": "FIND. Chemgurl",
+        "preGround": false
       }
     ],
     "eighthOunceListings": [
-      {
-        "size": "1/8 oz",
-        "price": 60,
-        "line": "$60.00 | 3.5g",
-        "product": "Foreign Kush Mints | Infused",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 40,
-        "line": "$40.00 | 3.5g",
-        "product": "Dark Heart Genetics | Titan Express",
-        "preGround": false
-      },
       {
         "size": "1/8 oz",
         "price": 60,
@@ -1365,7 +1595,14 @@
         "size": "1/8 oz",
         "price": 40,
         "line": "$40.00 | 3.5g",
-        "product": "GRASSROOTS Animal Mint Cake",
+        "product": "Dark Heart Genetics | Titan Express",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 60,
+        "line": "$60.00 | 3.5g",
+        "product": "Foreign Kush Mints | Infused",
         "preGround": false
       },
       {
@@ -1379,14 +1616,21 @@
         "size": "1/8 oz",
         "price": 40,
         "line": "$40.00 | 3.5g",
-        "product": "B NOBLE Boogie Wuggie",
+        "product": "B NOBLE Singapore Sling",
         "preGround": false
       },
       {
         "size": "1/8 oz",
         "price": 40,
         "line": "$40.00 | 3.5g",
-        "product": "B NOBLE Singapore Sling",
+        "product": "GRASSROOTS Animal Mint Cake",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 40,
+        "line": "$40.00 | 3.5g",
+        "product": "B NOBLE Boogie Wuggie",
         "preGround": false
       }
     ],
@@ -1407,7 +1651,7 @@
       "size": "1/2 oz",
       "price": 110,
       "line": "$110.00 | 14g",
-      "product": "FIND. Pomme Jelly",
+      "product": "FIND. Muffin Bomb",
       "preGround": false
     },
     "cheapestQuarterOunce": {
@@ -1421,7 +1665,7 @@
       "size": "1/8 oz",
       "price": 40,
       "line": "$40.00 | 3.5g",
-      "product": "Dark Heart Genetics | Titan Express",
+      "product": "GRASSROOTS Triple Stack X Dark Heart Genetics",
       "preGround": false
     },
     "cheapestOunceFlower": {
@@ -1435,7 +1679,7 @@
       "size": "1/2 oz",
       "price": 110,
       "line": "$110.00 | 14g",
-      "product": "FIND. Pomme Jelly",
+      "product": "FIND. Muffin Bomb",
       "preGround": false
     },
     "cheapestQuarterOunceFlower": {
@@ -1449,7 +1693,7 @@
       "size": "1/8 oz",
       "price": 40,
       "line": "$40.00 | 3.5g",
-      "product": "Dark Heart Genetics | Titan Express",
+      "product": "GRASSROOTS Triple Stack X Dark Heart Genetics",
       "preGround": false
     }
   },
@@ -1490,6 +1734,20 @@
         "line": "Diesel (Bruce Banner) - 3.5g - Stranman",
         "product": "Diesel (Bruce Banner)",
         "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 50,
+        "line": "Flame Burger - - Skyworld 1/8oz",
+        "product": "Flame Burger - - Skyworld",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 30,
+        "line": "Iced Sangria - 3.5g - Pines",
+        "product": "Iced Sangria",
+        "preGround": false
       }
     ],
     "deals": [],
@@ -1517,11 +1775,17 @@
         "price": 16,
         "line": "Grape Pie x Animal Cookies - Infused - Umamii",
         "product": "Grape Pie x Animal Cookies - Infused - Umamii"
+      },
+      {
+        "size": "2g",
+        "price": 19,
+        "line": "Ultra Premium (OCP x Jelly Donut) - 2g - Stranman",
+        "product": "Ultra Premium (OCP x Jelly Donut)"
       }
     ],
     "error": null,
-    "totalProducts": 3,
-    "flowerProducts": 3,
+    "totalProducts": 5,
+    "flowerProducts": 5,
     "provider": "joint",
     "cheapestOunce": {
       "size": "1 oz",
@@ -1844,13 +2108,6 @@
       {
         "size": "1/8 oz",
         "price": 44,
-        "line": "Heady Tree | Flower | Tear Gas | 3.5g",
-        "product": "Heady Tree | Flower | Tear Gas",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 44,
         "line": "Heady Tree | Flower | Yellow Mermaid | 3.5g",
         "product": "Heady Tree | Flower | Yellow Mermaid",
         "preGround": false
@@ -1896,14 +2153,14 @@
       {
         "size": "1g",
         "price": 52,
-        "line": "Ayrloom | AIO | Honeycrisp | 1g",
-        "product": "Ayrloom | AIO | Honeycrisp"
+        "line": "Ayrloom | AIO | Cereal Milk | 1g",
+        "product": "Ayrloom | AIO | Cereal Milk"
       },
       {
         "size": "1g",
         "price": 52,
-        "line": "Ayrloom | AIO | Cereal Milk | 1g",
-        "product": "Ayrloom | AIO | Cereal Milk"
+        "line": "Ayrloom | AIO | Honeycrisp | 1g",
+        "product": "Ayrloom | AIO | Honeycrisp"
       },
       {
         "size": "1g",
@@ -2154,12 +2411,6 @@
       {
         "size": "1g",
         "price": 52,
-        "line": "Fernway | AIO | Sour Diesel | 1g",
-        "product": "Fernway | AIO | Sour Diesel"
-      },
-      {
-        "size": "1g",
-        "price": 52,
         "line": "Fernway | AIO | Cuban Black Haze | 1g",
         "product": "Fernway | AIO | Cuban Black Haze"
       },
@@ -2168,6 +2419,12 @@
         "price": 225,
         "line": "Fernway Ritual: Three 2g Vapes And A .3g Vape For $225",
         "product": "Fernway | AIO | Alpine Strawberry Traveler Pro"
+      },
+      {
+        "size": "1g",
+        "price": 52,
+        "line": "Fernway | AIO | Sour Diesel | 1g",
+        "product": "Fernway | AIO | Sour Diesel"
       },
       {
         "size": "2g",
@@ -2248,12 +2505,6 @@
         "product": "Jaunty | 510 | Live Resin | Nimbus Snacks"
       },
       {
-        "size": "0.5g",
-        "price": 57,
-        "line": "Maui Waui | Melted Diamond Live Resin MiniBar Vaporizer | 0.5g (All-In-One)",
-        "product": "Maui Waui | Melted Diamond Live Resin MiniBar Vaporizer"
-      },
-      {
         "size": "1g",
         "price": 95,
         "line": "Maui Waui | Melted Diamond Live Resin Vaporizer | 1.0g (Ready-To-Use)",
@@ -2264,6 +2515,12 @@
         "price": 85,
         "line": "Strawberry Cough | Melted Diamond Live Resin Vaporizer | 1g (Reload)",
         "product": "Strawberry Cough | Melted Diamond Live Resin Vaporizer"
+      },
+      {
+        "size": "0.5g",
+        "price": 57,
+        "line": "Maui Waui | Melted Diamond Live Resin MiniBar Vaporizer | 0.5g (All-In-One)",
+        "product": "Maui Waui | Melted Diamond Live Resin MiniBar Vaporizer"
       },
       {
         "size": "1g",
@@ -2346,14 +2603,14 @@
       {
         "size": "1g",
         "price": 89,
-        "line": "Pax | Pod | Blue Dream | Live Rosin w Diamonds | 1g",
-        "product": "Pax | Pod | Blue Dream | Live Rosin w Diamonds"
+        "line": "PAX | AIO | Pineapple Express Live Rosin w/ Diamonds | 1g",
+        "product": "PAX | AIO | Pineapple Express Live Rosin w/ Diamonds"
       },
       {
         "size": "1g",
         "price": 89,
-        "line": "PAX | AIO | Pineapple Express Live Rosin w/ Diamonds | 1g",
-        "product": "PAX | AIO | Pineapple Express Live Rosin w/ Diamonds"
+        "line": "Pax | Pod | Blue Dream | Live Rosin w Diamonds | 1g",
+        "product": "Pax | Pod | Blue Dream | Live Rosin w Diamonds"
       },
       {
         "size": "1g",
@@ -2363,8 +2620,8 @@
       }
     ],
     "error": null,
-    "totalProducts": 45,
-    "flowerProducts": 45,
+    "totalProducts": 44,
+    "flowerProducts": 44,
     "provider": "dutchie",
     "cheapestOunce": {
       "size": "1 oz",
@@ -2476,13 +2733,6 @@
         "price": 180,
         "line": "Matter | Flower | LA Purple Popz | 28g",
         "product": "Matter | Flower | LA Purple Popz",
-        "preGround": false
-      },
-      {
-        "size": "1 oz",
-        "price": 180,
-        "line": "Matter | Flower | Original Mandarin Cookies | 28g",
-        "product": "Matter | Flower | Original Mandarin Cookies",
         "preGround": false
       },
       {
@@ -2845,12 +3095,6 @@
       },
       {
         "size": "1g",
-        "price": 35.7,
-        "line": "Apple Fritter Original THC Pod | 1g",
-        "product": "Apple Fritter Original THC Pod"
-      },
-      {
-        "size": "1g",
         "price": 52,
         "line": "Ayrloom | AIO | Alaskan Thunder F*ck | 1g",
         "product": "Ayrloom | AIO | Alaskan Thunder F*ck"
@@ -2896,12 +3140,6 @@
         "price": 52,
         "line": "Ayrloom | Honeycrisp | AIO | 1g",
         "product": "Ayrloom | Honeycrisp | AIO"
-      },
-      {
-        "size": "1g",
-        "price": 35.7,
-        "line": "Biscotti Original THC Pod | 1g",
-        "product": "Biscotti Original THC Pod"
       },
       {
         "size": "1g",
@@ -3049,12 +3287,6 @@
       },
       {
         "size": "1g",
-        "price": 35.7,
-        "line": "Magic Melon Original THC Pod | 1g",
-        "product": "Magic Melon Original THC Pod"
-      },
-      {
-        "size": "1g",
         "price": 41,
         "line": "Magnitude | 510 | Blue Dream | 1:1 THC:THCv | 1g",
         "product": "Magnitude | 510 | Blue Dream | 1:1 THC:THCv"
@@ -3076,12 +3308,6 @@
         "price": 41,
         "line": "Magnitude | 510 | White Widow | 1g",
         "product": "Magnitude | 510 | White Widow"
-      },
-      {
-        "size": "1g",
-        "price": 37.4,
-        "line": "Northern Lights Live Resin Liquid Diamonds Pod | 1g",
-        "product": "Northern Lights Live Resin Liquid Diamonds Pod"
       },
       {
         "size": "1g",
@@ -3130,12 +3356,6 @@
         "price": 63,
         "line": "PAX | Pod | Superboof Diamonds | 1g",
         "product": "PAX | Pod | Superboof Diamonds"
-      },
-      {
-        "size": "1g",
-        "price": 35.7,
-        "line": "Pink Acai Original THC Pod | 1g",
-        "product": "Pink Acai Original THC Pod"
       },
       {
         "size": "0.5g",
@@ -3193,44 +3413,74 @@
       },
       {
         "size": "1g",
-        "price": 35.7,
+        "price": 42,
+        "line": "Stiiizy | Pod | Apple Fritter | 1g",
+        "product": "Stiiizy | Pod | Apple Fritter"
+      },
+      {
+        "size": "1g",
+        "price": 42,
+        "line": "Stiiizy | Pod | Biscotti | 1g",
+        "product": "Stiiizy | Pod | Biscotti"
+      },
+      {
+        "size": "1g",
+        "price": 42,
         "line": "Stiiizy | Pod | Blue Burst | 1g",
         "product": "Stiiizy | Pod | Blue Burst"
       },
       {
         "size": "1g",
-        "price": 35.7,
+        "price": 42,
         "line": "Stiiizy | Pod | Blue Dream | 1g",
         "product": "Stiiizy | Pod | Blue Dream"
       },
       {
         "size": "1g",
-        "price": 37.4,
+        "price": 44,
         "line": "Stiiizy | Pod | Cereal Milk Live Resin | 1g",
         "product": "Stiiizy | Pod | Cereal Milk Live Resin"
       },
       {
         "size": "1g",
-        "price": 37.4,
+        "price": 44,
         "line": "Stiiizy | Pod | Hawaiian Snow | Liquid Diamonds | 1g",
         "product": "Stiiizy | Pod | Hawaiian Snow | Liquid Diamonds"
       },
       {
         "size": "1g",
-        "price": 35.7,
+        "price": 42,
         "line": "Stiiizy | Pod | King Louis XIII | 1g",
         "product": "Stiiizy | Pod | King Louis XIII"
       },
       {
         "size": "1g",
-        "price": 37.4,
-        "line": "Tahoe OG Live Resin Liquid Diamonds Pod | 1g",
-        "product": "Tahoe OG Live Resin Liquid Diamonds Pod"
+        "price": 42,
+        "line": "Stiiizy | Pod | Magic Melon | 1g",
+        "product": "Stiiizy | Pod | Magic Melon"
+      },
+      {
+        "size": "1g",
+        "price": 44,
+        "line": "Stiiizy | Pod | Northern Lights | Liquid Diamonds | 1g",
+        "product": "Stiiizy | Pod | Northern Lights | Liquid Diamonds"
+      },
+      {
+        "size": "1g",
+        "price": 42,
+        "line": "Stiiizy | Pod | Pink Acai | 1g",
+        "product": "Stiiizy | Pod | Pink Acai"
+      },
+      {
+        "size": "1g",
+        "price": 44,
+        "line": "Stiiizy | Pod | Tahoe OG | Liquid Diamonds | 1g",
+        "product": "Stiiizy | Pod | Tahoe OG | Liquid Diamonds"
       }
     ],
     "error": null,
-    "totalProducts": 50,
-    "flowerProducts": 50,
+    "totalProducts": 49,
+    "flowerProducts": 49,
     "provider": "dutchie",
     "cheapestOunce": {
       "size": "1 oz",
@@ -3324,6 +3574,13 @@
       {
         "size": "1 oz",
         "price": 220,
+        "line": "Rythm | Bananaconda | 28g Flower | Hybrid",
+        "product": "Rythm | Bananaconda",
+        "preGround": false
+      },
+      {
+        "size": "1 oz",
+        "price": 220,
         "line": "Rythm | Jack's Delight | 28g Flower | Sativa",
         "product": "Rythm | Jack's Delight",
         "preGround": false
@@ -3337,9 +3594,9 @@
       },
       {
         "size": "1 oz",
-        "price": 220,
-        "line": "Rythm | Bananaconda | 28g Flower | Hybrid",
-        "product": "Rythm | Bananaconda",
+        "price": 160,
+        "line": "Grocery | Trop Cherry | 28g Flower | Sativa",
+        "product": "Grocery | Trop Cherry",
         "preGround": false
       },
       {
@@ -3347,13 +3604,6 @@
         "price": 160,
         "line": "Grocery | Soap X Purple Punch | Hybrid | 28g Flower",
         "product": "Grocery | Soap X Purple Punch | Hybrid",
-        "preGround": false
-      },
-      {
-        "size": "1 oz",
-        "price": 160,
-        "line": "Grocery | Trop Cherry | 28g Flower | Sativa",
-        "product": "Grocery | Trop Cherry",
         "preGround": false
       },
       {
@@ -3375,15 +3625,15 @@
       {
         "size": "1/2 oz",
         "price": 60,
-        "line": "Dumbo Electric | Hash Money | 14G Infused Pre Ground Flower | Hybrid |",
-        "product": "Dumbo Electric | Hash Money",
+        "line": "Dumbo Electric | Kiwi Lemon Cherry Gelato | 14g Pre-Ground Flower | Hybrid",
+        "product": "Dumbo Electric | Kiwi Lemon Cherry Gelato",
         "preGround": true
       },
       {
         "size": "1/2 oz",
         "price": 60,
-        "line": "Dumbo Electric | Kiwi Lemon Cherry Gelato | 14g Pre-Ground Flower | Hybrid",
-        "product": "Dumbo Electric | Kiwi Lemon Cherry Gelato",
+        "line": "Dumbo Electric | Hash Money | 14G Infused Pre Ground Flower | Hybrid |",
+        "product": "Dumbo Electric | Hash Money",
         "preGround": true
       }
     ],
@@ -3391,15 +3641,15 @@
       {
         "size": "1/4 oz",
         "price": 40,
-        "line": "Ready 2 Roll | Sativa | Ground Flower | 7g",
-        "product": "Ready 2 Roll | Sativa | Ground Flower",
+        "line": "Ready 2 Roll | Hybrid | 7g Ground Flower",
+        "product": "Ready 2 Roll | Hybrid",
         "preGround": false
       },
       {
         "size": "1/4 oz",
         "price": 40,
-        "line": "Ready 2 Roll | Hybrid | 7g Ground Flower",
-        "product": "Ready 2 Roll | Hybrid",
+        "line": "Ready 2 Roll | Sativa | Ground Flower | 7g",
+        "product": "Ready 2 Roll | Sativa | Ground Flower",
         "preGround": false
       },
       {
@@ -3421,13 +3671,6 @@
       {
         "size": "1/8 oz",
         "price": 50,
-        "line": "Rythm | Garlic Drip | 3.5g Flower | Indica Dom",
-        "product": "Rythm | Garlic Drip",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 50,
         "line": "Rythm | Bananaconda | 3.5g Flower | Hybrid",
         "product": "Rythm | Bananaconda",
         "preGround": false
@@ -3435,15 +3678,15 @@
       {
         "size": "1/8 oz",
         "price": 50,
-        "line": "Rythm | Dulce De Uva | 3.5g Flower | Indica",
-        "product": "Rythm | Dulce De Uva",
+        "line": "Rythm | Garlic Drip | 3.5g Flower | Indica Dom",
+        "product": "Rythm | Garlic Drip",
         "preGround": false
       },
       {
         "size": "1/8 oz",
         "price": 50,
-        "line": "Rythm | Donut Trip | 3.5g Flower | Hybrid",
-        "product": "Rythm | Donut Trip",
+        "line": "Rythm | Dulce De Uva | 3.5g Flower | Indica",
+        "product": "Rythm | Dulce De Uva",
         "preGround": false
       },
       {
@@ -3470,8 +3713,8 @@
       {
         "size": "1/8 oz",
         "price": 50,
-        "line": "Rythm | Jack 's Delight | 3.5g Flower | Sativa",
-        "product": "Rythm | Jack 's Delight",
+        "line": "Rythm | Donut Trip | 3.5g Flower | Hybrid",
+        "product": "Rythm | Donut Trip",
         "preGround": false
       },
       {
@@ -3479,6 +3722,13 @@
         "price": 50,
         "line": "Rythm | Jet Fuel OG | 3.5g Flower | Hybrid",
         "product": "Rythm | Jet Fuel OG",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 50,
+        "line": "Rythm | Jack 's Delight | 3.5g Flower | Sativa",
+        "product": "Rythm | Jack 's Delight",
         "preGround": false
       },
       {
@@ -3533,13 +3783,6 @@
       {
         "size": "1/8 oz",
         "price": 42,
-        "line": "Ruby Farms | SFV OG | Special Reserve | 3.5g Flower",
-        "product": "Ruby Farms | SFV OG | Special Reserve",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 42,
         "line": "Ruby Farms | Blue Dream | 3.5g Special Reserve Flower | Hybrid",
         "product": "Ruby Farms | Blue Dream",
         "preGround": false
@@ -3547,8 +3790,8 @@
       {
         "size": "1/8 oz",
         "price": 42,
-        "line": "Ruby Farms | Maui Waui | 3.5g Special Reserve Flower | Sativa",
-        "product": "Ruby Farms | Maui Waui",
+        "line": "Ruby Farms | SFV OG | Special Reserve | 3.5g Flower",
+        "product": "Ruby Farms | SFV OG | Special Reserve",
         "preGround": false
       },
       {
@@ -3560,9 +3803,16 @@
       },
       {
         "size": "1/8 oz",
+        "price": 42,
+        "line": "Ruby Farms | Maui Waui | 3.5g Special Reserve Flower | Sativa",
+        "product": "Ruby Farms | Maui Waui",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
         "price": 50,
-        "line": "Dada Exotics | Cheetah Piss | 3.5g | Sativa",
-        "product": "Dada Exotics | Cheetah Piss",
+        "line": "Dada Exotics | Custard Cream | 3.5g | Indica",
+        "product": "Dada Exotics | Custard Cream",
         "preGround": false
       },
       {
@@ -3575,8 +3825,8 @@
       {
         "size": "1/8 oz",
         "price": 50,
-        "line": "Dada Exotics | Custard Cream | 3.5g | Indica",
-        "product": "Dada Exotics | Custard Cream",
+        "line": "Dada Exotics | Cheetah Piss | 3.5g | Sativa",
+        "product": "Dada Exotics | Cheetah Piss",
         "preGround": false
       },
       {
@@ -3607,8 +3857,8 @@
     "cheapestOunce": {
       "size": "1 oz",
       "price": 160,
-      "line": "Grocery | Soap X Purple Punch | Hybrid | 28g Flower",
-      "product": "Grocery | Soap X Purple Punch | Hybrid",
+      "line": "Grocery | Trop Cherry | 28g Flower | Sativa",
+      "product": "Grocery | Trop Cherry",
       "preGround": false
     },
     "cheapestHalfOunce": {
@@ -3621,8 +3871,8 @@
     "cheapestQuarterOunce": {
       "size": "1/4 oz",
       "price": 40,
-      "line": "Ready 2 Roll | Sativa | Ground Flower | 7g",
-      "product": "Ready 2 Roll | Sativa | Ground Flower",
+      "line": "Ready 2 Roll | Hybrid | 7g Ground Flower",
+      "product": "Ready 2 Roll | Hybrid",
       "preGround": false
     },
     "cheapestEighthOunce": {
@@ -3635,8 +3885,8 @@
     "cheapestOunceFlower": {
       "size": "1 oz",
       "price": 160,
-      "line": "Grocery | Soap X Purple Punch | Hybrid | 28g Flower",
-      "product": "Grocery | Soap X Purple Punch | Hybrid",
+      "line": "Grocery | Trop Cherry | 28g Flower | Sativa",
+      "product": "Grocery | Trop Cherry",
       "preGround": false
     },
     "cheapestHalfOunceFlower": {
@@ -3649,8 +3899,8 @@
     "cheapestQuarterOunceFlower": {
       "size": "1/4 oz",
       "price": 40,
-      "line": "Ready 2 Roll | Sativa | Ground Flower | 7g",
-      "product": "Ready 2 Roll | Sativa | Ground Flower",
+      "line": "Ready 2 Roll | Hybrid | 7g Ground Flower",
+      "product": "Ready 2 Roll | Hybrid",
       "preGround": false
     },
     "cheapestEighthOunceFlower": {
@@ -5719,7 +5969,7 @@
       },
       {
         "size": "1 oz",
-        "price": 226,
+        "price": 180.8,
         "line": "1 oz",
         "product": "1/8 oz El Chivo",
         "preGround": false
@@ -6121,12 +6371,6 @@
         "product": "Traveler ALPINE STRAWBERRY | AIO"
       },
       {
-        "size": "2g",
-        "price": 85,
-        "line": "2g",
-        "product": ""
-      },
-      {
         "size": "1g",
         "price": 78,
         "line": "1g",
@@ -6370,12 +6614,6 @@
         "size": "2g",
         "price": 83,
         "line": "2g",
-        "product": ""
-      },
-      {
-        "size": "2g",
-        "price": 83,
-        "line": "2g",
         "product": "Traveler Pro WHITE WIDOW | AIO"
       },
       {
@@ -6470,11 +6708,11 @@
     "neighborhood": "Chelsea",
     "menuUrlOverride": "https://newamsterdam.nyc/store/categories/flower",
     "dealsUrlOverride": "https://newamsterdam.nyc/store/categories/flower",
-    "cartMenuUrlOverride": "https://newamsterdam.nyc/store/categories/vaporizer",
+    "cartMenuUrlOverride": "https://newamsterdam.nyc/store/categories/vaporizers",
     "sourceNote": "Dispense platform (newamsterdam.nyc) — 170+ flower products",
     "menuUrl": "https://newamsterdam.nyc/store/categories/flower",
     "dealsUrl": "https://newamsterdam.nyc/store/categories/flower",
-    "cartMenuUrl": "https://newamsterdam.nyc/store/categories/vaporizer",
+    "cartMenuUrl": "https://newamsterdam.nyc/store/categories/vaporizers",
     "status": "ok",
     "ounceListings": [
       {
@@ -7857,7 +8095,668 @@
         "pct": 21
       }
     ],
-    "cartListings": [],
+    "cartListings": [
+      {
+        "product": "All Day | Bruce Banner",
+        "size": "1g",
+        "price": 40
+      },
+      {
+        "product": "All Day | Sour Diesel",
+        "size": "1g",
+        "price": 34
+      },
+      {
+        "product": "All Night | Girl Scout Cookies",
+        "size": "1g",
+        "price": 40
+      },
+      {
+        "product": "All Night | OG Kush",
+        "size": "1g",
+        "price": 34
+      },
+      {
+        "product": "Ayrloom | Alaskan Thunder Fuck",
+        "size": "2g",
+        "price": 75
+      },
+      {
+        "product": "Ayrloom | Alaskan Thunder Fu#k | Vape AIO Pen",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Ayrloom | Bliss | Vape AIO Pen",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Ayrloom | Blue Widow | Vape AIO Pen",
+        "size": "0.5g",
+        "price": 30
+      },
+      {
+        "product": "Ayrloom | Blue Widow | Vape AIO Pen",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Ayrloom | Bomb Popz | Vape AIO Pen",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Ayrloom | Cereal Milk",
+        "size": "2g",
+        "price": 75
+      },
+      {
+        "product": "Ayrloom | Cereal Milk | Vape AIO Pen",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Ayrloom | Energy | Vape AIO Pen",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Ayrloom | Lime Haze | Vape AIO Pen",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Ayrloom | Lychee Dream",
+        "size": "2g",
+        "price": 75
+      },
+      {
+        "product": "Ayrloom | Lychee Dream | Vape AIO Pen",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Ayrloom | Pineapple Express | Vape AIO Pen",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Ayrloom | Pink Rozay",
+        "size": "2g",
+        "price": 75
+      },
+      {
+        "product": "Ayrloom | Pink Rozay | Vape AIO Pen",
+        "size": "0.5g",
+        "price": 30
+      },
+      {
+        "product": "Ayrloom | Pink Rozay | Vape AIO Pen",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Ayrloom | Rest | Vape AIO Pen",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Bloom | Jack Herer",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Bloom | Maui Wowie",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Bloom | Pineapple Express",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Bloom | Super Sour Diesel",
+        "size": "1g",
+        "price": 55
+      },
+      {
+        "product": "Eureka | Classic | Triple Diesel (S)",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Feels | Grape Pop | Vape AIO Pen",
+        "size": "1g",
+        "price": 35
+      },
+      {
+        "product": "Feels | Strawberry Bubblegum | Vape AIO Pen",
+        "size": "1g",
+        "price": 35
+      },
+      {
+        "product": "Fernway | Alpine Strawberry (S)",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Fernway | Alpine Strawberry (S)",
+        "size": "2g",
+        "price": 83
+      },
+      {
+        "product": "Fernway | Berry Haze (I)",
+        "size": "2g",
+        "price": 83
+      },
+      {
+        "product": "Fernway | Champagne Kush",
+        "size": "2g",
+        "price": 83
+      },
+      {
+        "product": "Fernway | Cuban Black Haze (S)",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Fernway | Elderflower",
+        "size": "2g",
+        "price": 83
+      },
+      {
+        "product": "Fernway | Headband (H)",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Fernway | King Louie (I)",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Fernway | Mandarin Orange",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Fernway | Mandarin Orange (S)",
+        "size": "2g",
+        "price": 83
+      },
+      {
+        "product": "Fernway | Pineapple Express (H)",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Fernway | Red-Headed Stranger (S)",
+        "size": "2g",
+        "price": 83
+      },
+      {
+        "product": "Fernway | Snow Dog",
+        "size": "2g",
+        "price": 83
+      },
+      {
+        "product": "Fernway | Space Queen",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Fernway | White Widow",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Fernway | White Widow (H)",
+        "size": "2g",
+        "price": 83
+      },
+      {
+        "product": "Florist Farms | Gelato",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Florist Farms | Gorilla Glue",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Florist Farms | Grandaddy Purp",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Florist Farms | Jack Herer",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Florist Farms | Pineapple Express",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Gezoont | Blood Orange Diesel",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Gezoont | Gorilla Glu",
+        "size": "1g",
+        "price": 50
+      },
+      {
+        "product": "Ghost | Apple Jacks",
+        "size": "2g",
+        "price": 90
+      },
+      {
+        "product": "Ghost | Black Mamba",
+        "size": "2g",
+        "price": 90
+      },
+      {
+        "product": "Ghost | Blueberry Dream",
+        "size": "2g",
+        "price": 90
+      },
+      {
+        "product": "Ghost | Ghost Train Haze",
+        "size": "2g",
+        "price": 90
+      },
+      {
+        "product": "Ghost | Gorilla Glue #4",
+        "size": "2g",
+        "price": 90
+      },
+      {
+        "product": "Ghost | Guava",
+        "size": "2g",
+        "price": 90
+      },
+      {
+        "product": "Ghost | White Fire OG",
+        "size": "2g",
+        "price": 90
+      },
+      {
+        "product": "Good Green | Durban Z Pen | (Full Spectrum Live AIO)",
+        "size": "2g",
+        "price": 90
+      },
+      {
+        "product": "Halara | Apricot Octane",
+        "size": "1g",
+        "price": 48
+      },
+      {
+        "product": "Halara | Blue Dream",
+        "size": "1g",
+        "price": 48
+      },
+      {
+        "product": "Halara | Grand Daddy Purple",
+        "size": "1g",
+        "price": 48
+      },
+      {
+        "product": "Halara | Maui Wowie",
+        "size": "1g",
+        "price": 48
+      },
+      {
+        "product": "Halara | Pineapple Express",
+        "size": "1g",
+        "price": 48
+      },
+      {
+        "product": "Halara | Watermelon Z OG",
+        "size": "1g",
+        "price": 48
+      },
+      {
+        "product": "Halara | Zkooby Znakz",
+        "size": "1g",
+        "price": 48
+      },
+      {
+        "product": "Heavy Hitters | ATF",
+        "size": "2g",
+        "price": 100
+      },
+      {
+        "product": "Heavy Hitters | Blackberry Kush",
+        "size": "2g",
+        "price": 100
+      },
+      {
+        "product": "Heavy Hitters | Gelonade",
+        "size": "1g",
+        "price": 80
+      },
+      {
+        "product": "Heavy Hitters | Mega Diesel",
+        "size": "1g",
+        "price": 80
+      },
+      {
+        "product": "Heavy Hitters | Mimosa",
+        "size": "2g",
+        "price": 100
+      },
+      {
+        "product": "Heavy Hitters | Sherb Cream Pie",
+        "size": "1g",
+        "price": 80
+      },
+      {
+        "product": "Jaunty | Durban Poison",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Jaunty | Forbidden Fruit",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Jaunty | Granddaddy Purple",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Jaunty | Green Crack",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Jaunty | Headband",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Jaunty | Heir Heads",
+        "size": "1g",
+        "price": 60
+      },
+      {
+        "product": "Jaunty | LSD",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Jaunty | Pineapple Express",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Jaunty | Wedding Cake",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Jaunty | White Widow",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Jeeter | Clouded Sunset",
+        "size": "1g",
+        "price": 61
+      },
+      {
+        "product": "Melo x Holiday | Garden Grape (Relax)",
+        "size": "1g",
+        "price": 65
+      },
+      {
+        "product": "Off Hours | Blue Dream 1g AIO",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Off Hours | Dialed [Focus] 0.5g AIO",
+        "size": "0.5g",
+        "price": 35
+      },
+      {
+        "product": "Off Hours | Gelato 1g AIO",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Off Hours | Go [Party] 0.5g AIO",
+        "size": "0.5g",
+        "price": 35
+      },
+      {
+        "product": "Off Hours | Green Crack 1g AIO",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Off Hours | Maui Wowie 1g AIO",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Off Hours | Offline [Sleep] 0.5g AIO",
+        "size": "0.5g",
+        "price": 35
+      },
+      {
+        "product": "Off Hours | On [Energy] 0.5g AIO",
+        "size": "0.5g",
+        "price": 35
+      },
+      {
+        "product": "Off Hours | Orange Apricot 1g AIO",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Off Hours | Rainbow Beltz 1g AIO",
+        "size": "1g",
+        "price": 45
+      },
+      {
+        "product": "Off Hours | Unwind [Calm] 0.5g AIO",
+        "size": "0.5g",
+        "price": 35
+      },
+      {
+        "product": "Raw Sins | Bodega Booty",
+        "size": "1g",
+        "price": 65
+      },
+      {
+        "product": "Raw Sins | Gush Hour",
+        "size": "1g",
+        "price": 65
+      },
+      {
+        "product": "Raw Sins | Lime Light",
+        "size": "1g",
+        "price": 65
+      },
+      {
+        "product": "Raw Sins | The Cookout",
+        "size": "1g",
+        "price": 65
+      },
+      {
+        "product": "Rove | Apple Jack (S)",
+        "size": "1g",
+        "price": 83
+      },
+      {
+        "product": "Rove | Blue Dream (H)",
+        "size": "1g",
+        "price": 83
+      },
+      {
+        "product": "Rove | Cherry Gelato (H)",
+        "size": "1g",
+        "price": 83
+      },
+      {
+        "product": "Rove | Cherry Gelato (H)",
+        "size": "1g",
+        "price": 93
+      },
+      {
+        "product": "Rove | Choco Mints",
+        "size": "1g",
+        "price": 83
+      },
+      {
+        "product": "Rove | Fruit Punch (S)",
+        "size": "1g",
+        "price": 93
+      },
+      {
+        "product": "Rove | Magic Melon (H)",
+        "size": "1g",
+        "price": 83
+      },
+      {
+        "product": "Rove | Maui Wowie (S)",
+        "size": "1g",
+        "price": 83
+      },
+      {
+        "product": "Rove | Northern Lights (I)",
+        "size": "1g",
+        "price": 83
+      },
+      {
+        "product": "Rove | Orange Crush (S)",
+        "size": "1g",
+        "price": 83
+      },
+      {
+        "product": "Rove | Pineapple Express",
+        "size": "1g",
+        "price": 93
+      },
+      {
+        "product": "Rove | Pineapple Express (H)",
+        "size": "1g",
+        "price": 83
+      },
+      {
+        "product": "Rove | Skywalker OG (I)",
+        "size": "1g",
+        "price": 83
+      },
+      {
+        "product": "Rove | Strawberry Cough (S)",
+        "size": "1g",
+        "price": 83
+      },
+      {
+        "product": "Rove | Watermelon Burst",
+        "size": "1g",
+        "price": 93
+      },
+      {
+        "product": "Rove | Watermelon Burst (I)",
+        "size": "1g",
+        "price": 83
+      },
+      {
+        "product": "Select | Briq 2.0 | Baja Smash",
+        "size": "2g",
+        "price": 83
+      },
+      {
+        "product": "Select | Briq 2.0 | Clementine",
+        "size": "2g",
+        "price": 83
+      },
+      {
+        "product": "Select | Briq 2.0 | Misty Mint",
+        "size": "2g",
+        "price": 83
+      },
+      {
+        "product": "Select | Briq 2.0 | Unicorn Piss",
+        "size": "2g",
+        "price": 83
+      },
+      {
+        "product": "Select | Briq 2.0 | Waffle Hut",
+        "size": "2g",
+        "price": 83
+      },
+      {
+        "product": "Select | Briq 2.0 | Watermelon Ice",
+        "size": "2g",
+        "price": 83
+      },
+      {
+        "product": "Select | Briq | Cantaloupe Crush",
+        "size": "2g",
+        "price": 80
+      },
+      {
+        "product": "Select | Briq | Northern Lights",
+        "size": "2g",
+        "price": 80
+      },
+      {
+        "product": "Select | Elite Briq | Durban Cookies",
+        "size": "2g",
+        "price": 80
+      },
+      {
+        "product": "Select | Elite Briq | Pappy Poison",
+        "size": "2g",
+        "price": 80
+      },
+      {
+        "product": "Select | Elite Briq | Pineapple Skunk",
+        "size": "2g",
+        "price": 80
+      },
+      {
+        "product": "Select | Elite Briq | Purple Urkle",
+        "size": "2g",
+        "price": 80
+      },
+      {
+        "product": "Select | Elite Terpologist Briq | Brazzy Kush",
+        "size": "2g",
+        "price": 80
+      },
+      {
+        "product": "Select | Elite Terpologist Briq | Durban Fizz",
+        "size": "2g",
+        "price": 80
+      },
+      {
+        "product": "Suspect | Blue Dream",
+        "size": "2g",
+        "price": 60
+      },
+      {
+        "product": "Suspect | Orange Crush",
+        "size": "2g",
+        "price": 60
+      },
+      {
+        "product": "Suspect | Sour Diesel",
+        "size": "2g",
+        "price": 60
+      }
+    ],
     "error": null,
     "totalProducts": 174,
     "flowerProducts": 174,
@@ -8037,15 +8936,8 @@
       {
         "size": "1/8 oz",
         "price": 55,
-        "line": "RUNTZ | 3.5g Flower | Lemon Candy Runtz",
-        "product": "RUNTZ",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 55,
         "line": "1/8 oz",
-        "product": "Runtz Staff Pick",
+        "product": "RUNTZ",
         "preGround": false
       },
       {
@@ -8320,7 +9212,7 @@
       {
         "size": "1g",
         "price": 50,
-        "line": "Fernway | Space Queen | Strain Collection | Cart | 1.0g | Indica",
+        "line": "1g",
         "product": "Fernway | Space Queen | Strain Collection | Cart"
       },
       {
@@ -8338,7 +9230,7 @@
       {
         "size": "1g",
         "price": 50,
-        "line": "Ayrloom | Alaskan Thunder Fuck | AIO | 1g",
+        "line": "1g",
         "product": "Ayrloom | Alaskan Thunder Fuck | AIO"
       },
       {
@@ -8427,8 +9319,8 @@
       }
     ],
     "error": null,
-    "totalProducts": 53,
-    "flowerProducts": 53,
+    "totalProducts": 52,
+    "flowerProducts": 52,
     "provider": "conbud",
     "cheapestOunce": {
       "size": "1 oz",
@@ -8651,13 +9543,6 @@
       },
       {
         "size": "1/2 oz",
-        "price": 135,
-        "line": "1/2 oz",
-        "product": "Foreign Kush Mints (Smalls)",
-        "preGround": false
-      },
-      {
-        "size": "1/2 oz",
         "price": 120,
         "line": "1/2 oz",
         "product": "Snow Caps Roll-Your-Own Diamond & Bubble Hash-Infused (Ground)",
@@ -8735,6 +9620,13 @@
       },
       {
         "size": "1/2 oz",
+        "price": 135,
+        "line": "1/2 oz",
+        "product": "Foreign Kush Mints (Smalls)",
+        "preGround": false
+      },
+      {
+        "size": "1/2 oz",
         "price": 80,
         "line": "1/2 oz",
         "product": "Cinderella 99",
@@ -8795,14 +9687,14 @@
         "size": "1/4 oz",
         "price": 70,
         "line": "1/4 oz",
-        "product": "Moonbeam Gelato (Smalls)",
+        "product": "Tropicana Cookies Florist Farms",
         "preGround": false
       },
       {
         "size": "1/4 oz",
         "price": 70,
         "line": "1/4 oz",
-        "product": "Tropicana Cookies Florist Farms",
+        "product": "Moonbeam Gelato (Smalls)",
         "preGround": false
       },
       {
@@ -8867,7 +9759,7 @@
         "size": "1/8 oz",
         "price": 45,
         "line": "1/8 oz",
-        "product": "Triple Stack",
+        "product": "Zesty Garlic Cookies",
         "preGround": false
       },
       {
@@ -8916,7 +9808,7 @@
         "size": "1/8 oz",
         "price": 45,
         "line": "1/8 oz",
-        "product": "Zesty Garlic Cookies",
+        "product": "Triple Stack",
         "preGround": false
       },
       {
@@ -8924,6 +9816,13 @@
         "price": 40,
         "line": "1/8 oz",
         "product": "Project Lato",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 45,
+        "line": "1/8 oz",
+        "product": "Sour Jack | Early Bird | Sativa",
         "preGround": false
       },
       {
@@ -8945,13 +9844,6 @@
         "price": 44,
         "line": "1/8 oz",
         "product": "Sunny Z",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 45,
-        "line": "1/8 oz",
-        "product": "Sour Jack | Early Bird | Sativa",
         "preGround": false
       },
       {
@@ -9974,12 +10866,6 @@
       },
       {
         "size": "2g",
-        "price": 16.95,
-        "line": "1.2g",
-        "product": ""
-      },
-      {
-        "size": "2g",
         "price": 96.05,
         "line": "2g",
         "product": "Berry Haze Traveler PRO Disposable Fernway"
@@ -10151,20 +11037,6 @@
       },
       {
         "size": "1/2 oz",
-        "price": 84,
-        "line": "(14G)",
-        "product": "(14G)",
-        "preGround": false
-      },
-      {
-        "size": "1/2 oz",
-        "price": 84,
-        "line": "$84.00/14g",
-        "product": "Infused Ready-to-Roll (14G)",
-        "preGround": false
-      },
-      {
-        "size": "1/2 oz",
         "price": 99,
         "line": "(14G)",
         "product": "(14G)",
@@ -10175,6 +11047,20 @@
         "price": 99,
         "line": "$99.00/14g",
         "product": "Revert Cannabis (14G)",
+        "preGround": false
+      },
+      {
+        "size": "1/2 oz",
+        "price": 84,
+        "line": "(14G)",
+        "product": "(14G)",
+        "preGround": false
+      },
+      {
+        "size": "1/2 oz",
+        "price": 84,
+        "line": "$84.00/14g",
+        "product": "Infused Ready-to-Roll (14G)",
         "preGround": false
       },
       {
@@ -10295,14 +11181,14 @@
         "size": "1/4 oz",
         "price": 77,
         "line": "$77.00/7g",
-        "product": "Dark Heart Collection (7G)",
+        "product": "Grassroots (7G)",
         "preGround": false
       },
       {
         "size": "1/4 oz",
         "price": 77,
         "line": "$77.00/7g",
-        "product": "Grassroots (7G)",
+        "product": "Dark Heart Collection (7G)",
         "preGround": false
       },
       {
@@ -10428,20 +11314,6 @@
       },
       {
         "size": "1/8 oz",
-        "price": 30,
-        "line": "(3.5G)",
-        "product": "(3.5G)",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 30,
-        "line": "$30.00/3.5g",
-        "product": "The Ladies (3.5G)",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
         "price": 46,
         "line": "(3.5G)",
         "product": "(3.5G)",
@@ -10452,6 +11324,20 @@
         "price": 46,
         "line": "$46.00/3.5g",
         "product": "Florette (3.5G)",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 30,
+        "line": "(3.5G)",
+        "product": "(3.5G)",
+        "preGround": false
+      },
+      {
+        "size": "1/8 oz",
+        "price": 30,
+        "line": "$30.00/3.5g",
+        "product": "The Ladies (3.5G)",
         "preGround": false
       },
       {
@@ -10647,14 +11533,14 @@
         "size": "1/8 oz",
         "price": 50,
         "line": "$50.00/3.5g",
-        "product": "Dank (3.5G)",
+        "product": "7 (3.5G)",
         "preGround": false
       },
       {
         "size": "1/8 oz",
         "price": 50,
         "line": "$50.00/3.5g",
-        "product": "7 (3.5G)",
+        "product": "Dank (3.5G)",
         "preGround": false
       }
     ],
@@ -11073,29 +11959,15 @@
       {
         "size": "1/8 oz",
         "price": 45,
-        "line": "Edie Parker | Sugar Breath | Hybrid | Flower | 3.5g",
+        "line": "1/8 oz",
         "product": "Edie Parker | Sugar Breath | Hybrid",
         "preGround": false
       },
       {
         "size": "1/8 oz",
-        "price": 45,
-        "line": "1/8 oz",
-        "product": "Edie Parker Staff Pick",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
         "price": 32,
-        "line": "Hurley Grown | Gelato 41 | Hybrid | Flower | 3.5g",
+        "line": "1/8 oz",
         "product": "Hurley Grown | Gelato 41 | Hybrid",
-        "preGround": false
-      },
-      {
-        "size": "1/8 oz",
-        "price": 32,
-        "line": "1/8 oz",
-        "product": "Hurley Grown Staff Pick",
         "preGround": false
       },
       {
@@ -11684,7 +12556,7 @@
       {
         "size": "1g",
         "price": 66,
-        "line": "Woodstock | Grape Cake | Indica | Live Resin | Cart | 1g",
+        "line": "1g",
         "product": "Woodstock | Grape Cake | Indica | Live Resin | Cart"
       },
       {
@@ -11700,22 +12572,10 @@
         "product": "Ayrloom | Cereal Milk | Hybrid | AIO"
       },
       {
-        "size": "2g",
-        "price": 75,
-        "line": "2g",
-        "product": "Add .5g to cart"
-      },
-      {
         "size": "0.5g",
         "price": 30,
         "line": "Ayrloom | Pineapple Express | Sativa | AIO | 0.5g",
         "product": "Ayrloom | Pineapple Express | Sativa | AIO"
-      },
-      {
-        "size": "1g",
-        "price": 45,
-        "line": "1g",
-        "product": "Add .5g to cart"
       },
       {
         "size": "1g",
@@ -11728,12 +12588,6 @@
         "price": 30,
         "line": "Bloom | Surf Classic | Fire Mango | Indica | AIO | 0.5g",
         "product": "Bloom | Surf Classic | Fire Mango | Indica | AIO"
-      },
-      {
-        "size": "1g",
-        "price": 50,
-        "line": "1g",
-        "product": "Add .5g to cart"
       },
       {
         "size": "0.5g",
@@ -11785,12 +12639,6 @@
       },
       {
         "size": "1g",
-        "price": 55,
-        "line": "1g",
-        "product": "Add .5g to cart"
-      },
-      {
-        "size": "1g",
         "price": 54,
         "line": "1g",
         "product": "Bloom | Surf Live | Colombian Gold | Sativa | AIO"
@@ -11818,12 +12666,6 @@
         "price": 32,
         "line": "Bloom | Surf Live | Super Sour Diesel | Sativa | AIO | 0.5g",
         "product": "Bloom | Surf Live | Super Sour Diesel | Sativa | AIO"
-      },
-      {
-        "size": "1g",
-        "price": 54,
-        "line": "1g",
-        "product": "Add .5g to cart"
       },
       {
         "size": "0.5g",
@@ -12301,8 +13143,8 @@
       }
     ],
     "error": null,
-    "totalProducts": 102,
-    "flowerProducts": 102,
+    "totalProducts": 100,
+    "flowerProducts": 100,
     "provider": "dutchie",
     "cheapestOunce": {
       "size": "1 oz",
@@ -12880,14 +13722,14 @@
       {
         "product": "Sour Diesel",
         "size": "1/8 oz",
-        "price": 39,
+        "price": 30,
         "line": "",
         "preGround": false
       },
       {
         "product": "Sour Diesel",
         "size": "1/8 oz",
-        "price": 30,
+        "price": 39,
         "line": "",
         "preGround": false
       },
@@ -12937,34 +13779,16 @@
     "deals": [],
     "cartListings": [
       {
-        "size": "2g",
-        "price": 21.75,
-        "line": "2g",
-        "product": "Dumbo Electric Staff Pick"
-      },
-      {
-        "size": "2g",
-        "price": 100,
-        "line": "2g",
-        "product": "Staff Pick"
-      },
-      {
         "size": "1g",
         "price": 45,
         "line": "1g",
         "product": "Airplane Mode | AIO"
       },
       {
-        "size": "1g",
-        "price": 45,
-        "line": "1g",
-        "product": "Add .5g to cart"
-      },
-      {
         "size": "2g",
         "price": 75,
         "line": "2g",
-        "product": "Add 1g to cart"
+        "product": ".5g"
       },
       {
         "size": "1g",

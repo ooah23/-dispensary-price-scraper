@@ -107,7 +107,7 @@ export const dispensaries = [
     neighborhood: "Chelsea",
     menuUrlOverride: "https://newamsterdam.nyc/store/categories/flower",
     dealsUrlOverride: "https://newamsterdam.nyc/store/categories/flower",
-    cartMenuUrlOverride: "https://newamsterdam.nyc/store/categories/vaporizer",
+    cartMenuUrlOverride: "https://newamsterdam.nyc/store/categories/vaporizers",
     sourceNote: "Dispense platform (newamsterdam.nyc) — 170+ flower products"
   },
 

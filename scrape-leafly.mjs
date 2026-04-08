@@ -213,7 +213,10 @@ function findPreviousLabel(lines, startIndex) {
     if (/\$[0-9]/.test(line)) {
       continue;
     }
-    if (/add to cart/i.test(line)) {
+    if (/add\s+.*to\s+(?:cart|bag)/i.test(line)) {
+      continue;
+    }
+    if (/^(staff\s*pick|select|featured|new arrival|on sale|sold out|add to bag|view all)$/i.test(line)) {
       continue;
     }
     if (/^(flower|pre-roll|concentrate|edible|cartridge|topical|accessory|other)$/i.test(line)) {
@@ -467,7 +470,10 @@ function extractCartEntriesFromText(text) {
     if (NOT_CART.test(contextText)) continue;
     // For ambiguous 1g size, require at least one vape keyword since pre-rolls are also 1g
     if (size === '1g' && !isCartProduct(contextText)) continue;
-    entries.push({ size, price, line, product: cleanProductName(product) });
+    const cleanedProduct = cleanProductName(product);
+    if (/add\s+.*to\s+(?:cart|bag)/i.test(cleanedProduct)) continue;
+    if (/^(staff\s*pick|select|featured|sold out)$/i.test(cleanedProduct.trim())) continue;
+    entries.push({ size, price, line, product: cleanedProduct });
   }
 
   return Array.from(
@@ -899,6 +905,56 @@ async function extractDispense(page, menuUrl) {
     }
   }
   return filterListingEntries(entries);
+}
+
+async function extractDispenseCartEntries(page, cartUrl) {
+  // Same API interception as extractDispense, but parses cart sizes from product name.
+  const allProducts = [];
+
+  const responseHandler = async (response) => {
+    const url = response.url();
+    if (!url.includes("dispenseapp.com") || !url.includes("products")) return;
+    try {
+      const data = await response.json();
+      const prods = Array.isArray(data?.data) ? data.data : [];
+      if (prods.length) allProducts.push(...prods);
+    } catch {}
+  };
+
+  page.on("response", responseHandler);
+  await gotoWithRetries(page, cartUrl, { attempts: 3, timeout: 90000, waitUntil: "domcontentloaded" });
+  await page.waitForTimeout(3000);
+
+  let prevCount = 0;
+  for (let i = 0; i < 10; i++) {
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await page.waitForTimeout(800);
+    if (i >= 3 && allProducts.length === prevCount) break;
+    prevCount = allProducts.length;
+  }
+
+  page.off("response", responseHandler);
+
+  const entries = [];
+  const seen = new Set();
+  for (const p of allProducts) {
+    const name = p.name ?? "";
+    const size = detectCartSize(name);
+    if (!size) continue;
+    if (size === "1g" && !isCartProduct(name)) continue;
+    const price = Number(p.priceWithDiscounts ?? p.price ?? 0);
+    if (!price || isNaN(price)) continue;
+    const product = cleanProductName(name);
+    const key = `${product}|${size}|${price}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    entries.push({ product, size, price });
+  }
+
+  if (entries.length > 0) return entries;
+
+  const bodyText = await page.locator("body").innerText();
+  return extractCartEntriesFromText(bodyText);
 }
 
 async function extractNewAmsterdamMosaic(page, menuUrl) {
@@ -2162,6 +2218,9 @@ async function scrapeStore(page, dispensary) {
       } else if (cartProvider === "blaze") {
         // Blaze platform: intercept ecom API for reliable cart listings
         result.cartListings = await extractBlazeCartEntries(page, result.cartMenuUrl);
+      } else if (cartProvider === "newamsterdam") {
+        // Dispense platform: intercept api.dispenseapp.com product responses
+        result.cartListings = await extractDispenseCartEntries(page, result.cartMenuUrl);
       } else {
         // CONBUD, Gotham, WooCommerce, generic: navigate + scroll + body text
         await gotoWithRetries(page, result.cartMenuUrl, { attempts: 2, timeout: 60000, waitUntil: "domcontentloaded" });
@@ -2173,6 +2232,8 @@ async function scrapeStore(page, dispensary) {
         const cartText = await page.locator("body").innerText();
         result.cartListings = extractCartEntriesFromText(cartText);
       }
+      // Filter out entries with no product name — they provide no useful info for users
+      result.cartListings = (result.cartListings ?? []).filter(e => e.product && e.product.trim().length > 2);
     } catch {
       result.cartListings = [];
     }
@@ -2194,7 +2255,7 @@ async function main() {
 
   const DEFAULT_STORE_TIMEOUT_MS = 30000;
   const SLOW_STORE_TIMEOUT_MS = 60000;
-  const SLOW_STORES = new Set(["New Amsterdam", "Mighty Lucky", "Green Genius", "Blue Forest Farms", "KushKlub NYC", "Dazed", "Smacked Village", "The Travel Agency", "VERDI", "CONBUD", "The Alchemy (Flatiron)", "The Alchemy (Chelsea)", "Midnight Moon", "Stoops NYC", "Housing Works Cannabis Co", "Superfly"]);
+  const SLOW_STORES = new Set(["New Amsterdam", "Mighty Lucky", "Green Genius", "Blue Forest Farms", "KushKlub NYC", "Dazed", "Smacked Village", "The Travel Agency", "VERDI", "CONBUD", "The Alchemy (Flatiron)", "The Alchemy (Chelsea)", "Midnight Moon", "Stoops NYC", "Housing Works Cannabis Co", "Superfly", "Gotham (Bowery)", "Gotham (Chelsea)"]);
 
   const results = [];
   for (const dispensary of dispensaries) {
