@@ -1111,9 +1111,9 @@ async function extractJointEntries(page, menuUrl) {
   // Wait for JS framework to initialise
   await page.waitForTimeout(3000);
 
-  // If base URL differs from the full URL, and API hasn't returned products yet,
-  // navigate to the flower category URL. Skip if API already delivered products.
-  if (baseMenuUrl !== menuUrl && allProducts.length === 0) {
+  // If base URL differs from the full URL, navigate to the flower category URL.
+  // Only skip if API already delivered a meaningful number of products.
+  if (baseMenuUrl !== menuUrl && allProducts.length < 5) {
     try {
       await page.goto(menuUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
     } catch {
@@ -1122,9 +1122,9 @@ async function extractJointEntries(page, menuUrl) {
     await page.waitForTimeout(2500);
   }
 
-  // Scroll to trigger lazy-loading; stop early if API has already returned products
+  // Scroll to trigger lazy-loading; stop early only when API has returned enough products
   for (let i = 0; i < 6; i++) {
-    if (allProducts.length > 0 && i >= 2) break; // API delivered — minimal scrolling only
+    if (allProducts.length >= 10 && i >= 3) break; // enough products, stop scrolling
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await page.waitForTimeout(800);
   }
@@ -1286,6 +1286,73 @@ async function extractBlazeEntries(page, menuUrl) {
   }
   const bodyText = await page.locator("body").innerText();
   return filterListingEntries(extractPriceEntries(bodyText));
+}
+
+async function extractBlazeCartEntries(page, cartUrl) {
+  // Intercept Blaze ecom API product responses — much more reliable than body text.
+  // The API paginates at ecom-api.blaze.me/api/v1/products/sponsored/?category=...
+  const allProducts = [];
+
+  const responseHandler = async (response) => {
+    const url = response.url();
+    if (!url.includes("ecom-api.blaze.me")) return;
+    try {
+      const data = await response.json();
+      const list = data?.data;
+      if (Array.isArray(list) && list.length > 0) {
+        allProducts.push(...list);
+      }
+    } catch { /* non-JSON or transient error */ }
+  };
+
+  page.on("response", responseHandler);
+  await gotoWithRetries(page, cartUrl, { attempts: 3, timeout: 90000, waitUntil: "domcontentloaded" });
+  await acceptBlazeAgeGate(page);
+  await page.waitForTimeout(3000);
+  // Scroll to trigger paginated API calls
+  for (let i = 0; i < 10; i++) {
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await page.waitForTimeout(800);
+  }
+  page.off("response", responseHandler);
+
+  // Parse intercepted API products
+  const entries = [];
+  for (const item of allProducts) {
+    const attrs = item?.attributes ?? item;
+    const name = attrs?.name ?? attrs?.product_name ?? "";
+    if (!isCartProduct(name)) continue;
+    const size = detectCartSize(name);
+    if (!size) continue;
+    let rawPrice =
+      attrs?.discount_price ??
+      attrs?.unit_prices?.[0]?.price ??
+      attrs?.price ??
+      null;
+    if (rawPrice === null) continue;
+    // Blaze API returns prices as {amount: N, currency: 'usd'} where N is cents
+    if (typeof rawPrice === "object" && rawPrice !== null && "amount" in rawPrice) {
+      rawPrice = rawPrice.amount / 100;
+    }
+    const price = Number(rawPrice);
+    if (!price || isNaN(price)) continue;
+    entries.push({ product: cleanProductName(String(name)), size, price });
+  }
+
+  // Deduplicate
+  const seen = new Set();
+  const deduped = entries.filter((e) => {
+    const key = `${e.product}|${e.size}|${e.price}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+
+  if (deduped.length > 0) return deduped;
+
+  // Fallback: body text
+  const bodyText = await page.locator("body").innerText();
+  return extractCartEntriesFromText(bodyText);
 }
 
 async function extractBlazeDeals(page, dealsUrl) {
@@ -2092,11 +2159,13 @@ async function scrapeStore(page, dispensary) {
       } else if (cartProvider === "dutchie") {
         // Dutchie embedded menus: click Vaporizers category
         result.cartListings = await extractDutchieEntries(page, result.cartMenuUrl, { wantCarts: true });
+      } else if (cartProvider === "blaze") {
+        // Blaze platform: intercept ecom API for reliable cart listings
+        result.cartListings = await extractBlazeCartEntries(page, result.cartMenuUrl);
       } else {
-        // Blaze, CONBUD, Gotham, WooCommerce, generic: navigate + age gate + scroll + body text
+        // CONBUD, Gotham, WooCommerce, generic: navigate + scroll + body text
         await gotoWithRetries(page, result.cartMenuUrl, { attempts: 2, timeout: 60000, waitUntil: "domcontentloaded" });
         await page.waitForTimeout(2500);
-        if (cartProvider === "blaze") await acceptBlazeAgeGate(page);
         for (let i = 0; i < 8; i++) {
           await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
           await page.waitForTimeout(700);
@@ -2125,7 +2194,7 @@ async function main() {
 
   const DEFAULT_STORE_TIMEOUT_MS = 30000;
   const SLOW_STORE_TIMEOUT_MS = 60000;
-  const SLOW_STORES = new Set(["New Amsterdam", "Mighty Lucky", "Green Genius", "Blue Forest Farms", "KushKlub NYC", "Dazed", "Smacked Village", "The Travel Agency", "VERDI", "CONBUD", "The Alchemy (Flatiron)", "The Alchemy (Chelsea)", "Midnight Moon", "Stoops NYC"]);
+  const SLOW_STORES = new Set(["New Amsterdam", "Mighty Lucky", "Green Genius", "Blue Forest Farms", "KushKlub NYC", "Dazed", "Smacked Village", "The Travel Agency", "VERDI", "CONBUD", "The Alchemy (Flatiron)", "The Alchemy (Chelsea)", "Midnight Moon", "Stoops NYC", "Housing Works Cannabis Co", "Superfly"]);
 
   const results = [];
   for (const dispensary of dispensaries) {

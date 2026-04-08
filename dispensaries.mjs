@@ -6,7 +6,7 @@ export const dispensaries = [
     neighborhood: "NoHo",
     menuUrlOverride: "https://hwcannabis.co/menu/broadway/categories/flower/",
     dealsUrlOverride: "https://hwcannabis.co/menu/broadway/specials/",
-    cartMenuUrlOverride: "https://hwcannabis.co/menu/broadway/categories/vaporizers/",
+    cartMenuUrlOverride: "https://hwcannabis.co/menu/broadway/categories/vape-pens/",
     sourceNote: "Official Blaze storefront"
   },
   {
